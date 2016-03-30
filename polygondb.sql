@@ -32,17 +32,17 @@ CREATE TABLE users (
     email VARCHAR(40)
 );
 
-CREATE TABLE municipality(
+CREATE TABLE municipalities (
     mname varchar(30),
-    phonenubmer varchar(10)
+    phonenumber varchar(10)
 );
 
-CREATE TABLE HousingAssociation(
+CREATE TABLE housingassociations (
     hname varchar(30),
-    phonenubmer varchar(10)
+    phonenumber varchar(10)
 );
 
-CREATE TABLE PrivatePerson(
+CREATE TABLE privatepersons (
     pname varchar(30),
-    phonenubmer varchar(10)
+    phonenumber varchar(10)
 );
