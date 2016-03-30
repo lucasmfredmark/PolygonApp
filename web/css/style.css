@@ -10,10 +10,13 @@ body {
 }
 
 h1 {
-    text-align:center;
     font-weight:700;
     font-size:24pt;
     color:#333;
+}
+
+.center {
+    text-align:center;
 }
 
 h1 span {
@@ -107,3 +110,43 @@ input[type=submit] {
 input[type=submit]:hover {
     background:rgba(0,162,255,0.75);
 }
+
+.overview {
+    width:1080px;
+    margin:0 auto;
+    border:1px solid #333;
+}
+
+.overview tr {
+
+}
+
+.overview tr:first-child {
+    background:#333;
+    color:#eee;
+}
+
+.overview tr:nth-child(even) {
+    background:#ddd;
+}
+
+.overview th {
+    text-align:left;
+    font-weight:700;
+    padding:5px;
+}
+
+.overview td {
+    padding:5px;
+}
+
+.overview img {
+    width:12px; height:12px;
+}
+
+.t1 { width:150px; }
+.t3 { width:150px; }
+.t4 { width:100px }
+.t5 { width:150px; }
+.t6 { width:50px; }
+

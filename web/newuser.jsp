@@ -9,7 +9,7 @@
     </head>
     <body>
         <div id="content">
-            <h1><span>Polygon</span>Group</h1>
+            <h1 class="center"><span>Polygon</span>Group</h1>
             <h2>Sign up to Polygon</h2>
             <form name ="loginForm" method="POST" action="Login">
                 <input type="text" name="username" maxlength="30" pattern="[0-9a-zA-Z]+" placeholder="Username" required>
