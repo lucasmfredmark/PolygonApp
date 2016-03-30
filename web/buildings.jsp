@@ -8,45 +8,45 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="css/resets.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>PolygonApp - My Buildings</title>
+        <title>Polygon - Overview</title>
     </head>
     <body>
-        <h1>My Buildings</h1>
-        <table>
+        <br>
+        <h1 class="center">Overview</h1>
+        <br>
+        <table class="overview">
             <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Parcel number</th>
-                <th>Size m&sup2;</th>
-                <th>Condition level</th>
-                <th>Remove</th>
+                <th class="t1">Name</th>
+                <th class="t2">Address</th>
+                <th class="t3">Parcel number</th>
+                <th class="t4">Size m&sup2;</th>
+                <th class="t5">Condition level</th>
+                <th class="t6">Action</th>
             </tr>
+            <%
+                for(int i = 0; i < 10; i++) {
+            %>
             <tr>
-                <td>Example 1</td>
-                <td>Example 1</td>
-                <td>Example 1</td>
-                <td>Example 1</td>
-                <td>Example 1</td>
-                <td>x</td>
+                <td>Example <%= i+1 %></td>
+                <td>Roadway 12</td>
+                <td>12345</td>
+                <td>123</td>
+                <td>1</td>
+                <td>
+                    <a href="#"><img src="images/edit.png"></a> <!-- Skal være button for at kunne POST'e -->
+                    <a href="#"><img src="images/delete.png"></a> <!-- Midlertidig løsning -->
+                </td>
             </tr>
-            <tr>
-                <td>Example 2</td>
-                <td>Example 2</td>
-                <td>Example 2</td>
-                <td>Example 2</td>
-                <td>Example 2</td>
-                <td>x</td>
-            </tr>
-            <tr>
-                <td>Example 3</td>
-                <td>Example 3</td>
-                <td>Example 3</td>
-                <td>Example 3</td>
-                <td>Example 3</td>
-                <td>x</td>
-            </tr>
+            <%
+                }      
+            %>
         </table>
-        <a href="AddBuilding">Add new building</a>
+        <br>
+        <form name="overviewform" action="" method="POST">
+            <input type="submit" value="Add a new building">        
+        </form>
     </body>
 </html>
