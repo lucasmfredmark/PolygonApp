@@ -27,7 +27,7 @@ h2 {
     color:#333;
 }
 
-p { //Feedback besked
+p { /*Feedback besked*/
     font-size:10pt;
     text-align:left;
     display:none;
