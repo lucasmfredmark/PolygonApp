@@ -10,5 +10,6 @@ package serviceLayer.interfaces;
  * @author lucas
  */
 public interface IRegister {
-    
+    boolean ifExists(String uname); 
+    boolean create(String uname, String pword);
 }
