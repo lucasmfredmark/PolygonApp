@@ -10,5 +10,5 @@ package serviceLayer.interfaces;
  * @author lucas
  */
 public interface ILogin {
-    
+    boolean validate(String uname, String pword);
 }
