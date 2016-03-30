@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import serviceLayer.entities.Building;
+import serviceLayer.entities.User;
 
 /**
  *
@@ -20,7 +21,7 @@ import serviceLayer.entities.Building;
 public class BuildingMapper {
     public ArrayList<Building> getCustomerBuildings(User user) throws SQLException {
         Connection conn = DBConnector.getConnection();
-        String sql = "SELECT * FROM buildings WHERE userid = " + user.getUserId();
+        String sql = "SELECT * FROM buildings WHERE userid = " + user.getId();
         PreparedStatement pstmt = conn.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
         

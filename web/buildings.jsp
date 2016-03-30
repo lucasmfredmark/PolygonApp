@@ -14,6 +14,11 @@
         <title>Polygon - Overview</title>
     </head>
     <body>
+        <%
+            if (session.getAttribute("user") != null) {
+                out.println("sup g");
+            }
+    }%>
         <br>
         <h1 class="center">Overview</h1>
         <br>

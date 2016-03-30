@@ -5,20 +5,29 @@
  */
 package serviceLayer.entities;
 
-import java.util.Enumeration;
-
 /**
  *
  * @author HazemSaeid
  */
 public class User {
-    int id;
-    String uname = "";
-    public enum userType {
-        PRIVATEPERSON, MUNICIPALITY, HOUSINGASSOCIATION,ADMIN;
+    private int id;
+    private String uname;
+    private String pass;
+    
+    private enum userType {
+        PRIVATEPERSON, MUNICIPALITY, HOUSINGASSOCIATION, ADMIN;
     }
-    String fullName = ""; 
-    String email = "";
+    
+    private String fullName;
+    private String email;
+
+    public User(int id, String uname, String pass, String fullName, String email) {
+        this.id = id;
+        this.uname = uname;
+        this.pass = pass;
+        this.fullName = fullName;
+        this.email = email;
+    }
 
     public int getId() {
         return id;
@@ -34,6 +43,14 @@ public class User {
 
     public void setUname(String uname) {
         this.uname = uname;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public String getFullName() {
