@@ -11,9 +11,13 @@
         <div id="content">
             <h1 class="center"><span>Polygon</span>Group</h1>
             <h2>Sign in with your username and password</h2>
-            <form name ="loginForm" method="POST" action="Login">
+            <% if (request.getParameter("error") != null) { %>
+            <br /><h2><%= request.getParameter("error") %></h2>
+            <% } %>
+            <form name ="loginForm" method="POST" action="UserServlet">
                 <input type="text" name="username" maxlength="30" pattern="[0-9a-zA-Z]+" placeholder="Username" required>
                 <input type="password" name="userpass" maxlength="30" placeholder="Password" required>
+                <input type="hidden" name="action" value="login">
                 <input type="submit" name="userlogin" value="Sign in">
                 <p>*Feedback</p>
             </form>

@@ -46,3 +46,5 @@ CREATE TABLE privatepersons (
     pname varchar(30),
     phonenumber varchar(10)
 );
+
+INSERT INTO users (userid, username, userpass, usertype, fullname, email) VALUES (1, 'Lucas', 1234, 'Admin', 'Lucas Fredmark', 'lucas.m.fredmark@gmail.com');

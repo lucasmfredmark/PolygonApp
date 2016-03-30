@@ -7,9 +7,8 @@ package presentationLayer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,14 +44,19 @@ public class UserServlet extends HttpServlet {
             switch (action) {
                 case "login":
                     String username = request.getParameter("username");
-                    String password = request.getParameter("password");
+                    String password = request.getParameter("userpass");
                     User user = userController.loginUser(username, password);
                     
                     if (user != null) {
                         HttpSession session = request.getSession();
                         session.setAttribute("user", user);
                         response.sendRedirect("buildings.jsp");
+                    } else {
+                        String error = "The user doesn\'t exist, or you typed the wrong password.";
+                        response.sendRedirect("index.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
                     }
+                    break;
+                case "register":
                     break;
             }
         } catch (SQLException ex) {
