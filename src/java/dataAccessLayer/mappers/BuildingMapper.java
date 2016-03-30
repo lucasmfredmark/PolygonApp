@@ -27,7 +27,8 @@ public class BuildingMapper {
         ArrayList<Building> buildingList = new ArrayList();
         
         while (rs.next()) {
-            
+            Building building = new Building(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
+            buildingList.add(building);
         }
         
         return buildingList;
