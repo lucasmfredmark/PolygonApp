@@ -8,19 +8,25 @@
         <title>Polygon - Login</title>
     </head>
     <body>
+        <%
+            if (session.getAttribute("user") != null) {
+                response.sendRedirect("index.jsp");
+            }
+        %>
         <div id="content">
             <h1 class="center"><span>Polygon</span>Group</h1>
             <h2>Sign in with your username and password</h2>
             <% if (request.getParameter("error") != null) { %>
             <br /><h2><%= request.getParameter("error") %></h2>
             <% } %>
-            <form name ="loginForm" method="POST" action="UserServlet">
+            <form method="POST" action="UserServlet">
                 <input type="text" name="username" maxlength="30" pattern="[0-9a-zA-Z]+" placeholder="Username" required>
                 <input type="password" name="userpass" maxlength="30" placeholder="Password" required>
                 <input type="hidden" name="action" value="login">
-                <input type="submit" name="userlogin" value="Sign in">
+                <input type="submit" value="Sign in">
                 <p>*Feedback</p>
             </form>
+            <h2>Don't have an account yet? Sign up <a href="register.jsp">here</a>.</h2>
         </div>
     </body>
 </html>

@@ -14,17 +14,19 @@ public class User {
     private String uname;
     private String pass;
     
-    private enum userType {
-        PRIVATEPERSON, MUNICIPALITY, HOUSINGASSOCIATION, ADMIN;
+    public static enum userType {
+        CUSTOMER, ADMIN
     }
     
+    public static userType userType;
     private String fullName;
     private String email;
 
-    public User(int id, String uname, String pass, String fullName, String email) {
+    public User(int id, String uname, String pass, userType userType, String fullName, String email) {
         this.id = id;
         this.uname = uname;
         this.pass = pass;
+        this.userType = userType;
         this.fullName = fullName;
         this.email = email;
     }
@@ -51,6 +53,14 @@ public class User {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public userType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(userType userType) {
+        this.userType = userType;
     }
 
     public String getFullName() {

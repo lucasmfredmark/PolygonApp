@@ -57,6 +57,7 @@ public class UserServlet extends HttpServlet {
                     }
                     break;
                 case "register":
+                    out.print("Registration not open, yet.");
                     break;
             }
         } catch (SQLException ex) {

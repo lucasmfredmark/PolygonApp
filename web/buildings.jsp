@@ -4,6 +4,7 @@
     Author     : lucas
 --%>
 
+<%@page import="serviceLayer.entities.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,8 +16,15 @@
     </head>
     <body>
         <%
-            if (session.getAttribute("user") != null) {
-                out.println("sup g");
+            User user = (User) session.getAttribute("user");
+            
+            if (user != null) {
+        %>
+        <h2>Hej <b><%= user.getUname() %></b> (<%= user.getFullName() %>)</h2>
+        <h3><%= user.getEmail() %></h3>
+        <%
+            } else {
+                response.sendRedirect("index.jsp");
             }
         %>
         <br>
