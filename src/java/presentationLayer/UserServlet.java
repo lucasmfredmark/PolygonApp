@@ -43,6 +43,7 @@ public class UserServlet extends HttpServlet {
             
             switch (action) {
                 case "login":
+                {
                     String username = request.getParameter("username");
                     String password = request.getParameter("userpass");
                     User user = userController.loginUser(username, password);
@@ -56,9 +57,22 @@ public class UserServlet extends HttpServlet {
                         response.sendRedirect("index.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
                     }
                     break;
+                }
                 case "register":
-                    out.print("Registration not open, yet.");
+                {
+                    String username = request.getParameter("username");
+                    String password = request.getParameter("userpass");
+                    String fullname = request.getParameter("fullname");
+                    String email = request.getParameter("email");
+                    out.print(username + ", " + password + ", " + fullname + ", " + email);
+                    if (userController.registerUser(username, password, fullname, email)) {
+                        response.sendRedirect("index.jsp");
+                    } else {
+                        String error = "The user already exists, or another error happened.";
+                        response.sendRedirect("register.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
+                    }
                     break;
+                }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

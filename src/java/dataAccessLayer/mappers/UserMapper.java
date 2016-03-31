@@ -29,7 +29,7 @@ public class UserMapper {
         if (rs.next()) {
             userType userType;
             
-            if (rs.getString(4).toUpperCase().equals(User.userType.ADMIN)) {
+            if (rs.getString(4).equals(User.userType.ADMIN)) {
                 userType = User.userType.ADMIN;
             } else {
                 userType = User.userType.CUSTOMER;
@@ -39,5 +39,24 @@ public class UserMapper {
         }
         
         return user;
+    }
+    
+    public boolean insertUser(String username, String password, String fullname, String email) throws SQLException {
+        Connection conn = DBConnector.getConnection();
+        String sql = "SELECT * FROM users WHERE username = '" + username + "'";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+        
+        if (!rs.next()) {
+            sql = "INSERT INTO users (username, userpass, fullname, email) VALUES ('" + username + "', '" + password + "', '" + fullname + "', '" + email + "')";
+            pstmt = conn.prepareStatement(sql);
+            int rowCount = pstmt.executeUpdate();
+            
+            if (rowCount == 1) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

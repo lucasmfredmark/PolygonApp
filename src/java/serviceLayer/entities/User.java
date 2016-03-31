@@ -14,14 +14,14 @@ public class User {
     private String uname;
     private String pass;
     
-    public static enum userType {
+    public enum userType {
         CUSTOMER, ADMIN
     }
     
     public static userType userType;
     private String fullName;
     private String email;
-
+    
     public User(int id, String uname, String pass, userType userType, String fullName, String email) {
         this.id = id;
         this.uname = uname;

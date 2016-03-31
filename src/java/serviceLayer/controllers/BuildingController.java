@@ -7,24 +7,23 @@ package serviceLayer.controllers;
 
 import dataAccessLayer.mappers.BuildingMapper;
 import java.sql.SQLException;
-import serviceLayer.entities.Building;
 
 /**
  *
  * @author Staal
  */
 public class BuildingController {
-
-    private final BuildingMapper buildingmapper;
+    private final BuildingMapper buildingMapper;
 
     public BuildingController() {
-        this.buildingmapper = new BuildingMapper();
+        this.buildingMapper = new BuildingMapper();
     }
 
-    public void addBuilding(String name, String address, int parcelNumber, int size, int conditionLevel, int buildingId) throws SQLException {
-        buildingmapper.addBuilding(name, address, parcelNumber, size, conditionLevel, buildingId);
+    public void addBuilding(String name, String address, String parcelNumber, int size, int userId) throws SQLException {
+        buildingMapper.addBuilding(name, address, parcelNumber, size, userId);
     }
+    
     public void deleteBuilding(int buildingId) throws SQLException {
-        buildingmapper.deleteBuilding(buildingId);
+        buildingMapper.deleteBuilding(buildingId);
     }
 }
