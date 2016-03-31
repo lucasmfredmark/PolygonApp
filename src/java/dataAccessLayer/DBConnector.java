@@ -7,7 +7,6 @@ package dataAccessLayer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -37,11 +36,5 @@ public class DBConnector {
         }
         
         return conn;
-    }
-           ResultSet doQuery(String query) throws SQLException {
-        return conn.createStatement().executeQuery(query);
-    }
-           public int doUpdate(String update) throws SQLException {
-        return conn.createStatement().executeUpdate(update);
     }
 }
