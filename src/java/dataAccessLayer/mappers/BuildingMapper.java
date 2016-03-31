@@ -20,7 +20,7 @@ import serviceLayer.entities.User;
  */
 public class BuildingMapper {
 
-    public ArrayList<Building> getCustomerBuildings(User user) throws SQLException {
+    public ArrayList <Building> getCustomerBuildings(User user) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "SELECT * FROM buildings WHERE userid = " + user.getId();
         PreparedStatement pstmt = conn.prepareStatement(sql);

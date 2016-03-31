@@ -7,6 +7,9 @@ package serviceLayer.controllers;
 
 import dataAccessLayer.mappers.BuildingMapper;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import serviceLayer.entities.Building;
+import serviceLayer.entities.User;
 
 /**
  *
@@ -26,4 +29,11 @@ public class BuildingController {
     public void deleteBuilding(int buildingId) throws SQLException {
         buildingMapper.deleteBuilding(buildingId);
     }
+
+    public ArrayList<Building> getAllBuildings(User user) throws SQLException {
+        ArrayList<Building> buildings = buildingMapper.getCustomerBuildings(user);
+        return buildings;
+    }
+    
+    
 }
