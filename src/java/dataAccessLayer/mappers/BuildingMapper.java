@@ -36,25 +36,25 @@ public class BuildingMapper {
         return buildingList;
     }
 
-    public void addBuildings(Building building) throws SQLException {
+    public void addBuilding(String name, String address, int parcelNumber, int size, int conditionLevel, int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "INSERT INTO buildings (bname, address, parcelnumber, size_m2, userid) VALUES (?,?,?,?,?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, building.getName());
-        pstmt.setString(2, building.getAddress());
-        pstmt.setInt(3, building.getParcelNumber());
-        pstmt.setInt(4, building.getSize());
-        pstmt.setString(5, "userid");
+        pstmt.setString(1, name);
+        pstmt.setString(2, address);
+        pstmt.setInt(3, parcelNumber);
+        pstmt.setInt(4, size);
+        pstmt.setInt(5, buildingId);
 
         pstmt.executeUpdate(sql);
 
     }
 
-    public void deleteBuilding(Building building) throws SQLException {
+    public void deleteBuilding(int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = " DELETE FROM buildings WHERE buildingid ='?'";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setInt(1, building.getBuildingId());
+        pstmt.setInt(1, buildingId);
         pstmt.executeUpdate(sql);
     }
     

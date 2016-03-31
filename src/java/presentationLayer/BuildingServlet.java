@@ -43,8 +43,7 @@ public class BuildingServlet extends HttpServlet {
                     
                     break;
                 case "remove":
-                    
-                    bm.deleteBuilding();
+                 
                     break;
             }
         }

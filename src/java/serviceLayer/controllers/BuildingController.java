@@ -14,21 +14,17 @@ import serviceLayer.entities.Building;
  * @author Staal
  */
 public class BuildingController {
-    
+
     private final BuildingMapper buildingmapper;
-    
+
     public BuildingController() {
         this.buildingmapper = new BuildingMapper();
     }
-    
-    public Building AddBuilding (String bname, String adress, String pacelnumber, String size_m2) throws SQLException {
-        if (bname != null && adress != null && pacelnumber != null  && size_m2 != null){
-            Building building = new Building;
-            Building building = buildingmapper.addBuilding()
-        }
-        
-        if (bname )
-        return null;
+
+    public void addBuilding(String name, String address, int parcelNumber, int size, int conditionLevel, int buildingId) throws SQLException {
+        buildingmapper.addBuilding(name, address, parcelNumber, size, conditionLevel, buildingId);
     }
-    
+    public void deleteBuilding(int buildingId) throws SQLException {
+        buildingmapper.deleteBuilding(buildingId);
+    }
 }
