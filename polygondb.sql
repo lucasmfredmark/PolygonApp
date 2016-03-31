@@ -1,6 +1,6 @@
-
 DROP DATABASE IF EXISTS polygon;
 CREATE DATABASE polygon;
+
 USE polygon;
 
 DROP TABLE IF EXISTS documents;
@@ -19,6 +19,11 @@ CREATE TABLE users ( /* MIDLERTIDIGT INGEN FOREIGN KEY */
     fullname VARCHAR(50),
     email VARCHAR(40)
 );
+
+INSERT INTO users (username, userpass, fullname, email) VALUES ('test','123','Power User','test@polygon.dk');
+INSERT INTO users (username, userpass, fullname, email) VALUES ('Admin','foobar','Power User','admin@polygon.dk');
+INSERT INTO users (username, userpass, fullname, email) VALUES ('John','123','John Doe','john@doe.com');
+INSERT INTO users (username, userpass, fullname, email) VALUES ('Jane','321','Jane Doe','jane@doe.com');
 
 CREATE TABLE buildings (
     buildingid INT AUTO_INCREMENT PRIMARY KEY,
