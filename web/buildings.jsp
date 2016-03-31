@@ -4,6 +4,9 @@
     Author     : lucas
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="serviceLayer.controllers.BuildingController"%>
+<%@page import="serviceLayer.entities.Building"%>
 <%@page import="serviceLayer.entities.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -39,23 +42,24 @@
                 <th class="t5">Condition level</th>
                 <th class="t6">Action</th>
             </tr>
-            <%
-                for(int i = 0; i < 10; i++) {
-            %>
             <tr>
-                <td>Example <%= i+1 %></td>
-                <td>Roadway 12</td>
-                <td>12345</td>
-                <td>123</td>
-                <td>1</td>
+            <%
+                
+                BuildingController buildingcontroller = new BuildingController();
+                ArrayList <Building> buildings = buildingcontroller.getAllBuildings(user);
+                for (Building b : buildings) {
+                out.print("<td>" + b.getName() + "</td>");
+                out.print("<td>" + b.getAddress()+ "</td>");
+                out.print("<td>" + b.getParcelNumber()+ "</td>");
+                out.print("<td>" + b.getSize()+ "</td>");
+                out.print("<td>" + b.getConditionLevel() + "</td>");
+            }
+            %>
                 <td>
                     <a href="#"><img src="images/edit.png"></a> <!-- Skal være button for at kunne POST'e -->
                     <a href="#"><img src="images/delete.png"></a> <!-- Midlertidig løsning -->
                 </td>
-            </tr>
-            <%
-                }      
-            %>
+            </tr>         
         </table>
         <br>
         <form name="overviewform" action="BuildingServlet" method="POST">
