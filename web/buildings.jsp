@@ -44,21 +44,18 @@
             </tr>
             <tr>
             <%
-                
                 BuildingController buildingcontroller = new BuildingController();
                 ArrayList <Building> buildings = buildingcontroller.getAllBuildings(user);
+                
                 for (Building b : buildings) {
-                out.print("<td>" + b.getName() + "</td>");
-                out.print("<td>" + b.getAddress()+ "</td>");
-                out.print("<td>" + b.getParcelNumber()+ "</td>");
-                out.print("<td>" + b.getSize()+ "</td>");
-                out.print("<td>" + b.getConditionLevel() + "</td>");
-            }
+                    out.print("<td>" + b.getName() + "</td>");
+                    out.print("<td>" + b.getAddress()+ "</td>");
+                    out.print("<td>" + b.getParcelNumber()+ "</td>");
+                    out.print("<td>" + b.getSize()+ "</td>");
+                    out.print("<td>" + b.getConditionLevel() + "</td>");
+                    out.print("<td><a href=\"#\"><img src=\"images/edit.png\"></a><a href=\"#\"><img src=\"images/delete.png\"></a></td>");
+                }
             %>
-                <td>
-                    <a href="#"><img src="images/edit.png"></a> <!-- Skal være button for at kunne POST'e -->
-                    <a href="#"><img src="images/delete.png"></a> <!-- Midlertidig løsning -->
-                </td>
             </tr>         
         </table>
         <br>
