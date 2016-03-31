@@ -44,8 +44,8 @@
             </tr>
             <tr>
             <%
-                BuildingController buildingcontroller = new BuildingController();
-                ArrayList <Building> buildings = buildingcontroller.getAllBuildings(user);
+                BuildingController buildingController = new BuildingController();
+                ArrayList<Building> buildings = buildingController.getAllBuildings(user);
                 
                 for (Building b : buildings) {
                     out.print("<td>" + b.getName() + "</td>");

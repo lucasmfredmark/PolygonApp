@@ -22,8 +22,9 @@ public class UserMapper {
         User user = null;
         
         Connection conn = DBConnector.getConnection();
-        String sql = "SELECT * FROM users WHERE username = '" + username + "'";
+        String sql = "SELECT * FROM users WHERE username = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, username);
         ResultSet rs = pstmt.executeQuery();
         
         if (rs.next()) {

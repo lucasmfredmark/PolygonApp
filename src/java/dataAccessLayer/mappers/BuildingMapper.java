@@ -22,17 +22,18 @@ public class BuildingMapper {
 
     public ArrayList <Building> getCustomerBuildings(User user) throws SQLException {
         Connection conn = DBConnector.getConnection();
-        String sql = "SELECT * FROM buildings WHERE userid = " + user.getId();
+        String sql = "SELECT * FROM buildings WHERE fk_userid = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, user.getId());
         ResultSet rs = pstmt.executeQuery();
-
+        
         ArrayList<Building> buildingList = new ArrayList();
-
+        
         while (rs.next()) {
             Building building = new Building(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
             buildingList.add(building);
         }
-
+        
         return buildingList;
     }
 
@@ -45,7 +46,6 @@ public class BuildingMapper {
         pstmt.setString(3, parcelNumber);
         pstmt.setInt(4, size);
         pstmt.setInt(5, userId);
-        
         pstmt.executeUpdate(sql);
 
     }
