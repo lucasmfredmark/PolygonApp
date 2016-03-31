@@ -1,5 +1,5 @@
 
-DROP DATABASE if exists polygon;
+DROP DATABASE IF EXISTS polygon;
 CREATE DATABASE polygon;
 USE polygon;
 
