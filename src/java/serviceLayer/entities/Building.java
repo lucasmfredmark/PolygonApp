@@ -16,15 +16,29 @@ public class Building {
     private int parcelNumber;
     private int size;
     private int conditionLevel;
-
-  
-    public Building(String name, String address, int parcelNumber, int size, int conditionLevel, int buildingId) {
+    
+    public Building(String name, String address, int parcelNumber, int size) {
+        this.name = name;
+        this.address = address;
+        this.parcelNumber = parcelNumber;
+        this.size = size;
+    }
+    
+    public Building(int buildingId, String name, String address, int parcelNumber, int size, int conditionLevel) {
         this.buildingId = buildingId;
         this.name = name;
         this.address = address;
         this.parcelNumber = parcelNumber;
         this.size = size;
         this.conditionLevel = conditionLevel;
+    }
+    
+    public int getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(int buildingId) {
+        this.buildingId = buildingId;
     }
 
     public String getName() {
@@ -66,12 +80,4 @@ public class Building {
     public void setConditionLevel(int conditionLevel) {
         this.conditionLevel = conditionLevel;
     }
-    public int getBuildingId() {
-        return buildingId;
-    }
-
-    public void setBuildingId(int buildingId) {
-        this.buildingId = buildingId;
-    }
-      
 }
