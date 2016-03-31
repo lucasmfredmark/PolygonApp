@@ -23,9 +23,9 @@
         <h2>Hej <b><%= user.getUname() %></b> (<%= user.getFullName() %>)</h2>
         <h3><%= user.getEmail() %></h3>
         <%
-            } else {
+            } /*else {
                 response.sendRedirect("index.jsp");
-            }
+            }*/
         %>
         <br>
         <h1 class="center">Overview</h1>
@@ -58,7 +58,7 @@
             %>
         </table>
         <br>
-        <form name="overviewform" action="" method="POST">
+        <form name="overviewform" action="BuildingServlet" method="POST">
             <input type="submit" value="Add a new building">        
         </form>
     </body>
