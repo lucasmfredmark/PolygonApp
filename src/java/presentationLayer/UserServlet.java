@@ -42,8 +42,7 @@ public class UserServlet extends HttpServlet {
             UserController userController = new UserController();
             
             switch (action) {
-                case "login":
-                {
+                case "login": {
                     String username = request.getParameter("username");
                     String password = request.getParameter("userpass");
                     User user = userController.loginUser(username, password);
@@ -58,8 +57,7 @@ public class UserServlet extends HttpServlet {
                     }
                     break;
                 }
-                case "register":
-                {
+                case "register": {
                     String username = request.getParameter("username");
                     String password = request.getParameter("userpass");
                     String fullname = request.getParameter("fullname");
