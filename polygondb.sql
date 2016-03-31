@@ -1,7 +1,6 @@
-/* KØRES KUN FØRSTE GANG
-CREATE DATABASE polygon;
-*/
 
+DROP DATABASE if exists polygon;
+CREATE DATABASE polygon;
 USE polygon;
 
 DROP TABLE IF EXISTS documents;
