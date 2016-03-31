@@ -10,13 +10,16 @@ package serviceLayer.entities;
  * @author lucas
  */
 public class Building {
+    private int buildingId;
     private String name;
     private String address;
-    private String parcelNumber;
+    private int parcelNumber;
     private int size;
     private int conditionLevel;
 
-    public Building(String name, String address, String parcelNumber, int size, int conditionLevel) {
+  
+    public Building(String name, String address, int parcelNumber, int size, int conditionLevel, int buildingId) {
+        this.buildingId = buildingId;
         this.name = name;
         this.address = address;
         this.parcelNumber = parcelNumber;
@@ -40,11 +43,11 @@ public class Building {
         this.address = address;
     }
 
-    public String getParcelNumber() {
+    public int getParcelNumber() {
         return parcelNumber;
     }
 
-    public void setParcelNumber(String parcelNumber) {
+    public void setParcelNumber(int parcelNumber) {
         this.parcelNumber = parcelNumber;
     }
 
@@ -63,4 +66,12 @@ public class Building {
     public void setConditionLevel(int conditionLevel) {
         this.conditionLevel = conditionLevel;
     }
+    public int getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(int buildingId) {
+        this.buildingId = buildingId;
+    }
+      
 }

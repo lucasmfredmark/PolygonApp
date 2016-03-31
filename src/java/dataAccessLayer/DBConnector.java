@@ -7,6 +7,7 @@ package dataAccessLayer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -17,8 +18,8 @@ public class DBConnector {
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     private static final String URL = "jdbc:mysql://localhost/polygon";
     private static final String USER = "root";
-    private static final String PWD = "root";
-    private static Connection conn = null;
+    private static final String PWD = "1234";
+    public static Connection conn;
     
     public static Connection getConnection() {
         if (conn == null) {
@@ -36,5 +37,11 @@ public class DBConnector {
         }
         
         return conn;
+    }
+           ResultSet doQuery(String query) throws SQLException {
+        return conn.createStatement().executeQuery(query);
+    }
+           public int doUpdate(String update) throws SQLException {
+        return conn.createStatement().executeUpdate(update);
     }
 }
