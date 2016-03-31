@@ -11,6 +11,7 @@ package serviceLayer.entities;
  */
 public class Building {
     private int buildingId;
+    private String bdate;
     private String name;
     private String address;
     private String parcelNumber;
@@ -28,6 +29,7 @@ public class Building {
     
     public Building(int buildingId, String bdate, String name, String address, String parcelNumber, int size, int conditionLevel, int userId) {
         this.buildingId = buildingId;
+        this.bdate = bdate;
         this.name = name;
         this.address = address;
         this.parcelNumber = parcelNumber;
@@ -42,6 +44,14 @@ public class Building {
 
     public void setBuildingId(int buildingId) {
         this.buildingId = buildingId;
+    }
+
+    public String getBdate() {
+        return bdate;
+    }
+
+    public void setBdate(String bdate) {
+        this.bdate = bdate;
     }
 
     public String getName() {
