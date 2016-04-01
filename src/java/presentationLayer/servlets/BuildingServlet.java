@@ -3,27 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package presentationLayer;
+package presentationLayer.servlets;
 
+import dataAccessLayer.mappers.BuildingMapper;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLEncoder;
-import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import serviceLayer.controllers.UserController;
-import serviceLayer.entities.User;
+import serviceLayer.entities.Building;
 
 /**
  *
  * @author lucas
  */
-@WebServlet(name = "UserServlet", urlPatterns = {"/UserServlet"})
-public class UserServlet extends HttpServlet {
+@WebServlet(name = "BuildingServlet", urlPatterns = {"/BuildingServlet"})
+public class BuildingServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,44 +33,19 @@ public class UserServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        BuildingMapper bm = new BuildingMapper();
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String action = request.getParameter("action");
-            UserController userController = new UserController();
             
             switch (action) {
-                case "login": {
-                    String username = request.getParameter("username");
-                    String password = request.getParameter("userpass");
-                    User user = userController.loginUser(username, password);
+                case "add":
                     
-                    if (user != null) {
-                        HttpSession session = request.getSession();
-                        session.setAttribute("user", user);
-                        response.sendRedirect("buildings.jsp");
-                    } else {
-                        String error = "The user doesn\'t exist, or you typed the wrong password.";
-                        response.sendRedirect("index.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
-                    }
                     break;
-                }
-                case "register": {
-                    String username = request.getParameter("username");
-                    String password = request.getParameter("userpass");
-                    String fullname = request.getParameter("fullname");
-                    String email = request.getParameter("email");
-                    out.print(username + ", " + password + ", " + fullname + ", " + email);
-                    if (userController.registerUser(username, password, fullname, email)) {
-                        response.sendRedirect("index.jsp");
-                    } else {
-                        String error = "The user already exists, or another error happened.";
-                        response.sendRedirect("register.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
-                    }
+                case "remove":
+                 
                     break;
-                }
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         }
     }
 

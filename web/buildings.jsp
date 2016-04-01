@@ -21,16 +21,18 @@
         <%
             User user = (User) session.getAttribute("user");
             
-            if (user != null) {
-        %>
-        <h2>Hej <b><%= user.getUname() %></b> (<%= user.getFullName() %>)</h2>
-        <h3><%= user.getEmail() %></h3>
-        <%
-            } /*else {
+            if (user == null) {
                 response.sendRedirect("index.jsp");
-            }*/
+                return;
+            }
         %>
-        <br>
+        <h3>Hello, <span><%= user.getUname() %></span> (<%= user.getFullName() %>)</h3>
+        <h3><%= user.getEmail() %></h3>
+        <form action="UserServlet" method="POST" style="padding: 0;">
+            <input type="hidden" name="action" value="logout">
+            <input type="submit" value="Log out">
+        </form>
+        <br><hr><br>
         <h1 class="center">Overview</h1>
         <br>
         <table class="overview">
@@ -40,27 +42,31 @@
                 <th class="t3">Parcel number</th>
                 <th class="t4">Size m&sup2;</th>
                 <th class="t5">Condition level</th>
-                <th class="t6">Action</th>
+                <th class="t6">Actions</th>
             </tr>
-            <tr>
             <%
                 BuildingController buildingController = new BuildingController();
-                ArrayList<Building> buildings = buildingController.getAllBuildings(user);
+                ArrayList<Building> buildings = buildingController.getCustomerBuildings(user);
                 
-                for (Building b : buildings) {
-                    out.print("<td>" + b.getName() + "</td>");
-                    out.print("<td>" + b.getAddress()+ "</td>");
-                    out.print("<td>" + b.getParcelNumber()+ "</td>");
-                    out.print("<td>" + b.getSize()+ "</td>");
-                    out.print("<td>" + b.getConditionLevel() + "</td>");
-                    out.print("<td><a href=\"#\"><img src=\"images/edit.png\"></a><a href=\"#\"><img src=\"images/delete.png\"></a></td>");
+                if (buildings.size() > 0) {
+                    for (Building b : buildings) {
+                        out.print("<tr>");
+                        out.print("<td>" + b.getName() + "</td>");
+                        out.print("<td>" + b.getAddress()+ "</td>");
+                        out.print("<td>" + b.getParcelNumber()+ "</td>");
+                        out.print("<td>" + b.getSize()+ "</td>");
+                        out.print("<td>" + b.getConditionLevel() + "</td>");
+                        out.print("<td><a href=\"#\"><img src=\"images/edit.png\" title=\"Edit building\"></a> <a href=\"#\"><img src=\"images/delete.png\" title=\"Delete building\"></a></td>");
+                        out.print("</tr>");
+                    }
+                } else {
+                    out.print("<tr><td colspan=\"6\">You haven't added any buildings yet. Click on the button below to add one.</td></tr>");
                 }
             %>
-            </tr>         
         </table>
         <br>
-        <form name="overviewform" action="BuildingServlet" method="POST">
-            <input type="submit" value="Add a new building">        
-        </form>
+        <div class="button">
+            <a href="addbuilding.jsp">Add a new building</a>
+        </div>
     </body>
 </html>

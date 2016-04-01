@@ -19,6 +19,31 @@ h1 {
     text-align:center;
 }
 
+.error {
+    color:#d80000;
+}
+
+.button {
+    width: 242px;
+    background:#00a2ff;
+    margin:10px auto;
+    line-height:26px;
+    border-radius:3px;
+    font-weight:700;
+    text-align: center;
+}
+
+.button:hover {
+    background:rgba(0,162,255,0.75);
+}
+
+.button a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    font-family: Arial, sans-serif;
+}
+
 h1 span {
     color:#00a2ff;
 }
@@ -30,6 +55,17 @@ h2 {
     color:#333;
 }
 
+h3 {
+    text-align: center;
+    margin: 15px 0;
+    font-size: 16pt;
+    color: #333;
+}
+
+h3 span {
+    font-weight: 700;
+}
+
 p { /*Feedback besked*/
     font-size:10pt;
     text-align:left;
@@ -37,7 +73,7 @@ p { /*Feedback besked*/
 }
 
 form {
-    padding:20px 0;
+    padding: 20px 0;
     width:240px;
     margin:0 auto;
 }
@@ -79,6 +115,7 @@ form input[type=submit] {
     border-radius:3px;
     color:white;
     font-weight:700;
+    cursor: pointer;
 }
 
 form input[type=submit]:hover {

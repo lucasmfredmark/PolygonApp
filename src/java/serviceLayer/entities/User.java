@@ -11,6 +11,7 @@ package serviceLayer.entities;
  */
 public class User {
     private int id;
+    private String udate;
     private String uname;
     private String pass;
     
@@ -18,12 +19,13 @@ public class User {
         CUSTOMER, ADMIN
     }
     
-    public static userType userType;
+    private userType userType;
     private String fullName;
     private String email;
-    
-    public User(int id, String uname, String pass, userType userType, String fullName, String email) {
+
+    public User(int id, String udate, String uname, String pass, userType userType, String fullName, String email) {
         this.id = id;
+        this.udate = udate;
         this.uname = uname;
         this.pass = pass;
         this.userType = userType;
@@ -37,6 +39,14 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUdate() {
+        return udate;
+    }
+
+    public void setUdate(String udate) {
+        this.udate = udate;
     }
 
     public String getUname() {

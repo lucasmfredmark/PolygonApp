@@ -28,7 +28,7 @@ public class UserMapper {
         ResultSet rs = pstmt.executeQuery();
         
         if (rs.next()) {
-            userType userType;
+            userType userType = null;
             
             if (rs.getString(4).equals(User.userType.ADMIN)) {
                 userType = User.userType.ADMIN;
@@ -36,7 +36,7 @@ public class UserMapper {
                 userType = User.userType.CUSTOMER;
             }
             
-            user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), userType, rs.getString(5), rs.getString(6));
+            user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), userType, rs.getString(6), rs.getString(7));
         }
         
         return user;
@@ -44,13 +44,18 @@ public class UserMapper {
     
     public boolean insertUser(String username, String password, String fullname, String email) throws SQLException {
         Connection conn = DBConnector.getConnection();
-        String sql = "SELECT * FROM users WHERE username = '" + username + "'";
+        String sql = "SELECT * FROM users WHERE username = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, username);
         ResultSet rs = pstmt.executeQuery();
         
         if (!rs.next()) {
-            sql = "INSERT INTO users (username, userpass, fullname, email) VALUES ('" + username + "', '" + password + "', '" + fullname + "', '" + email + "')";
+            sql = "INSERT INTO users (username, userpass, fullname, email) VALUES (?, ?, ?, ?)";
             pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            pstmt.setString(3, fullname);
+            pstmt.setString(4, email);
             int rowCount = pstmt.executeUpdate();
             
             if (rowCount == 1) {

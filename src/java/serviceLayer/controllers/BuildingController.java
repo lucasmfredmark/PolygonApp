@@ -22,18 +22,15 @@ public class BuildingController {
         this.buildingMapper = new BuildingMapper();
     }
 
+    public ArrayList<Building> getCustomerBuildings(User user) throws SQLException {
+        return buildingMapper.getCustomerBuildings(user);
+    }
+
     public void addBuilding(String name, String address, String parcelNumber, int size, int userId) throws SQLException {
         buildingMapper.addBuilding(name, address, parcelNumber, size, userId);
     }
-    
+
     public void deleteBuilding(int buildingId) throws SQLException {
         buildingMapper.deleteBuilding(buildingId);
     }
-
-    public ArrayList<Building> getAllBuildings(User user) throws SQLException {
-        ArrayList<Building> buildings = buildingMapper.getCustomerBuildings(user);
-        return buildings;
-    }
-    
-    
 }

@@ -9,13 +9,15 @@
     </head>
     <body>
         <br>
-        <h1 class="center">Add a new building!</h1>
+        <h1 class="center">Add new building</h1>
         <br>
-        <form name="addform" action="" method="POST">
+        <form action="BuildingServlet" method="POST">
             <input type="text" name="bname" placeholder="Name of building">
             <input type="text" name="address" placeholder="Address">
             <input type="text" name="parcel" placeholder="Parcel number">
-            <input type="text" name="size" placeholder="Size in m&sup2">
-            <input type="submit" name="addb" value="Add new building">
+            <input type="text" name="size" placeholder="Size in m&sup2" pattern="\d*">
+            <input type="hidden" name="action" value="add">
+            <input type="submit" value="Add new building">
         </form>
+    </body>
 </html>

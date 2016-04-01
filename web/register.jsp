@@ -10,12 +10,18 @@
     <body>
         <%
             if (session.getAttribute("user") != null) {
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("buildings.jsp");
+                return;
             }
         %>
         <div id="content">
             <h1 class="center"><span>Polygon</span>Group</h1>
             <h2>Sign up to Polygon</h2>
+            <%
+                if (request.getParameter("msg") != null) {
+                    out.print("<br /><h2 class=\"error\">" + request.getParameter("msg") + "</h2>");
+                }
+            %>
             <form method="POST" action="UserServlet">
                 <input type="text" name="username" maxlength="30" pattern="[0-9a-zA-Z]+" placeholder="Username" required>
                 <input type="password" name="userpass" maxlength="30" placeholder="Password" required>
