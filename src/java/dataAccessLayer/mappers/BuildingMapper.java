@@ -56,8 +56,8 @@ public class BuildingMapper {
         String sql = "DELETE FROM buildings WHERE buildingid = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, buildingId);
-        pstmt.executeUpdate(sql);
+        int rowCount = pstmt.executeUpdate();
         
-        return false;
+        return rowCount == 1;
     }
 }
