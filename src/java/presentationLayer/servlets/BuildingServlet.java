@@ -5,7 +5,6 @@
  */
 package presentationLayer.servlets;
 
-import dataAccessLayer.mappers.BuildingMapper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
@@ -36,14 +35,13 @@ public class BuildingServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BuildingMapper bm = new BuildingMapper();
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String action = request.getParameter("action");
             BuildingController buildingController = new BuildingController();
             
             switch (action) {
-                case "add":
+                case "add": {
                     String name = request.getParameter("bname");
                     String address = request.getParameter("address");
                     String parcelNumber = request.getParameter("parcel");
@@ -59,8 +57,18 @@ public class BuildingServlet extends HttpServlet {
                         response.sendRedirect("addbuilding.jsp?msg=" + URLEncoder.encode(message, "UTF-8"));
                     }
                     break;
-                case "remove":
+                }
+                case "remove": {
+                    int buildingId = Integer.parseInt(request.getParameter("buildingId"));
+                    
+                    if (buildingController.deleteBuilding(buildingId)) {
+                        response.sendRedirect("buildings.jsp");
+                    } else {
+                        String message = "The building couldn't be deleted because of an error.";
+                        response.sendRedirect("buildings.jsp?msg=" + URLEncoder.encode(message, "UTF-8"));
+                    }
                     break;
+                }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
