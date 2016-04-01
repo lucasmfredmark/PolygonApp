@@ -36,9 +36,7 @@ public class UserController {
     
     public boolean registerUser(String username, String password, String fullname, String email) throws SQLException {
         if (username != null && password != null && fullname != null && email != null) {
-            if (userMapper.insertUser(username, password, fullname, email)) {
-                return true;
-            }
+            return userMapper.insertUser(username, password, fullname, email);
         }
         
         return false;

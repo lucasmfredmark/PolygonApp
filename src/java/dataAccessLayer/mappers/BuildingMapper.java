@@ -37,7 +37,7 @@ public class BuildingMapper {
         return buildingList;
     }
 
-    public void addBuilding(String name, String address, String parcelNumber, int size, int userId) throws SQLException {
+    public boolean addBuilding(String name, String address, String parcelNumber, int size, int userId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES (?,?,?,?,?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -46,15 +46,18 @@ public class BuildingMapper {
         pstmt.setString(3, parcelNumber);
         pstmt.setInt(4, size);
         pstmt.setInt(5, userId);
-        pstmt.executeUpdate(sql);
-
+        int rowCount = pstmt.executeUpdate();
+        
+        return rowCount == 1;
     }
 
-    public void deleteBuilding(int buildingId) throws SQLException {
+    public boolean deleteBuilding(int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "DELETE FROM buildings WHERE buildingid = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, buildingId);
         pstmt.executeUpdate(sql);
+        
+        return false;
     }
 }

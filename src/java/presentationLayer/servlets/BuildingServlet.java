@@ -8,12 +8,15 @@ package presentationLayer.servlets;
 import dataAccessLayer.mappers.BuildingMapper;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import serviceLayer.entities.Building;
+import serviceLayer.controllers.BuildingController;
+import serviceLayer.entities.User;
 
 /**
  *
@@ -37,15 +40,30 @@ public class BuildingServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String action = request.getParameter("action");
+            BuildingController buildingController = new BuildingController();
             
             switch (action) {
                 case "add":
+                    String name = request.getParameter("bname");
+                    String address = request.getParameter("address");
+                    String parcelNumber = request.getParameter("parcel");
+                    int size = Integer.parseInt(request.getParameter("size"));
                     
+                    User user = (User) request.getSession().getAttribute("user");
+                    int userId = user.getId();
+                    
+                    if (buildingController.addBuilding(name, address, parcelNumber, size, userId)) {
+                        response.sendRedirect("buildings.jsp");
+                    } else {
+                        String message = "The building couldn't be added. Remember to fill out all fields.";
+                        response.sendRedirect("addbuilding.jsp?msg=" + URLEncoder.encode(message, "UTF-8"));
+                    }
                     break;
                 case "remove":
-                 
                     break;
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 

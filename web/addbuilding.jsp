@@ -8,9 +8,12 @@
         <title>Polygon - Add new building</title>
     </head>
     <body>
-        <br>
-        <h1 class="center">Add new building</h1>
-        <br>
+        <h1 class="center" style="margin-top: 20px;">Add new building</h1>
+        <%
+            if (request.getParameter("msg") != null) {
+                out.print("<br /><h2 class=\"error\">" + request.getParameter("msg") + "</h2>");
+            }
+        %>
         <form action="BuildingServlet" method="POST">
             <input type="text" name="bname" placeholder="Name of building">
             <input type="text" name="address" placeholder="Address">

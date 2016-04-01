@@ -26,11 +26,15 @@ public class BuildingController {
         return buildingMapper.getCustomerBuildings(user);
     }
 
-    public void addBuilding(String name, String address, String parcelNumber, int size, int userId) throws SQLException {
-        buildingMapper.addBuilding(name, address, parcelNumber, size, userId);
+    public boolean addBuilding(String name, String address, String parcelNumber, int size, int userId) throws SQLException {
+        if (name != null && address != null && parcelNumber != null && size > 0 && userId > 0) {
+            return buildingMapper.addBuilding(name, address, parcelNumber, size, userId);
+        }
+        
+        return false;
     }
 
-    public void deleteBuilding(int buildingId) throws SQLException {
-        buildingMapper.deleteBuilding(buildingId);
+    public boolean deleteBuilding(int buildingId) throws SQLException {
+        return buildingMapper.deleteBuilding(buildingId);
     }
 }
