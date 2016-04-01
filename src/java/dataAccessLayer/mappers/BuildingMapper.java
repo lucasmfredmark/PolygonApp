@@ -60,4 +60,18 @@ public class BuildingMapper {
         
         return rowCount == 1;
     }
+    public boolean editBuilding(String name, String address, String parcelNumber, int size, int buildingId) throws SQLException {
+        Connection conn = DBConnector.getConnection();
+        String sql = "UPDATE buildings SET bname=?, address=?, parcelnumber=?, size=? WHERE buildingId=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, name);
+        pstmt.setString(2, address);
+        pstmt.setString(3, parcelNumber);
+        pstmt.setInt(4, size);
+        pstmt.setInt(5, buildingId);
+        int rowCount = pstmt.executeUpdate();
+        
+        
+        return rowCount == 1;
+    } 
 }

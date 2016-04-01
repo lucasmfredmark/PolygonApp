@@ -56,7 +56,8 @@
                         out.print("<td>" + b.getParcelNumber()+ "</td>");
                         out.print("<td>" + b.getSize()+ "</td>");
                         out.print("<td>" + b.getConditionLevel() + "</td>");
-                        out.print("<td><a href=\"#\"><img src=\"images/edit.png\" title=\"Edit building\"></a> <a href=\"#\"><img src=\"images/delete.png\" title=\"Delete building\"></a></td>");
+                            out.print("<td><a href=\"editbuilding.jsp?buildingId=" + b.getBuildingId() + "\"><img src=\"images/edit.png\" title=\"Edit building\"></a> "
+                                    + "<form action=\"BuildingServlet\" method=\"POST\"><input type=\"hidden\" name=\"buildingId\" value=\"" + b.getBuildingId() + "\"><input type=\"hidden\" name=\"action\" value=\"delete\"><input type=\"image\" src=\"images/delete.png\" title=\"Delete building\"></form></td>");
                         out.print("</tr>");
                     }
                 } else {

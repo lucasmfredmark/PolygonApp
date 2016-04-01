@@ -16,6 +16,7 @@ import serviceLayer.entities.User;
  * @author Staal
  */
 public class BuildingController {
+
     private final BuildingMapper buildingMapper;
 
     public BuildingController() {
@@ -30,11 +31,19 @@ public class BuildingController {
         if (name != null && address != null && parcelNumber != null && size > 0 && userId > 0) {
             return buildingMapper.addBuilding(name, address, parcelNumber, size, userId);
         }
-        
+
         return false;
     }
 
     public boolean deleteBuilding(int buildingId) throws SQLException {
         return buildingMapper.deleteBuilding(buildingId);
+    }
+
+    public boolean editBuilding(String name, String address, String parcelNumber, int size, int buildingId) throws SQLException {
+        if (name != null && address != null && parcelNumber != null && size > 0 && buildingId > 0) {
+            return buildingMapper.editBuilding(name, address, parcelNumber, size, buildingId);
+            
+        }
+        return false;
     }
 }

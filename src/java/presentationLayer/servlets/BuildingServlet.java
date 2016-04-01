@@ -5,6 +5,7 @@
  */
 package presentationLayer.servlets;
 
+import dataAccessLayer.mappers.BuildingMapper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
@@ -38,6 +39,7 @@ public class BuildingServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String action = request.getParameter("action");
+            BuildingMapper b = new BuildingMapper();
             BuildingController buildingController = new BuildingController();
             
             switch (action) {
@@ -58,7 +60,7 @@ public class BuildingServlet extends HttpServlet {
                     }
                     break;
                 }
-                case "remove": {
+                case "delete": {
                     int buildingId = Integer.parseInt(request.getParameter("buildingId"));
                     
                     if (buildingController.deleteBuilding(buildingId)) {
@@ -68,6 +70,21 @@ public class BuildingServlet extends HttpServlet {
                         response.sendRedirect("buildings.jsp?msg=" + URLEncoder.encode(message, "UTF-8"));
                     }
                     break;
+                }
+                case "edit": {
+                    String name = request.getParameter("bname");
+                    String address = request.getParameter("address");
+                    String parcelNumber = request.getParameter("parcel");
+                    int size = Integer.parseInt(request.getParameter("size"));
+                    
+                    int buildingId = Integer.parseInt(request.getParameter("buildingId"));
+
+                      if (buildingController.editBuilding(name, address, parcelNumber, size, buildingId)) {
+                        response.sendRedirect("buildings.jsp");
+                    } else {
+                        String message = "The building couldn't be updates. Remember to fill out all fields.";
+                        response.sendRedirect("editbuilding.jsp?msg=" + URLEncoder.encode(message, "UTF-8"));
+                    }
                 }
             }
         } catch (SQLException ex) {
