@@ -8,6 +8,12 @@
         <title>Polygon - Add new building</title>
     </head>
     <body>
+        <%
+            if (session.getAttribute("user") == null) {
+                response.sendRedirect("index.jsp");
+                return;
+            }
+        %>
         <h1 class="center" style="margin-top: 20px;">Add new building</h1>
         <%
             if (request.getParameter("msg") != null) {
@@ -21,6 +27,9 @@
             <input type="text" name="size" placeholder="Size in m&sup2" pattern="\d*">
             <input type="hidden" name="action" value="add">
             <input type="submit" value="Add new building">
+            <div class="button">
+                <a href="buildings.jsp"><- Back to overview</a>
+            </div>
         </form>
     </body>
 </html>

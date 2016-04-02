@@ -1,13 +1,7 @@
-<%-- 
-    Document   : buildings
-    Created on : 30-03-2016, 10:33:31
-    Author     : lucas
---%>
-
 <%@page import="java.util.ArrayList"%>
-<%@page import="serviceLayer.controllers.BuildingController"%>
 <%@page import="serviceLayer.entities.Building"%>
 <%@page import="serviceLayer.entities.User"%>
+<%@page import="serviceLayer.controllers.BuildingController"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
