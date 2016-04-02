@@ -19,8 +19,13 @@ h1 {
     text-align:center;
 }
 
-.error {
+.error-msg {
     color:#d80000;
+    font-weight: 700;
+}
+
+.success-msg {
+    color:#00b300;
     font-weight: 700;
 }
 
@@ -129,17 +134,13 @@ form input[type=submit]:hover {
     border:1px solid #333;
 }
 
-.overview tr {
-
+.overview tr:nth-child(odd) {
+    background:#ddd;
 }
 
 .overview tr:first-child {
     background:#333;
     color:#eee;
-}
-
-.overview tr:nth-child(even) {
-    background:#ddd;
 }
 
 .overview th {
@@ -152,8 +153,15 @@ form input[type=submit]:hover {
     padding:5px;
 }
 
-.overview img {
-    width:12px; height:12px;
+.overview a {
+    display: inline-block;
+}
+
+.overview form {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
 }
 
 .t1 { width:150px; }

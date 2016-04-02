@@ -19,8 +19,6 @@ import serviceLayer.entities.User.userType;
  */
 public class UserMapper {
     public User getUserByUsername(String username) throws SQLException {
-        User user = null;
-        
         Connection conn = DBConnector.getConnection();
         String sql = "SELECT * FROM users WHERE username = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -36,10 +34,10 @@ public class UserMapper {
                 userType = User.userType.CUSTOMER;
             }
             
-            user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), userType, rs.getString(6), rs.getString(7));
+            return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), userType, rs.getString(6), rs.getString(7));
         }
         
-        return user;
+        return null;
     }
     
     public boolean insertUser(String username, String password, String fullname, String email) throws SQLException {
@@ -58,9 +56,7 @@ public class UserMapper {
             pstmt.setString(4, email);
             int rowCount = pstmt.executeUpdate();
             
-            if (rowCount == 1) {
-                return true;
-            }
+            return rowCount == 1;
         }
         
         return false;

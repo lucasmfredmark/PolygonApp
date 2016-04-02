@@ -16,8 +16,10 @@
         %>
         <h1 class="center" style="margin-top: 20px;">Add new building</h1>
         <%
-            if (request.getParameter("msg") != null) {
-                out.print("<br /><h2 class=\"error\">" + request.getParameter("msg") + "</h2>");
+            if (request.getParameter("error") != null) {
+                out.print("<br /><h2 class=\"error-msg\">" + request.getParameter("error") + "</h2>");
+            } else if (request.getParameter("success") != null) {
+                out.print("<br /><h2 class=\"success-msg\">" + request.getParameter("success") + "</h2>");
             }
         %>
         <form action="BuildingServlet" method="POST">

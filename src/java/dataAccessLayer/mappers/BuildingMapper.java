@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import serviceLayer.entities.Building;
-import serviceLayer.entities.User;
 
 /**
  *
@@ -20,11 +19,26 @@ import serviceLayer.entities.User;
  */
 public class BuildingMapper {
 
-    public ArrayList<Building> getCustomerBuildings(User user) throws SQLException {
+    public Building getCustomerBuildingById(int buildingId, int userId) throws SQLException {
+        Connection conn = DBConnector.getConnection();
+        String sql = "SELECT * FROM buildings WHERE buildingid = ? AND fk_userid = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, buildingId);
+        pstmt.setInt(2, userId);
+        ResultSet rs = pstmt.executeQuery();
+        
+        if (rs.next()) {
+            return new Building(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
+        }
+        
+        return null;
+    }
+
+    public ArrayList<Building> getAllCustomerBuildings(int userId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "SELECT * FROM buildings WHERE fk_userid = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setInt(1, user.getId());
+        pstmt.setInt(1, userId);
         ResultSet rs = pstmt.executeQuery();
         
         ArrayList<Building> buildingList = new ArrayList();
@@ -60,9 +74,10 @@ public class BuildingMapper {
         
         return rowCount == 1;
     }
+
     public boolean editBuilding(String name, String address, String parcelNumber, int size, int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
-        String sql = "UPDATE buildings SET bname=?, address=?, parcelnumber=?, size=? WHERE buildingId=?";
+        String sql = "UPDATE buildings SET bname = ?, address = ?, parcelnumber = ?, size = ? WHERE buildingid = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, name);
         pstmt.setString(2, address);
@@ -70,7 +85,6 @@ public class BuildingMapper {
         pstmt.setInt(4, size);
         pstmt.setInt(5, buildingId);
         int rowCount = pstmt.executeUpdate();
-        
         
         return rowCount == 1;
     } 

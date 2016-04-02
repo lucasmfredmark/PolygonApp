@@ -5,7 +5,6 @@
  */
 package presentationLayer.servlets;
 
-import dataAccessLayer.mappers.BuildingMapper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
@@ -39,7 +38,6 @@ public class BuildingServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String action = request.getParameter("action");
-            BuildingMapper b = new BuildingMapper();
             BuildingController buildingController = new BuildingController();
             
             switch (action) {
@@ -53,10 +51,11 @@ public class BuildingServlet extends HttpServlet {
                     int userId = user.getId();
                     
                     if (buildingController.addBuilding(name, address, parcelNumber, size, userId)) {
-                        response.sendRedirect("buildings.jsp");
+                        String message = "The building has been added to your overview.";
+                        response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
                     } else {
                         String message = "The building couldn't be added. Remember to fill out all fields.";
-                        response.sendRedirect("addbuilding.jsp?msg=" + URLEncoder.encode(message, "UTF-8"));
+                        response.sendRedirect("addbuilding.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
                     }
                     break;
                 }
@@ -64,10 +63,11 @@ public class BuildingServlet extends HttpServlet {
                     int buildingId = Integer.parseInt(request.getParameter("buildingId"));
                     
                     if (buildingController.deleteBuilding(buildingId)) {
-                        response.sendRedirect("buildings.jsp");
+                        String message = "The building has been deleted.";
+                        response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
                     } else {
                         String message = "The building couldn't be deleted because of an error.";
-                        response.sendRedirect("buildings.jsp?msg=" + URLEncoder.encode(message, "UTF-8"));
+                        response.sendRedirect("buildings.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
                     }
                     break;
                 }
@@ -78,12 +78,13 @@ public class BuildingServlet extends HttpServlet {
                     int size = Integer.parseInt(request.getParameter("size"));
                     
                     int buildingId = Integer.parseInt(request.getParameter("buildingId"));
-
-                      if (buildingController.editBuilding(name, address, parcelNumber, size, buildingId)) {
-                        response.sendRedirect("buildings.jsp");
+                    
+                    if (buildingController.editBuilding(name, address, parcelNumber, size, buildingId)) {
+                        String message = "Your changes has been saved to the building.";
+                        response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
                     } else {
-                        String message = "The building couldn't be updates. Remember to fill out all fields.";
-                        response.sendRedirect("editbuilding.jsp?msg=" + URLEncoder.encode(message, "UTF-8"));
+                        String message = "The building couldn't be updated. Remember to fill out all fields.";
+                        response.sendRedirect("editbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
                     }
                 }
             }

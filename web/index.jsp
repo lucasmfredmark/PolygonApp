@@ -18,8 +18,10 @@
             <h1 class="center"><span>Polygon</span>Group</h1>
             <h2>Sign in with your username and password</h2>
             <%
-                if (request.getParameter("msg") != null) {
-                    out.print("<br /><h2 class=\"error\">" + request.getParameter("msg") + "</h2>");
+                if (request.getParameter("error") != null) {
+                    out.print("<br /><h2 class=\"error-msg\">" + request.getParameter("error") + "</h2>");
+                } else if (request.getParameter("success") != null) {
+                    out.print("<br /><h2 class=\"success-msg\">" + request.getParameter("success") + "</h2>");
                 }
             %>
             <form method="POST" action="UserServlet">

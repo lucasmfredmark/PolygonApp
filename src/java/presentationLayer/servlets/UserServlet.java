@@ -52,7 +52,7 @@ public class UserServlet extends HttpServlet {
                         response.sendRedirect("buildings.jsp");
                     } else {
                         String message = "The user doesn\'t exist, or you typed the wrong password.";
-                        response.sendRedirect("index.jsp?msg=" + URLEncoder.encode(message, "UTF-8"));
+                        response.sendRedirect("index.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
                     }
                     break;
                 }
@@ -64,10 +64,10 @@ public class UserServlet extends HttpServlet {
                     
                     if (userController.registerUser(username, password, fullname, email)) {
                         String message = "Your account has successfully been created. You can now log in.";
-                        response.sendRedirect("index.jsp?msg=" + URLEncoder.encode(message, "UTF-8"));
+                        response.sendRedirect("index.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
                     } else {
                         String message = "The user already exists, or another error happened.";
-                        response.sendRedirect("register.jsp?msg=" + URLEncoder.encode(message, "UTF-8"));
+                        response.sendRedirect("register.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
                     }
                     break;
                 }

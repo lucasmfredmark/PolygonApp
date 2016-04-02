@@ -18,15 +18,7 @@ public class Building {
     private int size;
     private int conditionLevel;
     private int userId;
-
-    public Building(String name, String address, String parcelNumber, int size, int userId) {
-        this.name = name;
-        this.address = address;
-        this.parcelNumber = parcelNumber;
-        this.size = size;
-        this.userId = userId;
-    }
-
+    
     public Building(int buildingId, String bdate, String name, String address, String parcelNumber, int size, int conditionLevel, int userId) {
         this.buildingId = buildingId;
         this.bdate = bdate;

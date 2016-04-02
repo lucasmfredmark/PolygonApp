@@ -28,6 +28,13 @@
         </form>
         <br><hr><br>
         <h1 class="center">Overview</h1>
+        <%
+            if (request.getParameter("error") != null) {
+                out.print("<br /><h2 class=\"error-msg\">" + request.getParameter("error") + "</h2>");
+            } else if (request.getParameter("success") != null) {
+                out.print("<br /><h2 class=\"success-msg\">" + request.getParameter("success") + "</h2>");
+            }
+        %>
         <br>
         <table class="overview">
             <tr>
@@ -40,7 +47,7 @@
             </tr>
             <%
                 BuildingController buildingController = new BuildingController();
-                ArrayList<Building> buildings = buildingController.getCustomerBuildings(user);
+                ArrayList<Building> buildings = buildingController.getAllCustomerBuildings(user.getId());
                 
                 if (buildings.size() > 0) {
                     for (Building b : buildings) {
@@ -50,8 +57,8 @@
                         out.print("<td>" + b.getParcelNumber()+ "</td>");
                         out.print("<td>" + b.getSize()+ "</td>");
                         out.print("<td>" + b.getConditionLevel() + "</td>");
-                            out.print("<td><a href=\"editbuilding.jsp?buildingId=" + b.getBuildingId() + "\"><img src=\"images/edit.png\" title=\"Edit building\"></a> "
-                                    + "<form action=\"BuildingServlet\" method=\"POST\"><input type=\"hidden\" name=\"buildingId\" value=\"" + b.getBuildingId() + "\"><input type=\"hidden\" name=\"action\" value=\"delete\"><input type=\"image\" src=\"images/delete.png\" title=\"Delete building\"></form></td>");
+                        out.print("<td><a href=\"editbuilding.jsp?buildingId=" + b.getBuildingId() + "\"><img src=\"images/edit.png\" title=\"Edit building\"></a> "
+                                + "<form action=\"BuildingServlet\" method=\"POST\"><input type=\"hidden\" name=\"buildingId\" value=\"" + b.getBuildingId() + "\"><input type=\"hidden\" name=\"action\" value=\"delete\"><input type=\"image\" src=\"images/delete.png\" title=\"Delete building\"></form></td>");
                         out.print("</tr>");
                     }
                 } else {
