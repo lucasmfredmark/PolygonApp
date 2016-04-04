@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import serviceLayer.controllers.BuildingController;
+import serviceLayer.entities.Building;
 
 /**
  *
@@ -61,6 +62,31 @@ public class BuildingControllerTest {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } 
+    }
+    
+    @Test
+    public void testGetBuildingById() {
+        BuildingController bc = new BuildingController(); 
+        
+        int buildingId = 2;
+        int userId = 5;
+        try {
+        Building expResult = bc.getCustomerBuilding(2, 5);
+        Building result = bc.getCustomerBuilding(buildingId, userId);
+        assertEquals(expResult, result); 
+        } catch 
+            (SQLException ex) {
+            ex.printStackTrace();
+        }
+     }
+    @Test
+    public void testDeleteBuilding() {
+        BuildingController bc = new BuildingController();
+        try {
+            bc.deleteBuilding(1);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
     
     // TODO add test methods here.
