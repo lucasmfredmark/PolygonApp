@@ -40,16 +40,6 @@ public class BuildingTest {
     }
     
     @Test
-    public void testAddBuilding() {
-    BuildingController bc = new BuildingController();
-        try {
-        bc.addBuilding("Testnavn", "Testadresse", "12ab", 123, 1);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    
-    }
-    @Test
     public void testGetBuildingById() {
         BuildingController bc = new BuildingController(); 
         

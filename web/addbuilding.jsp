@@ -23,10 +23,10 @@
             }
         %>
         <form action="BuildingServlet" method="POST">
-            <input type="text" name="bname" placeholder="Name of building">
-            <input type="text" name="address" placeholder="Address">
-            <input type="text" name="parcel" placeholder="Parcel number">
-            <input type="text" name="size" placeholder="Size in m&sup2" pattern="\d*">
+            <input type="text" name="bname" placeholder="Name of building" maxlength="50" required>
+            <input type="text" name="address" placeholder="Address" maxlength="50" required>
+            <input type="text" name="parcel" placeholder="Parcel number" maxlength="20" pattern="[0-9a-z]+" required>
+            <input type="text" name="size" placeholder="Size in m&sup2" pattern="\d*" required>
             <input type="hidden" name="action" value="add">
             <input type="submit" value="Add new building">
             <div class="button">

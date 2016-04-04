@@ -8,6 +8,8 @@ package serviceLayer.controllers;
 import dataAccessLayer.mappers.BuildingMapper;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+import jdk.nashorn.internal.runtime.regexp.RegExpFactory;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
 
@@ -31,8 +33,13 @@ public class BuildingController {
     }
 
     public boolean addBuilding(String name, String address, String parcelNumber, int size, int userId) throws SQLException {
+        final Pattern parcel = Pattern.compile("[0-9a-z]+");
         if (name != null && address != null && parcelNumber != null && size > 0 && userId > 0) {
-            return buildingMapper.addBuilding(name, address, parcelNumber, size, userId);
+            if(parcelNumber.length() <= 20 && parcel.matcher(parcelNumber).matches()) {
+                if(name.length() <= 50 && address.length() <= 50) {
+                    return buildingMapper.addBuilding(name, address, parcelNumber, size, userId);
+                }
+            }
         }
         
         return false;
