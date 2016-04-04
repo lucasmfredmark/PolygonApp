@@ -50,7 +50,7 @@ public class BuildingTest {
     
     }
     @Test
-    public void testgetBuildingById() {
+    public void testGetBuildingById() {
         BuildingController bc = new BuildingController(); 
         
         int buildingId = 2;
@@ -64,6 +64,15 @@ public class BuildingTest {
             ex.printStackTrace();
         }
      }
+    @Test
+    public void testDeleteBuilding() {
+        BuildingController bc = new BuildingController();
+        try {
+            bc.deleteBuilding(1);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
