@@ -75,12 +75,12 @@
                 
                 if (checkups.size() > 0) {
                     for (Checkup c : checkups) {
-                        out.print("<tr onclick=\"document.location = 'reports/" + c.getCheckupPath() + "';\">");
+                        out.print("<tr onclick=\"document.location = 'uploads/reports/" + c.getCheckupPath() + "';\">");
                         out.print("<td>" + c.getCheckupDate() + "</td>");
                         out.print("<td>" + c.getCheckupPath() + "</td>");
                         out.print("<td></td>");
                         out.print("<td>" + c.getConditionLevel() + "</td>");
-                        out.print("<td><a href=\"reports/" + c.getCheckupPath() + "\">View</a></td>");
+                        out.print("<td><a href=\"uploads/reports/" + c.getCheckupPath() + "\">View</a></td>");
                         out.print("</tr>");
                     }
                 } else {

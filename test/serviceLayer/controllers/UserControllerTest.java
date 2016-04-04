@@ -174,15 +174,4 @@ public class UserControllerTest {
         assertFalse(result);
     }
     
-    @Test
-    public void testRegisterUserFail4() throws Exception {
-        UserController uc = new UserController();
-        String username = "Test";
-        String password = "Test";
-        String fullname = "Test";
-        String email = "Test";
-        boolean result = uc.registerUser(username, password, fullname, email);
-        assertFalse(result);
-    }
-    
 }
