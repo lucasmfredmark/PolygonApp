@@ -15,7 +15,7 @@
             }
         %>
         <div id="content">
-            <h1 class="center"><span>Polygon</span>Group</h1>
+            <img class="logo" src="images/polygon-logo.svg" alt="Polygon">
             <h2>Sign in with your username and password</h2>
             <%
                 if (request.getParameter("error") != null) {
