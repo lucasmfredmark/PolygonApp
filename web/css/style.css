@@ -178,3 +178,9 @@ form input[type=submit]:hover {
 .t4 { width:100px }
 .t5 { width:150px; }
 .t6 { width:50px; }
+
+.logo {
+    display:block;
+    width:300px;
+    margin:20px auto;
+}
