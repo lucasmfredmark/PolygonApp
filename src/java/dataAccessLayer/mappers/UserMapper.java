@@ -55,7 +55,6 @@ public class UserMapper {
             pstmt.setString(3, fullname);
             pstmt.setString(4, email);
             int rowCount = pstmt.executeUpdate();
-            
             return rowCount == 1;
         }
         
