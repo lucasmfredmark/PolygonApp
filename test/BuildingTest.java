@@ -7,10 +7,12 @@
 import java.sql.SQLException;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import serviceLayer.controllers.BuildingController;
+import serviceLayer.entities.Building;
 
 /**
  *
@@ -47,6 +49,21 @@ public class BuildingTest {
         }
     
     }
+    @Test
+    public void testgetBuildingById() {
+        BuildingController bc = new BuildingController(); 
+        
+        int buildingId = 2;
+        int userId = 5;
+        try {
+        Building expResult = bc.getCustomerBuilding(2, 5);
+        Building result = bc.getCustomerBuilding(buildingId, userId);
+        assertEquals(expResult, result); 
+        } catch 
+            (SQLException ex) {
+            ex.printStackTrace();
+        }
+     }
     
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
