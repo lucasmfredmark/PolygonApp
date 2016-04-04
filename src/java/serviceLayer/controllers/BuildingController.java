@@ -9,6 +9,7 @@ import dataAccessLayer.mappers.BuildingMapper;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import serviceLayer.entities.Building;
+import serviceLayer.entities.Checkup;
 
 /**
  *
@@ -21,12 +22,12 @@ public class BuildingController {
         this.buildingMapper = new BuildingMapper();
     }
 
-    public Building getCustomerBuildingById(int buildingId, int userId) throws SQLException {
-        return buildingMapper.getCustomerBuildingById(buildingId, userId);
+    public Building getCustomerBuilding(int buildingId, int userId) throws SQLException {
+        return buildingMapper.getCustomerBuilding(buildingId, userId);
     }
 
-    public ArrayList<Building> getAllCustomerBuildings(int userId) throws SQLException {
-        return buildingMapper.getAllCustomerBuildings(userId);
+    public ArrayList<Building> getCustomerBuildings(int userId) throws SQLException {
+        return buildingMapper.getCustomerBuildings(userId);
     }
 
     public boolean addBuilding(String name, String address, String parcelNumber, int size, int userId) throws SQLException {
@@ -51,5 +52,9 @@ public class BuildingController {
         }
         
         return false;
+    }
+    
+    public ArrayList<Checkup> getCheckupReports(int buildingId) throws SQLException {
+        return buildingMapper.getCheckupReports(buildingId);
     }
 }

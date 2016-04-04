@@ -20,10 +20,10 @@ CREATE TABLE users ( /* MIDLERTIDIGT INGEN FOREIGN KEY */
     email VARCHAR(40)
 );
 
-INSERT INTO users (username, userpass, fullname, email) VALUES ('test','123','Power User','test@polygon.dk');
-INSERT INTO users (username, userpass, fullname, email) VALUES ('Admin','foobar','Power User','admin@polygon.dk');
-INSERT INTO users (username, userpass, fullname, email) VALUES ('John','123','John Doe','john@doe.com');
-INSERT INTO users (username, userpass, fullname, email) VALUES ('Jane','321','Jane Doe','jane@doe.com');
+INSERT INTO users (username, userpass, fullname, email) VALUES ('test','test','Power User','test@polygon.dk');
+INSERT INTO users (username, userpass, fullname, email) VALUES ('admin','admin','Power User','admin@polygon.dk');
+INSERT INTO users (username, userpass, fullname, email) VALUES ('john','123','John Doe','john@doe.com');
+INSERT INTO users (username, userpass, fullname, email) VALUES ('jane','123','Jane Doe','jane@doe.com');
 
 CREATE TABLE buildings (
     buildingid INT AUTO_INCREMENT PRIMARY KEY,
@@ -37,10 +37,21 @@ CREATE TABLE buildings (
     FOREIGN KEY (fk_userid) REFERENCES users(userid)
 );
 
+INSERT INTO buildings (bname, address, parcelNumber, size, fk_userid) VALUES ('Building 1', 'Address', 'Parcel number', 100, 1);
+INSERT INTO buildings (bname, address, parcelNumber, size, fk_userid) VALUES ('Building 2', 'Address', 'Parcel number', 100, 1);
+INSERT INTO buildings (bname, address, parcelNumber, size, fk_userid) VALUES ('Building 3', 'Address', 'Parcel number', 100, 1);
+INSERT INTO buildings (bname, address, parcelNumber, size, fk_userid) VALUES ('Building 4', 'Address', 'Parcel number', 100, 1);
+INSERT INTO buildings (bname, address, parcelNumber, size, fk_userid) VALUES ('Building 5', 'Address', 'Parcel number', 100, 2);
+INSERT INTO buildings (bname, address, parcelNumber, size, fk_userid) VALUES ('Building 6', 'Address', 'Parcel number', 100, 2);
+INSERT INTO buildings (bname, address, parcelNumber, size, fk_userid) VALUES ('Building 7', 'Address', 'Parcel number', 100, 3);
+INSERT INTO buildings (bname, address, parcelNumber, size, fk_userid) VALUES ('Building 8', 'Address', 'Parcel number', 100, 3);
+
 CREATE TABLE services ( /* ID 1 = HEALTH CHECKUPS */
 	serviceid INT PRIMARY KEY,
     service VARCHAR(100)
 );
+
+INSERT INTO services (serviceid, service) VALUES (1, 'Health check-up');
 
 CREATE TABLE documents (
 	documentid INT AUTO_INCREMENT PRIMARY KEY,
@@ -62,6 +73,14 @@ CREATE TABLE orders (
     FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid)
 );
 
+INSERT INTO orders (fk_serviceid, fk_userid, fk_buildingid) VALUES (1, 1, 1);
+INSERT INTO orders (fk_serviceid, fk_userid, fk_buildingid) VALUES (1, 1, 1);
+INSERT INTO orders (fk_serviceid, fk_userid, fk_buildingid) VALUES (1, 1, 2);
+INSERT INTO orders (fk_serviceid, fk_userid, fk_buildingid) VALUES (1, 1, 2);
+INSERT INTO orders (fk_serviceid, fk_userid, fk_buildingid) VALUES (1, 2, 5);
+INSERT INTO orders (fk_serviceid, fk_userid, fk_buildingid) VALUES (1, 2, 5);
+INSERT INTO orders (fk_serviceid, fk_userid, fk_buildingid) VALUES (1, 2, 6);
+
 CREATE TABLE checkups (
 	checkupid INT AUTO_INCREMENT PRIMARY KEY,
     cdate DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -70,3 +89,11 @@ CREATE TABLE checkups (
     fk_orderid INT,
     FOREIGN KEY (fk_orderid) REFERENCES orders(orderid)
 );
+
+INSERT INTO checkups (cpath, conditionlevel, fk_orderid) VALUES ('test.txt', 2, 1);
+INSERT INTO checkups (cpath, conditionlevel, fk_orderid) VALUES ('test.txt', 1, 2);
+INSERT INTO checkups (cpath, conditionlevel, fk_orderid) VALUES ('test.txt', 1, 3);
+INSERT INTO checkups (cpath, conditionlevel, fk_orderid) VALUES ('test.txt', 0, 4);
+INSERT INTO checkups (cpath, conditionlevel, fk_orderid) VALUES ('test.txt', 1, 5);
+INSERT INTO checkups (cpath, conditionlevel, fk_orderid) VALUES ('test.txt', 0, 6);
+INSERT INTO checkups (cpath, conditionlevel, fk_orderid) VALUES ('test.txt', 1, 7);

@@ -41,21 +41,21 @@
                 <th class="t1">Name</th>
                 <th class="t2">Address</th>
                 <th class="t3">Parcel number</th>
-                <th class="t4">Size m&sup2;</th>
+                <th class="t4">Size in m&sup2;</th>
                 <th class="t5">Condition level</th>
                 <th class="t6">Actions</th>
             </tr>
             <%
                 BuildingController buildingController = new BuildingController();
-                ArrayList<Building> buildings = buildingController.getAllCustomerBuildings(user.getId());
+                ArrayList<Building> buildings = buildingController.getCustomerBuildings(user.getId());
                 
                 if (buildings.size() > 0) {
                     for (Building b : buildings) {
-                        out.print("<tr>");
+                        out.print("<tr onclick=\"document.location = 'viewbuilding.jsp?buildingId=" + b.getBuildingId() + "';\">");
                         out.print("<td>" + b.getName() + "</td>");
-                        out.print("<td>" + b.getAddress()+ "</td>");
-                        out.print("<td>" + b.getParcelNumber()+ "</td>");
-                        out.print("<td>" + b.getSize()+ "</td>");
+                        out.print("<td>" + b.getAddress() + "</td>");
+                        out.print("<td>" + b.getParcelNumber() + "</td>");
+                        out.print("<td>" + b.getSize() + "</td>");
                         out.print("<td>" + b.getConditionLevel() + "</td>");
                         out.print("<td><a href=\"editbuilding.jsp?buildingId=" + b.getBuildingId() + "\"><img src=\"images/edit.png\" title=\"Edit building\"></a> "
                                 + "<form action=\"BuildingServlet\" method=\"POST\"><input type=\"hidden\" name=\"buildingId\" value=\"" + b.getBuildingId() + "\"><input type=\"hidden\" name=\"action\" value=\"delete\"><input type=\"image\" src=\"images/delete.png\" title=\"Delete building\"></form></td>");

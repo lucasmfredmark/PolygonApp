@@ -24,14 +24,14 @@
             }
             
             BuildingController buildingController = new BuildingController();
-            Building building = buildingController.getCustomerBuildingById(Integer.parseInt(buildingId), user.getId());
+            Building building = buildingController.getCustomerBuilding(Integer.parseInt(buildingId), user.getId());
             
             if (building == null) {
                 response.sendRedirect("buildings.jsp");
                 return;
             }
         %>
-        <h1 class="center" style="margin-top: 20px;">Edit building "<%= building.getName() %>"</h1>
+        <h1 class="center" style="margin-top: 20px;">Editing building "<%= building.getName() %>"</h1>
         <%
             if (request.getParameter("error") != null) {
                 out.print("<br /><h2 class=\"error-msg\">" + request.getParameter("error") + "</h2>");

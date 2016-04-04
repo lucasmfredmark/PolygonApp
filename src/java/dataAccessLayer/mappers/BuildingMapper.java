@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import serviceLayer.entities.Building;
+import serviceLayer.entities.Checkup;
 
 /**
  *
@@ -19,7 +20,7 @@ import serviceLayer.entities.Building;
  */
 public class BuildingMapper {
 
-    public Building getCustomerBuildingById(int buildingId, int userId) throws SQLException {
+    public Building getCustomerBuilding(int buildingId, int userId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "SELECT * FROM buildings WHERE buildingid = ? AND fk_userid = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -34,7 +35,7 @@ public class BuildingMapper {
         return null;
     }
 
-    public ArrayList<Building> getAllCustomerBuildings(int userId) throws SQLException {
+    public ArrayList<Building> getCustomerBuildings(int userId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "SELECT * FROM buildings WHERE fk_userid = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -87,5 +88,22 @@ public class BuildingMapper {
         int rowCount = pstmt.executeUpdate();
         
         return rowCount == 1;
-    } 
+    }
+    
+    public ArrayList<Checkup> getCheckupReports(int buildingId) throws SQLException {
+        Connection conn = DBConnector.getConnection();
+        String sql = "SELECT * FROM checkups INNER JOIN orders ON checkups.fk_orderid = orders.orderid AND orders.fk_buildingid = ? ORDER BY checkups.cdate DESC";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, buildingId);
+        ResultSet rs = pstmt.executeQuery();
+        
+        ArrayList<Checkup> checkupList = new ArrayList();
+        
+        while (rs.next()) {
+            Checkup checkup = new Checkup(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
+            checkupList.add(checkup);
+        }
+        
+        return checkupList;
+    }
 }
