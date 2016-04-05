@@ -66,6 +66,10 @@ public class BuildingController {
         return buildingMapper.getCheckupReports(buildingId);
     }
     
+    public void addDocument(int buildingId) throws SQLException {
+        
+    }
+    
     public ArrayList<Documents> getDocuments(int buildingId) throws SQLException{
         return buildingMapper.getDocuments(buildingId);
     }
