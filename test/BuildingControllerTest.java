@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -71,11 +72,16 @@ public class BuildingControllerTest {
         int buildingId = 2;
         int userId = 5;
         try {
-        Building expResult = bc.getCustomerBuilding(2, 5);
+       /* Building expResult = bc.getCustomerBuilding(2, 5);
         Building result = bc.getCustomerBuilding(buildingId, userId);
         assertEquals(expResult, result); 
-        } catch 
-            (SQLException ex) {
+        */
+        //Building expResultF = bc.getCustomerBuilding(1, null);
+        Building resultF = bc.getCustomerBuilding(buildingId, userId);
+        assertNull(resultF);
+        
+        
+        } catch  (SQLException ex) {
             ex.printStackTrace();
         }
      }
