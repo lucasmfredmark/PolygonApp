@@ -117,7 +117,7 @@
                 }
             %>
         </table>
-        <form method="POST" enctype="multipart/form-data" action="fup.cgi">
+        <form method="POST" enctype="multipart/form-data" action="UploadServlet">
             Choose file to upload:<br><br>
             <input type="file" name="document"><br><br>
             Notes about the file: <input type="text" name="note">
