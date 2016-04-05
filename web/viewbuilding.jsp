@@ -1,3 +1,4 @@
+<%@page import="serviceLayer.entities.Documents"%>
 <%@page import="serviceLayer.entities.Checkup"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="serviceLayer.entities.Building"%>
@@ -98,14 +99,14 @@
                 <th style="width: 50px;">View</th>
             </tr>
             <%
-                if (checkups.size() > 0) {
-                    for (Checkup c : checkups) {
-                        out.print("<tr onclick=\"document.location = 'uploads/reports/" + c.getCheckupPath() + "';\">");
-                        out.print("<td>" + c.getCheckupDate() + "</td>");
-                        out.print("<td>" + c.getCheckupPath() + "</td>");
-                        out.print("<td>" + c.getOrderDate() + "</td>");
-                        out.print("<td>" + c.getConditionLevel() + "</td>");
-                        out.print("<td><a href=\"uploads/reports/" + c.getCheckupPath() + "\">View</a></td>");
+                ArrayList <Documents> documents = buildingController.getDocuments(Integer.parseInt(buildingId));
+                if (documents.size() > 0) {
+                    for (Documents d : documents) {
+                        out.print("<tr onclick=\"document.location = 'uploads/documents/" + d.getDpath() + "';\">");
+                        out.print("<td>" + d.getDdate()+ "</td>");
+                        out.print("<td>" + d.getDpath() + "</td>");
+                        out.print("<td>" + d.getDdate() + "</td>");                       
+                        out.print("<td><a href=\"uploads/documents/" + d.getDpath()+ "\">View</a></td>");
                         out.print("</tr>");
                     }
                 } else {

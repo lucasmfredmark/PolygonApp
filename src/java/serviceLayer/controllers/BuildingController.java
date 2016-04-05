@@ -9,7 +9,6 @@ import dataAccessLayer.mappers.BuildingMapper;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-import jdk.nashorn.internal.runtime.regexp.RegExpFactory;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
 import serviceLayer.entities.Documents;
@@ -62,7 +61,7 @@ public class BuildingController {
         return false;
     }
     
-    public ArrayList<Checkup> getCheckupReports(int buildingId) throws SQLException {
+    public ArrayList <Checkup> getCheckupReports(int buildingId) throws SQLException {
         return buildingMapper.getCheckupReports(buildingId);
     }
     
