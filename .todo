@@ -1,2 +1,4 @@
 Enable e-mail login - remove username
 Validate input field lengths
+Delete buildings confirmation
+MD5 kryptering af passwords(database password limit 32)
