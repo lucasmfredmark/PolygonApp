@@ -78,7 +78,7 @@
                         out.print("<tr onclick=\"document.location = 'uploads/reports/" + c.getCheckupPath() + "';\">");
                         out.print("<td>" + c.getCheckupDate() + "</td>");
                         out.print("<td>" + c.getCheckupPath() + "</td>");
-                        out.print("<td></td>");
+                        out.print("<td>" + c.getOrderDate() + "</td>");
                         out.print("<td>" + c.getConditionLevel() + "</td>");
                         out.print("<td><a href=\"uploads/reports/" + c.getCheckupPath() + "\">View</a></td>");
                         out.print("</tr>");

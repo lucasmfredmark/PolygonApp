@@ -15,13 +15,15 @@ public class Checkup {
     private String checkupPath;
     private int conditionLevel;
     private int orderId;
+    private String orderDate;
 
-    public Checkup(int checkupId, String checkupDate, String checkupPath, int conditionLevel, int orderId) {
+    public Checkup(int checkupId, String checkupDate, String checkupPath, int conditionLevel, int orderId, String orderDate) {
         this.checkupId = checkupId;
         this.checkupDate = checkupDate;
         this.checkupPath = checkupPath;
         this.conditionLevel = conditionLevel;
         this.orderId = orderId;
+        this.orderDate = orderDate;
     }
 
     public int getCheckupId() {
@@ -62,5 +64,13 @@ public class Checkup {
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+    
+    public String getOrderDate() {
+        return orderDate;
+    }
+    
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
     }
 }
