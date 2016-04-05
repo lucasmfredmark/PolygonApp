@@ -1,4 +1,4 @@
-<%@page import="serviceLayer.entities.Documents"%>
+<%@page import="serviceLayer.entities.Document"%>
 <%@page import="serviceLayer.entities.Checkup"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="serviceLayer.entities.Building"%>
@@ -99,9 +99,9 @@
                 <th style="width: 50px;">View</th>
             </tr>
             <%
-                ArrayList <Documents> documents = buildingController.getDocuments(Integer.parseInt(buildingId));
+                ArrayList<Document> documents = buildingController.getDocuments(Integer.parseInt(buildingId));
                 if (documents.size() > 0) {
-                    for (Documents d : documents) {
+                    for (Document d : documents) {
                         out.print("<tr onclick=\"document.location = 'uploads/documents/" + d.getDpath() + "';\">");
                         out.print("<td>" + d.getDdate()+ "</td>");
                         out.print("<td>" + d.getDpath() + "</td>");
@@ -118,6 +118,7 @@
         <form method="POST" enctype="multipart/form-data" action="fup.cgi">
             Choose file to upload: <input type="file" name="upfile"><br/><br>
             Notes about the file: <input type="text" name="note">
+            <input type="hidden" name="action" value="upload">
             <input type="submit" value="Upload">
         </form>
 

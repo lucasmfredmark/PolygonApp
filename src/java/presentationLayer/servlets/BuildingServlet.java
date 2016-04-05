@@ -1,23 +1,14 @@
 package presentationLayer.servlets;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import serviceLayer.controllers.BuildingController;
 import serviceLayer.entities.User;
 
@@ -91,32 +82,9 @@ public class BuildingServlet extends HttpServlet {
                         response.sendRedirect("editbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
                     }
                 }
-                case "upload": {
-                    // Apache commons file upload section -->
-                    // Check that we have a file upload request
-                    boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-
-                    // Create a factory for disk-based file items
-                    DiskFileItemFactory factory = new DiskFileItemFactory();
-
-                    // Configure a repository (to ensure a secure temp location is used)
-                    ServletContext servletContext = this.getServletConfig().getServletContext();
-                    File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
-                    factory.setRepository(repository);
-
-                    // Create a new file upload handler
-                    ServletFileUpload upload = new ServletFileUpload(factory);
-
-                    // Parse the request
-                    List<FileItem> items = upload.parseRequest(request);
-                    System.out.println("Number of items: " + items.size());
-                }
-
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } catch (FileUploadException ex) {
-            Logger.getLogger(BuildingServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

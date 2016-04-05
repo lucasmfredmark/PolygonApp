@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
-import serviceLayer.entities.Documents;
+import serviceLayer.entities.Document;
 
 /**
  *
@@ -69,7 +69,7 @@ public class BuildingController {
         
     }
     
-    public ArrayList<Documents> getDocuments(int buildingId) throws SQLException{
+    public ArrayList<Document> getDocuments(int buildingId) throws SQLException{
         return buildingMapper.getDocuments(buildingId);
     }
 }

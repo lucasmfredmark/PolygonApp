@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
-import serviceLayer.entities.Documents;
+import serviceLayer.entities.Document;
 
 /**
  *
@@ -108,16 +108,16 @@ public class BuildingMapper {
         return checkupList;
     }
 
-    public ArrayList<Documents> getDocuments(int buildingId) throws SQLException {
+    public ArrayList<Document> getDocuments(int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "SELECT * FROM documents WHERE fk_buildingid = ? ORDER by documents.ddate";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, buildingId);
         ResultSet rs = pstmt.executeQuery();
-        ArrayList<Documents> documentList = new ArrayList();
+        ArrayList<Document> documentList = new ArrayList();
         
         while (rs.next()) {
-            Documents document = new Documents(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+            Document document = new Document(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
             documentList.add(document);
         }
 

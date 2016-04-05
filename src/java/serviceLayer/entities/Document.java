@@ -9,13 +9,13 @@ package serviceLayer.entities;
  *
  * @author Staal
  */
-public class Documents {
+public class Document {
     private int documentId;
     private String ddate;
     private String dpath;
     private int buildingId;
 
-public Documents(int documentId, String ddate, String dpath, int buildingId){
+public Document(int documentId, String ddate, String dpath, int buildingId){
     this.documentId = documentId;
     this.ddate = ddate;
     this.dpath = dpath;
