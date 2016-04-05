@@ -110,7 +110,7 @@ public class BuildingMapper {
 
     public ArrayList<Documents> getDocuments(int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
-        String sql = "SELECT * FROM documents WHERE fk_buildingid = " + buildingId + " ORDER by documents.ddate";
+        String sql = "SELECT * FROM documents WHERE fk_buildingid = ? ORDER by documents.ddate";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, buildingId);
         ResultSet rs = pstmt.executeQuery();
