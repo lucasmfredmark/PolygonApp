@@ -11,52 +11,46 @@ package serviceLayer.entities;
  */
 public class Document {
     private int documentId;
-    private String ddate;
-    private String dpath;
-    private int buildingId;
+    private String documentDate;
+    private String documentNote;
+    private String documentPath;
 
-public Document(int documentId, String ddate, String dpath, int buildingId){
-    this.documentId = documentId;
-    this.ddate = ddate;
-    this.dpath = dpath;
-    this.buildingId = buildingId;
-}
+    public Document(int documentId, String documentDate, String documentNote, String documentPath) {
+        this.documentId = documentId;
+        this.documentDate = documentDate;
+        this.documentNote = documentNote;
+        this.documentPath = documentPath;
+    }
 
     public int getDocumentId() {
         return documentId;
     }
 
-
     public void setDocumentId(int documentId) {
         this.documentId = documentId;
     }
 
- 
-    public String getDdate() {
-        return ddate;
+    public String getDocumentDate() {
+        return documentDate;
     }
 
-   
-    public void setDdate(String ddate) {
-        this.ddate = ddate;
+    public void setDocumentDate(String documentDate) {
+        this.documentDate = documentDate;
     }
 
-   
-    public String getDpath() {
-        return dpath;
+    public String getDocumentNote() {
+        return documentNote;
     }
 
-    public void setDpath(String dpath) {
-        this.dpath = dpath;
+    public void setDocumentNote(String documentNote) {
+        this.documentNote = documentNote;
     }
 
-   
-    public int getBuildingId() {
-        return buildingId;
+    public String getDocumentPath() {
+        return documentPath;
     }
 
-    public void setBuildingId(int buildingId) {
-        this.buildingId = buildingId;
+    public void setDocumentPath(String documentPath) {
+        this.documentPath = documentPath;
     }
-    
 }

@@ -11,23 +11,19 @@ package serviceLayer.entities;
  */
 public class Building {
     private int buildingId;
-    private String bdate;
-    private String name;
-    private String address;
-    private String parcelNumber;
-    private int size;
-    private int conditionLevel;
-    private int userId;
-    
-    public Building(int buildingId, String bdate, String name, String address, String parcelNumber, int size, int conditionLevel, int userId) {
+    private String buildingDate;
+    private String buildingName;
+    private String buildingAddress;
+    private String buildingParcelNumber;
+    private int buildingSize;
+
+    public Building(int buildingId, String buildingDate, String buildingName, String buildingAddress, String buildingParcelNumber, int buildingSize) {
         this.buildingId = buildingId;
-        this.bdate = bdate;
-        this.name = name;
-        this.address = address;
-        this.parcelNumber = parcelNumber;
-        this.size = size;
-        this.conditionLevel = conditionLevel;
-        this.userId = userId;
+        this.buildingDate = buildingDate;
+        this.buildingName = buildingName;
+        this.buildingAddress = buildingAddress;
+        this.buildingParcelNumber = buildingParcelNumber;
+        this.buildingSize = buildingSize;
     }
 
     public int getBuildingId() {
@@ -38,59 +34,43 @@ public class Building {
         this.buildingId = buildingId;
     }
 
-    public String getBdate() {
-        return bdate;
+    public String getBuildingDate() {
+        return buildingDate;
     }
 
-    public void setBdate(String bdate) {
-        this.bdate = bdate;
+    public void setBuildingDate(String buildingDate) {
+        this.buildingDate = buildingDate;
     }
 
-    public String getName() {
-        return name;
+    public String getBuildingName() {
+        return buildingName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getBuildingAddress() {
+        return buildingAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setBuildingAddress(String buildingAddress) {
+        this.buildingAddress = buildingAddress;
     }
 
-    public String getParcelNumber() {
-        return parcelNumber;
+    public String getBuildingParcelNumber() {
+        return buildingParcelNumber;
     }
 
-    public void setParcelNumber(String parcelNumber) {
-        this.parcelNumber = parcelNumber;
+    public void setBuildingParcelNumber(String buildingParcelNumber) {
+        this.buildingParcelNumber = buildingParcelNumber;
     }
 
-    public int getSize() {
-        return size;
+    public int getBuildingSize() {
+        return buildingSize;
     }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public int getConditionLevel() {
-        return conditionLevel;
-    }
-
-    public void setConditionLevel(int conditionLevel) {
-        this.conditionLevel = conditionLevel;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setBuildingSize(int buildingSize) {
+        this.buildingSize = buildingSize;
     }
 }

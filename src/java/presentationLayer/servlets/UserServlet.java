@@ -43,9 +43,9 @@ public class UserServlet extends HttpServlet {
             
             switch (action) {
                 case "login": {
-                    String username = request.getParameter("username");
+                    String email = request.getParameter("e-mail");
                     String password = request.getParameter("userpass");
-                    User user = userController.loginUser(username, password);
+                    User user = userController.loginUser(email, password);
                     
                     if (user != null) {
                         request.getSession().setAttribute("user", user);
@@ -57,12 +57,11 @@ public class UserServlet extends HttpServlet {
                     break;
                 }
                 case "register": {
-                    String username = request.getParameter("username");
-                    String password = request.getParameter("userpass");
+                    String email = request.getParameter("e-mail");
                     String fullname = request.getParameter("fullname");
-                    String email = request.getParameter("email");
+                    String password = request.getParameter("userpass");
                     
-                    if (userController.registerUser(username, password, fullname, email)) {
+                    if (userController.registerUser(email, fullname, password)) {
                         String message = "Your account has successfully been created. You can now log in.";
                         response.sendRedirect("index.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
                     } else {

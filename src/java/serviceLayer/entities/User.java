@@ -10,10 +10,10 @@ package serviceLayer.entities;
  * @author HazemSaeid
  */
 public class User {
-    private int id;
-    private String udate;
-    private String uname;
-    private String pass;
+    private int userId;
+    private String userDate;
+    private String userMail;
+    private String userPass;
     
     public enum userType {
         CUSTOMER, ADMIN
@@ -21,48 +21,46 @@ public class User {
     
     private userType userType;
     private String fullName;
-    private String email;
 
-    public User(int id, String udate, String uname, String pass, userType userType, String fullName, String email) {
-        this.id = id;
-        this.udate = udate;
-        this.uname = uname;
-        this.pass = pass;
+    public User(int userId, String userDate, String userMail, String userPass, userType userType, String fullName) {
+        this.userId = userId;
+        this.userDate = userDate;
+        this.userMail = userMail;
+        this.userPass = userPass;
         this.userType = userType;
         this.fullName = fullName;
-        this.email = email;
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getUdate() {
-        return udate;
+    public String getUserDate() {
+        return userDate;
     }
 
-    public void setUdate(String udate) {
-        this.udate = udate;
+    public void setUserDate(String userDate) {
+        this.userDate = userDate;
     }
 
-    public String getUname() {
-        return uname;
+    public String getUserMail() {
+        return userMail;
     }
 
-    public void setUname(String uname) {
-        this.uname = uname;
+    public void setUserMail(String userMail) {
+        this.userMail = userMail;
     }
 
-    public String getPass() {
-        return pass;
+    public String getUserPass() {
+        return userPass;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setUserPass(String userPass) {
+        this.userPass = userPass;
     }
 
     public userType getUserType() {
@@ -79,13 +77,5 @@ public class User {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }

@@ -20,12 +20,12 @@ public class UserController {
         this.userMapper = new UserMapper();
     }
     
-    public User loginUser(String username, String password) throws SQLException {
-        if (username != null && password != null && !username.isEmpty() && !password.isEmpty()) {
-            User user = userMapper.getUserByUsername(username);
+    public User loginUser(String email, String password) throws SQLException {
+        if (email != null && password != null && !email.isEmpty() && !password.isEmpty()) {
+            User user = userMapper.getUserByEmail(email);
             
             if (user != null) {
-                if (user.getPass().equals(password)) {
+                if (user.getUserPass().equals(password)) {
                     return user;
                 }
             }
@@ -34,10 +34,10 @@ public class UserController {
         return null;
     }
     
-    public boolean registerUser(String username, String password, String fullname, String email) throws SQLException {
-        if (username != null && password != null && fullname != null && email != null &&
-            !username.isEmpty() && !password.isEmpty() && !fullname.isEmpty() && !email.isEmpty()) {
-            return userMapper.insertUser(username, password, fullname, email);
+    public boolean registerUser(String email, String fullname, String password) throws SQLException {
+        if (email != null && fullname != null && password != null &&
+            !email.isEmpty() && !fullname.isEmpty() && !password.isEmpty()) {
+            return userMapper.insertUser(email, fullname, password);
         }
         
         return false;

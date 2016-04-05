@@ -30,7 +30,7 @@ public class BuildingMapper {
         ResultSet rs = pstmt.executeQuery();
 
         if (rs.next()) {
-            return new Building(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
+            return new Building(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
         }
 
         return null;
@@ -46,14 +46,14 @@ public class BuildingMapper {
         ArrayList<Building> buildingList = new ArrayList();
 
         while (rs.next()) {
-            Building building = new Building(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
+            Building building = new Building(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
             buildingList.add(building);
         }
 
         return buildingList;
     }
 
-    public boolean addBuilding(String name, String address, String parcelNumber, int size, int userId) throws SQLException {
+    public boolean addCustomerBuilding(String name, String address, String parcelNumber, int size, int userId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES (?,?,?,?,?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -67,7 +67,7 @@ public class BuildingMapper {
         return rowCount == 1;
     }
 
-    public boolean deleteBuilding(int buildingId) throws SQLException {
+    public boolean deleteCustomerBuilding(int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "DELETE FROM buildings WHERE buildingid = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -77,7 +77,7 @@ public class BuildingMapper {
         return rowCount == 1;
     }
 
-    public boolean editBuilding(String name, String address, String parcelNumber, int size, int buildingId) throws SQLException {
+    public boolean editCustomerBuilding(String name, String address, String parcelNumber, int size, int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "UPDATE buildings SET bname = ?, address = ?, parcelnumber = ?, size = ? WHERE buildingid = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -91,9 +91,9 @@ public class BuildingMapper {
         return rowCount == 1;
     }
 
-    public ArrayList<Checkup> getCheckupReports(int buildingId) throws SQLException {
+    public ArrayList<Checkup> getBuildingCheckups(int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
-        String sql = "SELECT * FROM checkups INNER JOIN orders ON checkups.fk_orderid = orders.orderid AND orders.fk_buildingid = ? ORDER BY checkups.cdate DESC";
+        String sql = "SELECT * FROM checkups INNER JOIN orders ON checkups.fk_buildingid = orders.fk_buildingid AND orders.fk_buildingid = ? ORDER BY checkups.cdate DESC";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, buildingId);
         ResultSet rs = pstmt.executeQuery();
@@ -101,26 +101,40 @@ public class BuildingMapper {
         ArrayList<Checkup> checkupList = new ArrayList();
 
         while (rs.next()) {
-            Checkup checkup = new Checkup(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getString(7));
+            Checkup checkup = new Checkup(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(10));
             checkupList.add(checkup);
         }
 
         return checkupList;
     }
 
-    public ArrayList<Document> getDocuments(int buildingId) throws SQLException {
+    public ArrayList<Document> getBuildingDocuments(int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
-        String sql = "SELECT * FROM documents WHERE fk_buildingid = ? ORDER by documents.ddate";
+        String sql = "SELECT * FROM documents WHERE fk_buildingid = ? ORDER by documents.ddate DESC";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, buildingId);
         ResultSet rs = pstmt.executeQuery();
         ArrayList<Document> documentList = new ArrayList();
         
         while (rs.next()) {
-            Document document = new Document(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+            Document document = new Document(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
             documentList.add(document);
         }
 
         return documentList;
+    }
+
+    public int getBuildingConditionLevel(int buildingId) throws SQLException {
+        Connection conn = DBConnector.getConnection();
+        String sql = "SELECT * FROM checkups WHERE fk_buildingid = ? ORDER BY checkups.conditionlevel DESC LIMIT 1";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, buildingId);
+        ResultSet rs = pstmt.executeQuery();
+        
+        if (rs.next()) {
+            return rs.getInt(4);
+        }
+        
+        return 0;
     }
 }

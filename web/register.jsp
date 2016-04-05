@@ -15,7 +15,7 @@
             }
         %>
         <div id="content">
-            <h1 class="center"><span>Polygon</span>Group</h1>
+            <img class="logo" src="images/polygon-logo.svg" alt="Polygon">
             <h2>Sign up to Polygon</h2>
             <%
                 if (request.getParameter("error") != null) {
@@ -25,10 +25,9 @@
                 }
             %>
             <form method="POST" action="UserServlet">
-                <input type="text" name="username" maxlength="30" pattern="[0-9a-zA-Z]+" placeholder="Username" required>
-                <input type="password" name="userpass" maxlength="30" placeholder="Password" required>
-                <input type="text" name="fullname" maxlength="30" placeholder="Full name" required>
-                <input type="email" name="email" placeholder="Email" required>
+                <input type="email" name="e-mail" placeholder="E-mail" required>
+                <input type="text" name="fullname" maxlength="50" placeholder="Full name" required>
+                <input type="password" name="userpass" maxlength="20" placeholder="Password" required>
                 <input type="hidden" name="action" value="register">
                 <input type="submit" value="Sign up">
                 <p>*Feedback</p>

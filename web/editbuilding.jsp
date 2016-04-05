@@ -24,14 +24,14 @@
             }
             
             BuildingController buildingController = new BuildingController();
-            Building building = buildingController.getCustomerBuilding(Integer.parseInt(buildingId), user.getId());
+            Building building = buildingController.getCustomerBuilding(Integer.parseInt(buildingId), user.getUserId());
             
             if (building == null) {
                 response.sendRedirect("buildings.jsp");
                 return;
             }
         %>
-        <h1 class="center" style="margin-top: 20px;">Editing building "<%= building.getName() %>"</h1>
+        <h1 class="center" style="margin-top: 20px;">Editing building "<%= building.getBuildingName() %>"</h1>
         <%
             if (request.getParameter("error") != null) {
                 out.print("<br /><h2 class=\"error-msg\">" + request.getParameter("error") + "</h2>");
@@ -40,10 +40,10 @@
             }
         %>
         <form action="BuildingServlet" method="POST">
-            <input type="text" name="bname" value="<%= building.getName() %>" placeholder="Name of building">  
-            <input type="text" name="address" value="<%= building.getAddress() %>" placeholder="Address">
-            <input type="text" name="parcel" value="<%= building.getParcelNumber() %>" placeholder="Parcel number">
-            <input type="text" name="size" value="<%= building.getSize() %>" placeholder="Size in m&sup2" pattern="\d*">
+            <input type="text" name="bname" value="<%= building.getBuildingName() %>" placeholder="Name of building" maxlength="40">  
+            <input type="text" name="address" value="<%= building.getBuildingAddress() %>" placeholder="Address" maxlength="50">
+            <input type="text" name="parcel" value="<%= building.getBuildingParcelNumber() %>" placeholder="Parcel number" maxlength="20" pattern="[0-9a-z]+">
+            <input type="text" name="size" value="<%= building.getBuildingSize() %>" placeholder="Size in m&sup2" pattern="\d*">
             <input type="hidden" name="buildingId" value="<%= buildingId %>">
             <input type="hidden" name="action" value="edit">
             <input type="submit" value="Save changes">

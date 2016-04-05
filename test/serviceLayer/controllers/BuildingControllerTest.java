@@ -14,7 +14,6 @@ import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import serviceLayer.controllers.BuildingController;
 import serviceLayer.entities.Building;
 
 /**
@@ -46,21 +45,21 @@ public class BuildingControllerTest {
     public void testAddBuilding() {
     BuildingController bc = new BuildingController();
         try {
-        boolean p1 = bc.addBuilding("Testnavn", "Testadresse", "12ab", 25, 1);
+        boolean p1 = bc.addCustomerBuilding("Testnavn", "Testadresse", "12ab", 25, 1);
         assertEquals(true, p1);
-        boolean p2 = bc.addBuilding("Testnavn", "Testadresse", "12 ab", 25, 1);
+        boolean p2 = bc.addCustomerBuilding("Testnavn", "Testadresse", "12 ab", 25, 1);
         assertEquals(false, p2);
-        boolean p3 = bc.addBuilding("Testnavn", "Testadresse", "12AB", 25, 1);
+        boolean p3 = bc.addCustomerBuilding("Testnavn", "Testadresse", "12AB", 25, 1);
         assertEquals(false, p3);
-        boolean p4 = bc.addBuilding("Testnavn", "Testadresse", "12345678912345678900", 25, 1);
+        boolean p4 = bc.addCustomerBuilding("Testnavn", "Testadresse", "12345678912345678900", 25, 1);
         assertEquals(true, p4);
-        boolean p5 = bc.addBuilding("Testnavn", "Testadresse", "12345678912345678900465", 25, 1);
+        boolean p5 = bc.addCustomerBuilding("Testnavn", "Testadresse", "12345678912345678900465", 25, 1);
         assertEquals(false, p5);
-        boolean test1 = bc.addBuilding("Testnavn", "Testadresse", "12ab", 25, 1);
+        boolean test1 = bc.addCustomerBuilding("Testnavn", "Testadresse", "12ab", 25, 1);
         assertEquals(true, test1);
-        boolean test2 = bc.addBuilding("Testnavn", null, "12ab", 25, 1);
+        boolean test2 = bc.addCustomerBuilding("Testnavn", null, "12ab", 25, 1);
         assertEquals(false, test2);
-        boolean test3 = bc.addBuilding("Testnavn", "Testadresse", "12ab", -123, 1);
+        boolean test3 = bc.addCustomerBuilding("Testnavn", "Testadresse", "12ab", -123, 1);
         assertEquals(false, test3);
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -91,7 +90,7 @@ public class BuildingControllerTest {
     public void testDeleteBuilding() {
         BuildingController bc = new BuildingController();
         try {
-            bc.deleteBuilding(1);
+            bc.deleteCustomerBuilding(1);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

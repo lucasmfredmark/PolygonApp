@@ -41,11 +41,11 @@ public class BuildingServlet extends HttpServlet {
                     String address = request.getParameter("address");
                     String parcelNumber = request.getParameter("parcel");
                     int size = Integer.parseInt(request.getParameter("size"));
-
+                    
                     User user = (User) request.getSession().getAttribute("user");
-                    int userId = user.getId();
-
-                    if (buildingController.addBuilding(name, address, parcelNumber, size, userId)) {
+                    int userId = user.getUserId();
+                    
+                    if (buildingController.addCustomerBuilding(name, address, parcelNumber, size, userId)) {
                         String message = "The building has been added to your overview.";
                         response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
                     } else {
@@ -57,7 +57,7 @@ public class BuildingServlet extends HttpServlet {
                 case "delete": {
                     int buildingId = Integer.parseInt(request.getParameter("buildingId"));
 
-                    if (buildingController.deleteBuilding(buildingId)) {
+                    if (buildingController.deleteCustomerBuilding(buildingId)) {
                         String message = "The building has been deleted.";
                         response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
                     } else {
@@ -74,7 +74,7 @@ public class BuildingServlet extends HttpServlet {
 
                     int buildingId = Integer.parseInt(request.getParameter("buildingId"));
 
-                    if (buildingController.editBuilding(name, address, parcelNumber, size, buildingId)) {
+                    if (buildingController.editCustomerBuilding(name, address, parcelNumber, size, buildingId)) {
                         String message = "Your changes has been saved to the building.";
                         response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
                     } else {

@@ -20,8 +20,8 @@
                 return;
             }
         %>
-        <h3>Hello, <span><%= user.getUname() %></span> (<%= user.getFullName() %>)</h3>
-        <h3><%= user.getEmail() %></h3>
+        <h3>Hello, <span><%= user.getFullName() %></span> (<%= user.getUserType() %>)</h3>
+        <h3><%= user.getUserMail() %></h3>
         <form action="UserServlet" method="POST" style="padding: 0;">
             <input type="hidden" name="action" value="logout">
             <input type="submit" value="Log out">
@@ -47,16 +47,16 @@
             </tr>
             <%
                 BuildingController buildingController = new BuildingController();
-                ArrayList<Building> buildings = buildingController.getCustomerBuildings(user.getId());
+                ArrayList<Building> buildings = buildingController.getCustomerBuildings(user.getUserId());
                 
                 if (buildings.size() > 0) {
                     for (Building b : buildings) {
                         out.print("<tr onclick=\"document.location = 'viewbuilding.jsp?buildingId=" + b.getBuildingId() + "';\">");
-                        out.print("<td>" + b.getName() + "</td>");
-                        out.print("<td>" + b.getAddress() + "</td>");
-                        out.print("<td>" + b.getParcelNumber() + "</td>");
-                        out.print("<td>" + b.getSize() + "</td>");
-                        out.print("<td>" + b.getConditionLevel() + "</td>");
+                        out.print("<td>" + b.getBuildingName() + "</td>");
+                        out.print("<td>" + b.getBuildingAddress() + "</td>");
+                        out.print("<td>" + b.getBuildingParcelNumber() + "</td>");
+                        out.print("<td>" + b.getBuildingSize() + "</td>");
+                        out.print("<td>" + buildingController.getBuildingConditionLevel(b.getBuildingId()) + "</td>");
                         out.print("<td><a href=\"editbuilding.jsp?buildingId=" + b.getBuildingId() + "\"><img src=\"images/edit.png\" title=\"Edit building\"></a> "
                                 + "<form action=\"BuildingServlet\" method=\"POST\"><input type=\"hidden\" name=\"buildingId\" value=\"" + b.getBuildingId() + "\"><input type=\"hidden\" name=\"action\" value=\"delete\"><input type=\"image\" src=\"images/delete.png\" title=\"Delete building\"></form></td>");
                         out.print("</tr>");

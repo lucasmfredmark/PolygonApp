@@ -10,9 +10,6 @@ CREATE TABLE users ( /* MIDLERTIDIGT INGEN FOREIGN KEY */
     usertype ENUM('CUSTOMER','ADMIN') DEFAULT 'CUSTOMER',
     fullname VARCHAR(50)
 );
-INSERT INTO users (usermail, userpass, fullname) VALUES ('test@user.dk','test','Test User');
-INSERT INTO users (usermail, userpass, usertype, fullname) VALUES ('admin@polygon.dk','admin','ADMIN','Power User');
-INSERT INTO users (usermail, userpass, fullname) VALUES ('random@user.dk','123','John Doe');
 
 CREATE TABLE buildings (
     buildingid INT AUTO_INCREMENT PRIMARY KEY,
@@ -22,23 +19,14 @@ CREATE TABLE buildings (
     parcelnumber VARCHAR(20),
     size INT, /* Kvadratmeter m2 */
     fk_userid INT,
-    FOREIGN KEY (fk_userid) REFERENCES users(userid)
+    FOREIGN KEY (fk_userid) REFERENCES users(userid) ON DELETE CASCADE
 );
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 1', 'Address', 'Parcel number', 100, 1);
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 2', 'Address', 'Parcel number', 100, 1);
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 3', 'Address', 'Parcel number', 100, 1);
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 4', 'Address', 'Parcel number', 100, 1);
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 5', 'Address', 'Parcel number', 100, 2);
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 6', 'Address', 'Parcel number', 100, 2);
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 7', 'Address', 'Parcel number', 100, 3);
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 8', 'Address', 'Parcel number', 100, 3);
 
 CREATE TABLE services ( 
 	serviceid INT PRIMARY KEY,
     stype VARCHAR(50), /* Forskellige services som Polygon tilbyder */
     sdesc VARCHAR(255)
 );
-INSERT INTO services (serviceid, stype, sdesc) VALUES (1, 'Health check-up', 'Lorem ipsum dolor sit amet.');
 
 CREATE TABLE eventlogs (
 	logid INT PRIMARY KEY AUTO_INCREMENT,
@@ -48,7 +36,6 @@ CREATE TABLE eventlogs (
     FOREIGN KEY (fk_userid) REFERENCES users(userid),
     FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid)
 );
-/* INSERT INTO etc */ 
 
 CREATE TABLE documents (
 	documentid INT AUTO_INCREMENT PRIMARY KEY,
@@ -60,7 +47,6 @@ CREATE TABLE documents (
     FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid),
     FOREIGN KEY (fk_userid) REFERENCES users(userid)
 );
-/* INSERT INTO etc */
 
 CREATE TABLE orders (
 	orderid INT AUTO_INCREMENT PRIMARY KEY,
@@ -73,10 +59,6 @@ CREATE TABLE orders (
     FOREIGN KEY (fk_serviceid) REFERENCES services(serviceid),
     FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid)
 );
-INSERT INTO orders (fk_serviceid, fk_buildingid, odesc) VALUES (1, 1, 'Den er helt gal!');
-INSERT INTO orders (fk_serviceid, fk_buildingid, odesc) VALUES (1, 2, 'Den er helt gal!');
-INSERT INTO orders (fk_serviceid, fk_buildingid, odesc) VALUES (1, 3, 'Den er helt gal!');
-INSERT INTO orders (fk_serviceid, fk_buildingid, odesc) VALUES (1, 4, 'Den er helt gal!');
 
 CREATE TABLE checkups (
 	checkupid INT AUTO_INCREMENT PRIMARY KEY,
@@ -88,10 +70,6 @@ CREATE TABLE checkups (
     FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid),
     FOREIGN KEY (fk_orderid) REFERENCES orders(orderid)
 );
-INSERT INTO checkups (cpath, conditionlevel, fk_buildingid, fk_orderid) VALUES ('qwerty.txt', 0, 1, 1);
-INSERT INTO checkups (cpath, conditionlevel, fk_buildingid, fk_orderid) VALUES ('yuiop.txt', 3, 2, 3);
-INSERT INTO checkups (cpath, conditionlevel, fk_buildingid, fk_orderid) VALUES ('asdfg.txt', 1, 3, 2);
-INSERT INTO checkups (cpath, conditionlevel, fk_buildingid, fk_orderid) VALUES ('zxcvb.txt', 2, 4, 4);
 
 CREATE TABLE damages (
 	damageid INT AUTO_INCREMENT PRIMARY KEY,

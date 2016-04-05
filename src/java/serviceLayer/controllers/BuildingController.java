@@ -32,12 +32,12 @@ public class BuildingController {
         return buildingMapper.getCustomerBuildings(userId);
     }
 
-    public boolean addBuilding(String name, String address, String parcelNumber, int size, int userId) throws SQLException {
+    public boolean addCustomerBuilding(String name, String address, String parcelNumber, int size, int userId) throws SQLException {
         final Pattern parcel = Pattern.compile("[0-9a-z]+");
         if (name != null && address != null && parcelNumber != null && size > 0 && userId > 0) {
             if(parcelNumber.length() <= 20 && parcel.matcher(parcelNumber).matches()) {
                 if(name.length() <= 50 && address.length() <= 50) {
-                    return buildingMapper.addBuilding(name, address, parcelNumber, size, userId);
+                    return buildingMapper.addCustomerBuilding(name, address, parcelNumber, size, userId);
                 }
             }
         }
@@ -45,31 +45,31 @@ public class BuildingController {
         return false;
     }
 
-    public boolean deleteBuilding(int buildingId) throws SQLException {
+    public boolean deleteCustomerBuilding(int buildingId) throws SQLException {
         if (buildingId > 0) {
-            return buildingMapper.deleteBuilding(buildingId);
+            return buildingMapper.deleteCustomerBuilding(buildingId);
         }
         
         return false;
     }
 
-    public boolean editBuilding(String name, String address, String parcelNumber, int size, int buildingId) throws SQLException {
+    public boolean editCustomerBuilding(String name, String address, String parcelNumber, int size, int buildingId) throws SQLException {
         if (name != null && address != null && parcelNumber != null && size > 0 && buildingId > 0) {
-            return buildingMapper.editBuilding(name, address, parcelNumber, size, buildingId);
+            return buildingMapper.editCustomerBuilding(name, address, parcelNumber, size, buildingId);
         }
         
         return false;
     }
-    
-    public ArrayList <Checkup> getCheckupReports(int buildingId) throws SQLException {
-        return buildingMapper.getCheckupReports(buildingId);
+
+    public ArrayList<Checkup> getBuildingCheckups(int buildingId) throws SQLException {
+        return buildingMapper.getBuildingCheckups(buildingId);
+    }
+
+    public ArrayList<Document> getBuildingDocuments(int buildingId) throws SQLException {
+        return buildingMapper.getBuildingDocuments(buildingId);
     }
     
-    public void addDocument(int buildingId) throws SQLException {
-        
-    }
-    
-    public ArrayList<Document> getDocuments(int buildingId) throws SQLException{
-        return buildingMapper.getDocuments(buildingId);
+    public int getBuildingConditionLevel(int buildingId) throws SQLException {
+        return buildingMapper.getBuildingConditionLevel(buildingId);
     }
 }

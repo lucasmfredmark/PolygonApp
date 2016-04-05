@@ -53,15 +53,14 @@ public class UserControllerTest {
             st.addBatch("CREATE TABLE users ("
                     + "userid INT AUTO_INCREMENT PRIMARY KEY,"
                     + "udate DATETIME DEFAULT CURRENT_TIMESTAMP,"
-                    + "username VARCHAR(20),"
+                    + "usermail VARCHAR(255),"
                     + "userpass VARCHAR(20),"
                     + "usertype ENUM('CUSTOMER','ADMIN') DEFAULT 'CUSTOMER',"
-                    + "fullname VARCHAR(50),"
-                    + "email VARCHAR(40)"
+                    + "fullname VARCHAR(50)"
                     + ")");
             
             // insert
-            st.addBatch("INSERT INTO users (username, userpass, fullname, email) VALUES ('test','test','Power User','test@polygon.dk')");
+            st.addBatch("INSERT INTO users (usermail, userpass, fullname) VALUES ('test@polygon.dk','test','Power User')");
             
             st.executeBatch();
             
@@ -85,45 +84,45 @@ public class UserControllerTest {
     @Test
     public void testLoginUserPass1() throws Exception {
         UserController uc = new UserController();
-        String username = "test";
+        String email = "test";
         String password = "test";
-        User user = uc.loginUser(username, password);
+        User user = uc.loginUser(email, password);
         assertNotNull(user);
     }
     
     @Test
     public void testLoginUserFail1() throws Exception {
         UserController uc = new UserController();
-        String username = "Hans";
+        String email = "Hans";
         String password = "";
-        User user = uc.loginUser(username, password);
+        User user = uc.loginUser(email, password);
         assertNull(user);
     }
     
     @Test
     public void testLoginUserFail2() throws Exception {
         UserController uc = new UserController();
-        String username = "";
+        String email = "";
         String password = "Kage";
-        User user = uc.loginUser(username, password);
+        User user = uc.loginUser(email, password);
         assertNull(user);
     }
     
     @Test
     public void testLoginUserFail3() throws Exception {
         UserController uc = new UserController();
-        String username = "";
+        String email = "";
         String password = "";
-        User user = uc.loginUser(username, password);
+        User user = uc.loginUser(email, password);
         assertNull(user);
     }
     
     @Test
     public void testLoginUserFail4() throws Exception {
         UserController uc = new UserController();
-        String username = null;
+        String email = null;
         String password = null;
-        User user = uc.loginUser(username, password);
+        User user = uc.loginUser(email, password);
         assertNull(user);
     }
     
@@ -133,44 +132,40 @@ public class UserControllerTest {
     @Test
     public void testRegisterUserPass1() throws Exception {
         UserController uc = new UserController();
-        String username = "Patrick";
+        String email = "Patrick";
         String password = "Lotte";
         String fullname = "Hans Lotte";
-        String email = "hans.lotte@gmail.com";
-        boolean result = uc.registerUser(username, password, fullname, email);
+        boolean result = uc.registerUser(email, password, fullname);
         assertTrue(result);
     }
     
     @Test
     public void testRegisterUserFail1() throws Exception {
         UserController uc = new UserController();
-        String username = "";
+        String email = "";
         String password = "";
         String fullname = "";
-        String email = "";
-        boolean result = uc.registerUser(username, password, fullname, email);
+        boolean result = uc.registerUser(email, password, fullname);
         assertFalse(result);
     }
     
     @Test
     public void testRegisterUserFail2() throws Exception {
         UserController uc = new UserController();
-        String username = "Hej";
+        String email = "Hej";
         String password = "Hej";
         String fullname = "Hej";
-        String email = "";
-        boolean result = uc.registerUser(username, password, fullname, email);
+        boolean result = uc.registerUser(email, password, fullname);
         assertFalse(result);
     }
     
     @Test
     public void testRegisterUserFail3() throws Exception {
         UserController uc = new UserController();
-        String username = null;
+        String email = null;
         String password = null;
         String fullname = null;
-        String email = null;
-        boolean result = uc.registerUser(username, password, fullname, email);
+        boolean result = uc.registerUser(email, password, fullname);
         assertFalse(result);
     }
     

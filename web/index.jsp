@@ -16,7 +16,7 @@
         %>
         <div id="content">
             <img class="logo" src="images/polygon-logo.svg" alt="Polygon">
-            <h2>Sign in with your username and password</h2>
+            <h2>Sign in with your e-mail and password</h2>
             <%
                 if (request.getParameter("error") != null) {
                     out.print("<br /><h2 class=\"error-msg\">" + request.getParameter("error") + "</h2>");
@@ -25,8 +25,8 @@
                 }
             %>
             <form method="POST" action="UserServlet">
-                <input type="text" name="username" maxlength="30" pattern="[0-9a-zA-Z]+" placeholder="Username" required>
-                <input type="password" name="userpass" maxlength="30" placeholder="Password" required>
+                <input type="email" name="e-mail" placeholder="E-mail" required>
+                <input type="password" name="userpass" maxlength="20" placeholder="Password" required>
                 <input type="hidden" name="action" value="login">
                 <input type="submit" value="Sign in">
                 <p>*Feedback</p>
