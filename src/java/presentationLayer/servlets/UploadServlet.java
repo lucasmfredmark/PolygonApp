@@ -21,7 +21,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import serviceLayer.controllers.UploadController;
+import serviceLayer.controllers.BuildingController;
 import serviceLayer.entities.User;
 
 /**
@@ -33,7 +33,6 @@ public class UploadServlet extends HttpServlet {
     private File file;
     private String filePath;
     private String fileName;
-    private UploadController uc;
     private String note;
     private int buildingId;
     private ArrayList<String> stack;
@@ -51,7 +50,6 @@ public class UploadServlet extends HttpServlet {
         // The file path is specified in folder Configuration Files -> web.xml. 
         // The file path is set to work for a user, so it won't run on your computer. Fow now.
         filePath = getServletContext().getInitParameter("document-upload");
-        uc = new UploadController();
         fileName = null;
         note = null;
         buildingId = -1;
@@ -110,7 +108,10 @@ public class UploadServlet extends HttpServlet {
                             file = new File (filePath + 
                                     tempFileName.substring(tempFileName.lastIndexOf("\\")+1));
                         }
+                        
                         fi.write(file);
+                        
+                        
                         
                         // Pass name of the file, the id of the building it was uploaded to as well as the user's id to the controller
                         
@@ -126,14 +127,16 @@ public class UploadServlet extends HttpServlet {
                 }
                 
                 // Fetch the building id before uncommenting below:
-                    //uc.addDocument(fileName, buildingId, user.getUserId());
+                // addDocuments needs: file name, building id, user id and a note
+                    //uc.addDocument(fileName, buildingId, user.getUserId(),);
                 
                 
             }
         } catch (FileUploadException ex) {
             Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-        }
+            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
