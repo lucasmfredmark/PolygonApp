@@ -65,6 +65,9 @@
         <div class="button">
             <a href="buildings.jsp"><- Back to overview</a>
         </div>
+        <div class="button">
+            <a href="damage.jsp?buildingId=<%= buildingId %>"> Report a Damage </a>
+        </div>
         <br><hr><br>
         <h3>Check-up reports</h3>
         <table class="overview">

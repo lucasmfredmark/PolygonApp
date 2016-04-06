@@ -41,10 +41,10 @@ public class BuildingServlet extends HttpServlet {
                     String address = request.getParameter("address");
                     String parcelNumber = request.getParameter("parcel");
                     int size = Integer.parseInt(request.getParameter("size"));
-                    
+
                     User user = (User) request.getSession().getAttribute("user");
                     int userId = user.getUserId();
-                    
+
                     if (buildingController.addCustomerBuilding(name, address, parcelNumber, size, userId)) {
                         String message = "The building has been added to your overview.";
                         response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
@@ -81,6 +81,20 @@ public class BuildingServlet extends HttpServlet {
                         String message = "The building couldn't be updated. Remember to fill out all fields.";
                         response.sendRedirect("editbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
                     }
+                }
+                case "adddmg": {
+                    String dmgtitle = request.getParameter("dmgtitle");
+                    String desc = request.getParameter("dmgdesc");
+                    int buildingId = Integer.parseInt(request.getParameter("buildingId"));
+
+                    if (buildingController.addDamage(dmgtitle, desc, buildingId)) {
+                        String message = "Your changes has been saved to the building.";
+                        response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                    } else {
+                        String message = "The damage couldn't be added to the building. Remember to fill out all fields.";
+                        response.sendRedirect("damage.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                    }
+
                 }
             }
         } catch (SQLException ex) {
