@@ -137,4 +137,26 @@ public class BuildingMapper {
         
         return 0;
     }
+    public boolean addDamage(String dmgDate, String dmgTitle, String dmgDesc, int buildingId) throws SQLException {
+        Connection conn = DBConnector.getConnection();
+        String sql = "INSERT INTO damages (dmgdate, dmgtitle, dmgdesc, fk_ buildingid) VALUES (?,?,?,?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, dmgDate);
+        pstmt.setString(2, dmgTitle);
+        pstmt.setString(3, dmgDesc);
+        pstmt.setInt(4, buildingId);
+        
+        int rowCount = pstmt.executeUpdate();
+        return rowCount == 1;
+    }
+        public boolean deleteDamage(int damageId) throws SQLException {
+        Connection conn = DBConnector.getConnection();
+        String sql = "DELETE FROM damages WHERE damageid=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, damageId);
+        
+        
+        int rowCount = pstmt.executeUpdate();
+        return rowCount == 1;
+    }
 }

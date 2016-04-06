@@ -17,7 +17,7 @@ import serviceLayer.entities.Document;
  *
  * @author Staal
  */
-public class BuildingController {
+public class BuildingController{
     private final BuildingMapper buildingMapper;
 
     public BuildingController() {
@@ -72,4 +72,10 @@ public class BuildingController {
     public int getBuildingConditionLevel(int buildingId) throws SQLException {
         return buildingMapper.getBuildingConditionLevel(buildingId);
     }
+   public boolean addDamage(String dmgDate, String dmgTitle, String dmgDesc, int buildingId) throws SQLException {
+       return buildingMapper.addDamage(dmgDate, dmgTitle, dmgDesc, buildingId);
+   }
+   public boolean deleteDamage(int damageId) throws SQLException {
+       return buildingMapper.deleteDamage(damageId);
+   }
 }
