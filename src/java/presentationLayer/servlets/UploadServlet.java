@@ -8,6 +8,7 @@ package presentationLayer.servlets;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -35,6 +36,7 @@ public class UploadServlet extends HttpServlet {
     private UploadController uc;
     private String note;
     private int buildingId;
+    private ArrayList<String> stack;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,11 +50,12 @@ public class UploadServlet extends HttpServlet {
     public void init() {
         // The file path is specified in folder Configuration Files -> web.xml. 
         // The file path is set to work for a user, so it won't run on your computer. Fow now.
-        filePath = getServletContext().getInitParameter("file-upload");
+        filePath = getServletContext().getInitParameter("document-upload");
         uc = new UploadController();
         fileName = null;
         note = null;
         buildingId = -1;
+        stack = new ArrayList();
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -93,12 +96,6 @@ public class UploadServlet extends HttpServlet {
                 // Process the uploaded file items
                 Iterator i = fileItems.iterator();
                 
-                /* ->>
-                
-                
-                <-- */
-                
-                
                 while (i.hasNext()) {
                     FileItem fi = (FileItem)i.next();
                     if (!fi.isFormField()) {
@@ -119,10 +116,13 @@ public class UploadServlet extends HttpServlet {
                         
                         out.print("<div>Uploaded File: " + tempFileName + " succesfully to " + ": Path: " + filePath + "</div>");
                     } else {
-                        if (note == null) {
-                        note = fi.getString();
-                        }
+                        stack.add(fi.getString());
                     }
+                }
+                int k = 0;
+                for (String str : stack) {
+                    System.out.println("String in stack: " + k + ": " + str);
+                    k++;
                 }
                 
                 // Fetch the building id before uncommenting below:
