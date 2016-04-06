@@ -137,6 +137,20 @@ public class BuildingMapper {
         
         return 0;
     }
+
+    public boolean addCustomerDocument(String documentNote, String documentPath, int buildingId, int userId) throws SQLException {
+        Connection conn = DBConnector.getConnection();
+        String sql = "INSERT INTO documents (dnote, dpath, fk_buildingid, fk_userid) VALUES (?, ?, ?, ?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, documentNote);
+        pstmt.setString(2, documentPath);
+        pstmt.setInt(3, buildingId);
+        pstmt.setInt(4, userId);
+        int rowCount = pstmt.executeUpdate();
+
+        return rowCount == 1;
+    }
+
     public boolean addDamage(String dmgTitle, String dmgDesc, int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "INSERT INTO damages (dmgtitle, dmgdesc, fk_buildingid) VALUES (?, ?, ?)";
@@ -144,19 +158,18 @@ public class BuildingMapper {
         pstmt.setString(1, dmgTitle);
         pstmt.setString(2, dmgDesc);
         pstmt.setInt(3, buildingId);
-       
         int rowCount = pstmt.executeUpdate();
+        
         return rowCount == 1;
-
     }
-        public boolean deleteDamage(int damageId) throws SQLException {
+
+    public boolean deleteDamage(int damageId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "DELETE FROM damages WHERE damageid = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, damageId);
-        
-        
         int rowCount = pstmt.executeUpdate();
+        
         return rowCount == 1;
     }
 }

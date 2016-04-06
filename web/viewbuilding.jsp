@@ -120,11 +120,20 @@
                 }
             %>
         </table>
+        <%
+            if (request.getParameter("error") != null) {
+                out.print("<br /><h2 class=\"error-msg\">" + request.getParameter("error") + "</h2>");
+            } else if (request.getParameter("success") != null) {
+                out.print("<br /><h2 class=\"success-msg\">" + request.getParameter("success") + "</h2>");
+            }
+        %>
         <form method="POST" enctype="multipart/form-data" action="UploadServlet">
+            <input type="hidden" name="directory" value="upload-document">
             Choose file to upload:<br><br>
-            <input type="file" name="document"><br><br>
+            <input type="file" name="file"><br><br>
             Notes about the file: <input type="text" name="note">
-            <input type="hidden" name="action" value="upload">
+            <input type="hidden" name="action" value="upload-document">
+            <input type="hidden" name="buildingId" value="<%= buildingId %>">
             <input type="submit" value="Upload document">
         </form>
     </body>

@@ -8,11 +8,10 @@ package presentationLayer.servlets;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,14 +28,27 @@ import serviceLayer.entities.User;
  * @author Patrick
  */
 public class UploadServlet extends HttpServlet {
-
     private File file;
     private String filePath;
     private String fileName;
+    private BuildingController bc;
     private String note;
     private int buildingId;
-    private ArrayList<String> stack;
-    
+    private ArrayList<FileItem> stack;
+    boolean isPathSet;
+    boolean isWritten;
+
+    @Override
+    public void init() {
+        // The file path is specified in folder Configuration Files -> web.xml. 
+        // The file path is set to work for a user, so it won't run on your computer. Fow now.
+        bc = new BuildingController();
+        fileName = null;
+        note = null;
+        buildingId = 0;
+        stack = new ArrayList();
+    }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,28 +58,14 @@ public class UploadServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    public void init() {
-        // The file path is specified in folder Configuration Files -> web.xml. 
-        // The file path is set to work for a user, so it won't run on your computer. Fow now.
-        filePath = getServletContext().getInitParameter("document-upload");
-        fileName = null;
-        note = null;
-        buildingId = -1;
-        stack = new ArrayList();
-    }
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        
-        User user = (User) request.getSession().getAttribute("user");
-        
         // Check that we have a file upload request
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-        
+
         try (PrintWriter out = response.getWriter()) {
-            
+
             if (!isMultipart) {
                 /* TODO output your page here. You may use following sample code. */
                 out.println("<!DOCTYPE html>");
@@ -93,50 +91,80 @@ public class UploadServlet extends HttpServlet {
                 List fileItems = uploadHandler.parseRequest(request);
                 // Process the uploaded file items
                 Iterator i = fileItems.iterator();
-                
+
                 while (i.hasNext()) {
-                    FileItem fi = (FileItem)i.next();
+                    FileItem fi = (FileItem) i.next();
                     if (!fi.isFormField()) {
                         //Get the uploaded file name
                         String tempFileName = fi.getName();
                         fileName = tempFileName;
                         //Write the file
                         if (tempFileName.lastIndexOf("\\") >= 0) {
-                            file = new File ( filePath +
-                            tempFileName.substring( tempFileName.lastIndexOf("\\")));
+                            file = new File(filePath
+                                    + tempFileName.substring(tempFileName.lastIndexOf("\\")));
                         } else {
-                            file = new File (filePath + 
-                                    tempFileName.substring(tempFileName.lastIndexOf("\\")+1));
+                            file = new File(filePath
+                                    + tempFileName.substring(tempFileName.lastIndexOf("\\") + 1));
                         }
-                        
                         fi.write(file);
-                        
-                        
-                        
-                        // Pass name of the file, the id of the building it was uploaded to as well as the user's id to the controller
-                        
-                        out.print("<div>Uploaded File: " + tempFileName + " succesfully to " + ": Path: " + filePath + "</div>");
+                        isWritten = true;
                     } else {
-                        stack.add(fi.getString());
+                        stack.add(fi);
+
+                        if (!isPathSet && fi.getFieldName().equals("directory")) {
+                            filePath = getServletContext().getInitParameter(fi.getString());
+                        }
                     }
                 }
-                int k = 0;
-                for (String str : stack) {
-                    System.out.println("String in stack: " + k + ": " + str);
-                    k++;
+
+                if (isWritten) {
+                    String action = null;
+                    for (FileItem fileItem : stack) {
+                        if (fileItem.getFieldName().equals("action")) {
+                            action = fileItem.getString();
+                            break;
+                        }
+                    }
+
+                    User user = (User) request.getSession().getAttribute("user");
+
+                    switch (action) {
+                        case "upload-report": {
+                            break;
+                        }
+                        case "upload-document": {
+                            for (FileItem fileItem : stack) {
+                                String fieldName = fileItem.getFieldName();
+                                
+                                switch (fieldName) {
+                                    case "note": {
+                                        note = fileItem.getString();
+                                        break;
+                                    }
+                                    case "buildingId": {
+                                        buildingId = Integer.parseInt(fileItem.getString());
+                                        break;
+                                    }
+                                }
+                            }
+                            
+                            if (bc.addCustomerDocument(note, fileName, buildingId, user.getUserId())) {
+                                String message = "The document has been added to the document list.";
+                                response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                            } else {
+                                String message = "The document couldn't be added to the document list.";
+                                response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                            }
+                            break;
+                        }
+                    }
                 }
-                
-                // Fetch the building id before uncommenting below:
-                // addDocuments needs: file name, building id, user id and a note
-                    //uc.addDocument(fileName, buildingId, user.getUserId(),);
-                
-                
             }
         } catch (FileUploadException ex) {
-            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         } catch (Exception ex) {
-            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+            ex.printStackTrace();
+        }
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

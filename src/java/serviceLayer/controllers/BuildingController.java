@@ -68,14 +68,20 @@ public class BuildingController{
     public ArrayList<Document> getBuildingDocuments(int buildingId) throws SQLException {
         return buildingMapper.getBuildingDocuments(buildingId);
     }
-    
+
     public int getBuildingConditionLevel(int buildingId) throws SQLException {
         return buildingMapper.getBuildingConditionLevel(buildingId);
     }
-   public boolean addDamage(String dmgTitle, String dmgDesc, int buildingId) throws SQLException {
-       return buildingMapper.addDamage(dmgTitle, dmgDesc, buildingId);
-   }
-   public boolean deleteDamage(int damageId) throws SQLException {
-       return buildingMapper.deleteDamage(damageId);
-   }
+
+    public boolean addCustomerDocument(String documentNote, String documentPath, int buildingId, int userId) throws SQLException {
+        return buildingMapper.addCustomerDocument(documentNote, documentPath, buildingId, userId);
+    }
+
+    public boolean addDamage(String dmgTitle, String dmgDesc, int buildingId) throws SQLException {
+        return buildingMapper.addDamage(dmgTitle, dmgDesc, buildingId);
+    }
+
+    public boolean deleteDamage(int damageId) throws SQLException {
+        return buildingMapper.deleteDamage(damageId);
+    }
 }
