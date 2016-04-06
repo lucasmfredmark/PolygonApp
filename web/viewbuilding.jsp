@@ -34,7 +34,7 @@
                 return;
             }
         %>
-        <h1 class="center" style="margin-top: 20px;">Viewing building "<%= building.getBuildingName() %>"</h1>
+        <h1 class="center" style="margin-top: 20px;">View building "<%= building.getBuildingName() %>"</h1>
         <div style="width: 600px; margin: 20px auto; padding: 10px; background: #fafafa; border: 1px solid #333;">
             <table style="width: 100%;">
                 <tr>
@@ -63,10 +63,10 @@
             <a href="editbuilding.jsp?buildingId=<%= buildingId %>">Edit building</a>
         </div>
         <div class="button">
-            <a href="buildings.jsp"><- Back to overview</a>
+            <a href="adddamage.jsp?buildingId=<%= buildingId %>">Report a damage</a>
         </div>
         <div class="button">
-            <a href="damage.jsp?buildingId=<%= buildingId %>"> Report a Damage </a>
+            <a href="buildings.jsp"><- Back to overview</a>
         </div>
         <br><hr><br>
         <h3>Check-up reports</h3>

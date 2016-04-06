@@ -81,6 +81,7 @@ public class BuildingServlet extends HttpServlet {
                         String message = "The building couldn't be updated. Remember to fill out all fields.";
                         response.sendRedirect("editbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
                     }
+                    break;
                 }
                 case "adddmg": {
                     String dmgtitle = request.getParameter("dmgtitle");
@@ -92,9 +93,9 @@ public class BuildingServlet extends HttpServlet {
                         response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
                     } else {
                         String message = "The damage couldn't be added to the building. Remember to fill out all fields.";
-                        response.sendRedirect("damage.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                        response.sendRedirect("adddamage.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
                     }
-
+                    break;
                 }
             }
         } catch (SQLException ex) {
