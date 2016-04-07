@@ -190,7 +190,8 @@ public class BuildingMapper {
         
         return rowCount == 1;
     }
-      public ArrayList<Damage> getBuildingDamages(int buildingId) throws SQLException {
+    
+    public ArrayList<Damage> getBuildingDamages(int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "SELECT * FROM damages WHERE fk_buildingid = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
