@@ -112,6 +112,30 @@
             %>
         </table>
         <br><br>
+        <h3>Damage reports</h3>
+        <table class="overview">
+            <tr>
+                <th style="width: 200px;">Upload date</th>
+                <th style="width: 200px;">Damage title</th>
+                <th>Damage description</th>
+            </tr>
+            <% 
+                ArrayList<Damage> damage = buildingController.getDamages(Integer.parseInt(buildingId));
+                
+                if (damage.size() > 0) {
+                    for (Damage d : damage) {
+                        out.print("<tr>");
+                        out.print("<td>" + d.getDmgDate() + "</td>");
+                        out.print("<td>" + d.getDmgTitle() + "</td>");
+                        out.print("<td>" + d.getDmgDesc() + "</td>");
+                        out.print("</tr>");
+                    }
+                } else { 
+                     out.print("<tr><td colspan=\"3\">There are no damages available for this building yet.</td></tr>");
+                }
+            %>
+        </table>
+        <br><br>
         <h3>Other documents</h3>
         <table class="overview">
             <tr>
@@ -134,28 +158,6 @@
                     out.print("<tr><td colspan=\"3\">There are no documents available for this building yet.</td></tr>");
                 }
             %>
-        </table>
-        <br><br>
-        <h3>Damage reports</h3>
-        <table class="overview">
-            <tr>
-                <th style="width: 200px;">Upload date</th>
-                <th>note</th>
-                <th style="width: 50px;">View</th>
-            </tr>
-            <% 
-            ArrayList<Damage> damage = buildingController.getDamages(Integer.parseInt(buildingId));
-            if(damage.size() > 0) {
-                for(Damage d : damage) {
-                        out.print("<td>" + d.getDmgDate() + "</td>");
-                        out.print("<td>" + d.getDmgTitle() + "</td>");
-                        out.print("<td>" + d.getDmgDesc() + "</td>");
-                        out.print("</tr>");
-                }
-            } else { 
-                 out.print("<tr><td colspan=\"3\">There are no documents available for this building yet.</td></tr>");
-            }
-                %>
         </table>
         <%
             if (request.getParameter("error") != null) {
