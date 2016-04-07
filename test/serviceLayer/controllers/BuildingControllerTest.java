@@ -170,7 +170,7 @@ public class BuildingControllerTest {
         BuildingController bc = new BuildingController();
         bc.addDamage("vandskade", "my basement is flooded", 1);
         bc.addDamage("svamp", "spongebob lives in my basement", 1);
-        ArrayList<Damage> stack = bc.getDamage(1);
+        ArrayList<Damage> stack = bc.getDamages(1);
         assertTrue(stack.size() > 1);
     }
     
