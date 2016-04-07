@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import serviceLayer.entities.Building;
+import serviceLayer.entities.Document;
 
 /**
  *
@@ -76,6 +77,24 @@ public class BuildingControllerTest {
                     + "fk_userid INT,"
                     + "FOREIGN KEY (fk_userid) REFERENCES users(userid) ON DELETE CASCADE"
                     + ")");
+            st.addBatch("CREATE TABLE documents ("
+                    +"documentid INT AUTO_INCREMENT PRIMARY KEY,"
+                    +"ddate DATETIME DEFAULT CURRENT_TIMESTAMP,"
+                    +"dnote VARCHAR(100),"
+                    +"dpath VARCHAR(255),"
+                    +"fk_buildingid INT,"
+                    +"fk_userid INT,"
+                    +"FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid),"
+                    +"FOREIGN KEY (fk_userid) REFERENCES users(userid)"
+                    +")");
+            st.addBatch("CREATE TABLE damages ("
+                    +"damageid INT AUTO_INCREMENT PRIMARY KEY,"
+                    +"dmgdate DATETIME DEFAULT CURRENT_TIMESTAMP, /* Hvornår den er oprettet */"
+                    + "dmgtitle VARCHAR(50),"
+                    + "dmgdesc TEXT,"
+                    + "fk_buildingid INT,"
+                    + "FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid)"
+                    + ")");
             
             // insert
             st.addBatch("INSERT INTO users (usermail, userpass, fullname) VALUES ('test@polygon.dk','test','Power User')");
@@ -103,7 +122,6 @@ public class BuildingControllerTest {
         bc.addCustomerBuilding("dummy", "some address", "b623", 80, 1);
         Building b = bc.getCustomerBuilding(2, 1);
         assertEquals("some address", b.getBuildingAddress());
-        System.out.println("Test delete building");
         assertTrue(bc.deleteCustomerBuilding(2));
     }
     
@@ -126,10 +144,24 @@ public class BuildingControllerTest {
         assertTrue(bc.editCustomerBuilding("editTest", "edit address", "edit8", 160, 2));
         System.out.println("After editing: " + bc.getCustomerBuilding(2, 1).getBuildingParcelNumber());
     }
-    
-    public void addAndViewDocumentTest() {
+    @Test
+    public void addAndGetDocumentTest() throws SQLException {
         BuildingController bc = new BuildingController();
-        
+        System.out.println("Can we add a document?");
+        assertTrue(bc.addCustomerDocument("port mackerel", "dummyPath", 1, 1));
+        System.out.println("Can we get a document?");
+        ArrayList<Document> stack = bc.getBuildingDocuments(1);
+        int expResult = 1;
+        assertEquals(expResult, stack.size());
+    }
+    
+    @Test
+    public void addAndDeleteDamageTest() throws SQLException {
+        BuildingController bc = new BuildingController();
+        System.out.println("Can we add a damage?");
+        assertTrue(bc.addDamage("vandskade", "my basement is flooded", 1));
+        System.out.println("Can we delete a damage?");
+        assertTrue(bc.deleteDamage(1));
     }
     
     // TODO add test methods here.
