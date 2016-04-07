@@ -17,9 +17,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static serviceLayer.controllers.UserControllerTest.conn;
 import serviceLayer.entities.Building;
-import serviceLayer.entities.User;
 
 /**
  *
@@ -102,14 +100,38 @@ public class BuildingControllerTest {
     @Test
     public void addRemoveBuildingTest() throws SQLException {
         BuildingController bc = new BuildingController();
-        Building building = bc.getCustomerBuilding(1, 1);
-        System.out.println("Testing add building");
-        assertEquals("test", building.getBuildingParcelNumber());
+        bc.addCustomerBuilding("dummy", "some address", "b623", 80, 1);
+        Building b = bc.getCustomerBuilding(2, 1);
+        assertEquals("some address", b.getBuildingAddress());
         System.out.println("Test delete building");
-        assertTrue(bc.deleteCustomerBuilding(1));
+        assertTrue(bc.deleteCustomerBuilding(2));
+    }
+    
+    @Test
+    public void getAllBuildingsTest() throws SQLException {
+        BuildingController bc = new BuildingController();
+        bc.addCustomerBuilding("dummy10", "some address", "b105", 120, 1);
+        bc.addCustomerBuilding("dummy188", "a address", "b766", 70, 1);
+        ArrayList<Building> buildings = bc.getCustomerBuildings(1);
+        int size = buildings.size();
+        assertTrue(size > 1);
+    }
+    
+    @Test
+    public void editBuildingTest() throws SQLException {
+        BuildingController bc = new BuildingController();
+        bc.addCustomerBuilding("editTest", "edit address", "edit5", 160, 1);
+        System.out.println("Before editting: " + bc.getCustomerBuilding(2, 1).getBuildingParcelNumber());
+        assertEquals("edit5", bc.getCustomerBuilding(2, 1).getBuildingParcelNumber());
+        assertTrue(bc.editCustomerBuilding("editTest", "edit address", "edit8", 160, 2));
+        System.out.println("After editing: " + bc.getCustomerBuilding(2, 1).getBuildingParcelNumber());
+    }
+    
+    public void addAndViewDocumentTest() {
+        BuildingController bc = new BuildingController();
         
     }
-
+    
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
