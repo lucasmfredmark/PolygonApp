@@ -144,7 +144,7 @@
                 <th style="width: 50px;">View</th>
             </tr>
             <% 
-            ArrayList<Damage> damage = buildingController.getDamage(Integer.parseInt(buildingId));
+            ArrayList<Damage> damage = buildingController.getDamages(Integer.parseInt(buildingId));
             if(damage.size() > 0) {
                 for(Damage d : damage) {
                         out.print("<td>" + d.getDmgDate() + "</td>");
