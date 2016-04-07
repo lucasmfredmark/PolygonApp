@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
+import serviceLayer.entities.Damage;
 import serviceLayer.entities.Document;
 
 /**
@@ -93,5 +94,8 @@ public class BuildingController{
         }
         
         return false;
+    }
+    public ArrayList<Damage> getDamage(int buildingId) throws SQLException {
+        return buildingMapper.getBuildingDamages(buildingId);
     }
 }
