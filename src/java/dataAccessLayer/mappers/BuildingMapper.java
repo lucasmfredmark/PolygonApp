@@ -191,12 +191,15 @@ public class BuildingMapper {
         return rowCount == 1;
     }
     
+    // Fetches all the damage records a building has.
     public ArrayList<Damage> getBuildingDamages(int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "SELECT * FROM damages WHERE fk_buildingid = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, buildingId);
         ResultSet rs = pstmt.executeQuery();
+        
+        // Creates an arraylist to contain all the damage entities created from the database query.
         ArrayList<Damage> dmgList = new ArrayList();
         
         while (rs.next()) {
