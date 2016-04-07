@@ -1,3 +1,4 @@
+<%@page import="serviceLayer.entities.Damage"%>
 <%@page import="serviceLayer.entities.Document"%>
 <%@page import="serviceLayer.entities.Checkup"%>
 <%@page import="java.util.ArrayList"%>
@@ -119,6 +120,28 @@
                     out.print("<tr><td colspan=\"3\">There are no documents available for this building yet.</td></tr>");
                 }
             %>
+        </table>
+        
+        <h3>Damage reports</h3>
+        <table class="overview">
+            <tr>
+                <th style="width: 200px;">Upload date</th>
+                <th>note</th>
+                <th style="width: 50px;">View</th>
+            </tr>
+            <% 
+            ArrayList<Damage> damage = buildingController.getDamage(Integer.parseInt(buildingId));
+            if(damage.size() > 0) {
+                for(Damage d : damage) {
+                        out.print("<td>" + d.getDmgDate() + "</td>");
+                        out.print("<td>" + d.getDmgTitle() + "</td>");
+                        out.print("<td>" + d.getDmgDesc() + "</td>");
+                        out.print("</tr>");
+                }
+            } else { 
+                 out.print("<tr><td colspan=\"3\">There are no documents available for this building yet.</td></tr>");
+            }
+                %>
         </table>
         <%
             if (request.getParameter("error") != null) {
