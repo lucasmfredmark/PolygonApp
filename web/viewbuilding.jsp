@@ -135,7 +135,7 @@
                 }
             %>
         </table>
-        
+        <br><br>
         <h3>Damage reports</h3>
         <table class="overview">
             <tr>
