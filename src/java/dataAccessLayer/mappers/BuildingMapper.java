@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
+import serviceLayer.entities.Damage;
 import serviceLayer.entities.Document;
 
 /**
@@ -171,5 +172,20 @@ public class BuildingMapper {
         int rowCount = pstmt.executeUpdate();
         
         return rowCount == 1;
+    }
+      public ArrayList<Damage> getBuildingDamages(int buildingId) throws SQLException {
+        Connection conn = DBConnector.getConnection();
+        String sql = "SELECT * FROM damages WHERE fk_buildingid = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, buildingId);
+        ResultSet rs = pstmt.executeQuery();
+        ArrayList<Damage> dmgList = new ArrayList();
+        
+        while (rs.next()) {
+            Damage dmg = new Damage(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+            dmgList.add(dmg);
+        }
+
+        return dmgList;
     }
 }
