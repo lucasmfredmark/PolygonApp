@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import serviceLayer.entities.Building;
+import serviceLayer.entities.Damage;
 import serviceLayer.entities.Document;
 
 /**
@@ -163,6 +164,17 @@ public class BuildingControllerTest {
         System.out.println("Can we delete a damage?");
         assertTrue(bc.deleteDamage(1));
     }
+    
+    @Test
+    public void addAndGetDamages() throws SQLException {
+        BuildingController bc = new BuildingController();
+        bc.addDamage("vandskade", "my basement is flooded", 1);
+        bc.addDamage("svamp", "spongebob lives in my basement", 1);
+        ArrayList<Damage> stack = bc.getDamage(1);
+        assertTrue(stack.size() > 1);
+    }
+    
+    
     
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
