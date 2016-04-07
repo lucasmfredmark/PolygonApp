@@ -23,6 +23,14 @@
                 return;
             }
             
+            try {
+                int tempId = Integer.parseInt(buildingId);
+                buildingId = String.valueOf(tempId);
+            } catch (NumberFormatException ex) {
+                response.sendRedirect("buildings.jsp");
+                return;
+            }
+            
             BuildingController buildingController = new BuildingController();
             Building building = buildingController.getCustomerBuilding(Integer.parseInt(buildingId), user.getUserId());
             

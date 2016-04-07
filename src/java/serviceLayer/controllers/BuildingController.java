@@ -8,7 +8,6 @@ package serviceLayer.controllers;
 import dataAccessLayer.mappers.BuildingMapper;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
 import serviceLayer.entities.Document;
@@ -33,10 +32,9 @@ public class BuildingController{
     }
 
     public boolean addCustomerBuilding(String name, String address, String parcelNumber, int size, int userId) throws SQLException {
-        final Pattern parcel = Pattern.compile("[0-9a-z]+");
         if (name != null && address != null && parcelNumber != null && size > 0 && userId > 0) {
-            if(parcelNumber.length() <= 20 && parcel.matcher(parcelNumber).matches()) {
-                if(name.length() <= 50 && address.length() <= 50) {
+            if (name.length() <= 40 && address.length() <= 50 && parcelNumber.length() <= 20) {
+                if (parcelNumber.matches("[0-9a-z]+") && String.valueOf(size).matches("\\d*")) {
                     return buildingMapper.addCustomerBuilding(name, address, parcelNumber, size, userId);
                 }
             }
@@ -74,14 +72,26 @@ public class BuildingController{
     }
 
     public boolean addCustomerDocument(String documentNote, String documentPath, int buildingId, int userId) throws SQLException {
-        return buildingMapper.addCustomerDocument(documentNote, documentPath, buildingId, userId);
+        if (documentNote != null && documentPath != null && buildingId > 0 && userId > 0) {
+            return buildingMapper.addCustomerDocument(documentNote, documentPath, buildingId, userId);
+        }
+        
+        return false;
     }
 
     public boolean addDamage(String dmgTitle, String dmgDesc, int buildingId) throws SQLException {
-        return buildingMapper.addDamage(dmgTitle, dmgDesc, buildingId);
+        if (dmgTitle != null && dmgDesc != null && buildingId > 0) {
+            return buildingMapper.addDamage(dmgTitle, dmgDesc, buildingId);
+        }
+        
+        return false;
     }
 
     public boolean deleteDamage(int damageId) throws SQLException {
-        return buildingMapper.deleteDamage(damageId);
+        if (damageId > 0) {
+            return buildingMapper.deleteDamage(damageId);
+        }
+        
+        return false;
     }
 }

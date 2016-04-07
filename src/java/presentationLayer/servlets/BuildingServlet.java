@@ -37,63 +37,99 @@ public class BuildingServlet extends HttpServlet {
 
             switch (action) {
                 case "add": {
-                    String name = request.getParameter("bname");
-                    String address = request.getParameter("address");
-                    String parcelNumber = request.getParameter("parcel");
-                    int size = Integer.parseInt(request.getParameter("size"));
+                    if (request.getSession().getAttribute("user") != null) {
+                        String name = request.getParameter("bname");
+                        String address = request.getParameter("address");
+                        String parcelNumber = request.getParameter("parcel");
+                        int size = 0;
+                        
+                        try {
+                            size = Integer.parseInt(request.getParameter("size"));
+                        } catch (NumberFormatException ex) {
+                        }
+                        
+                        User user = (User) request.getSession().getAttribute("user");
+                        int userId = user.getUserId();
 
-                    User user = (User) request.getSession().getAttribute("user");
-                    int userId = user.getUserId();
-
-                    if (buildingController.addCustomerBuilding(name, address, parcelNumber, size, userId)) {
-                        String message = "The building has been added to your overview.";
-                        response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                        if (buildingController.addCustomerBuilding(name, address, parcelNumber, size, userId)) {
+                            String message = "The building has been added to your overview.";
+                            response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                        } else {
+                            String message = "The building couldn't be added. Remember to fill out all fields.";
+                            response.sendRedirect("addbuilding.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
+                        }
                     } else {
-                        String message = "The building couldn't be added. Remember to fill out all fields.";
-                        response.sendRedirect("addbuilding.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
+                        response.sendRedirect("index.jsp");
                     }
                     break;
                 }
                 case "delete": {
-                    int buildingId = Integer.parseInt(request.getParameter("buildingId"));
-
-                    if (buildingController.deleteCustomerBuilding(buildingId)) {
-                        String message = "The building has been deleted.";
-                        response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                    if (request.getSession().getAttribute("user") != null) {
+                        int buildingId = 0;
+                        
+                        try {
+                            buildingId = Integer.parseInt(request.getParameter("buildingId"));
+                        } catch (NumberFormatException ex) {
+                        }
+                        
+                        if (buildingController.deleteCustomerBuilding(buildingId)) {
+                            String message = "The building has been deleted.";
+                            response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                        } else {
+                            String message = "The building couldn't be deleted because of an error.";
+                            response.sendRedirect("buildings.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
+                        }
                     } else {
-                        String message = "The building couldn't be deleted because of an error.";
-                        response.sendRedirect("buildings.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
+                        response.sendRedirect("index.jsp");
                     }
                     break;
                 }
                 case "edit": {
-                    String name = request.getParameter("bname");
-                    String address = request.getParameter("address");
-                    String parcelNumber = request.getParameter("parcel");
-                    int size = Integer.parseInt(request.getParameter("size"));
+                    if (request.getSession().getAttribute("user") != null) {
+                        String name = request.getParameter("bname");
+                        String address = request.getParameter("address");
+                        String parcelNumber = request.getParameter("parcel");
+                        int size = 0;
+                        
+                        try {
+                            size = Integer.parseInt(request.getParameter("size"));
+                        } catch (NumberFormatException ex) {
+                        }
+                        
+                        int buildingId = Integer.parseInt(request.getParameter("buildingId"));
 
-                    int buildingId = Integer.parseInt(request.getParameter("buildingId"));
-
-                    if (buildingController.editCustomerBuilding(name, address, parcelNumber, size, buildingId)) {
-                        String message = "Your changes has been saved to the building.";
-                        response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                        if (buildingController.editCustomerBuilding(name, address, parcelNumber, size, buildingId)) {
+                            String message = "Your changes has been saved to the building.";
+                            response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                        } else {
+                            String message = "The building couldn't be updated. Remember to fill out all fields.";
+                            response.sendRedirect("editbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                        }
                     } else {
-                        String message = "The building couldn't be updated. Remember to fill out all fields.";
-                        response.sendRedirect("editbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                        response.sendRedirect("index.jsp");
                     }
                     break;
                 }
                 case "adddmg": {
-                    String dmgtitle = request.getParameter("dmgtitle");
-                    String desc = request.getParameter("dmgdesc");
-                    int buildingId = Integer.parseInt(request.getParameter("buildingId"));
-
-                    if (buildingController.addDamage(dmgtitle, desc, buildingId)) {
-                        String message = "Your changes has been saved to the building.";
-                        response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                    if (request.getSession().getAttribute("user") != null) {
+                        String dmgtitle = request.getParameter("dmgtitle");
+                        String desc = request.getParameter("dmgdesc");
+                        int buildingId = 0;
+                        
+                        try {
+                            buildingId = Integer.parseInt(request.getParameter("buildingId"));
+                        } catch (NumberFormatException ex) {
+                        }
+                        
+                        if (buildingController.addDamage(dmgtitle, desc, buildingId)) {
+                            String message = "Your changes has been saved to the building.";
+                            response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                        } else {
+                            String message = "The damage couldn't be added to the building. Remember to fill out all fields.";
+                            response.sendRedirect("adddamage.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                        }
                     } else {
-                        String message = "The damage couldn't be added to the building. Remember to fill out all fields.";
-                        response.sendRedirect("adddamage.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                        response.sendRedirect("index.jsp");
                     }
                     break;
                 }

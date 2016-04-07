@@ -43,30 +43,38 @@ public class UserServlet extends HttpServlet {
             
             switch (action) {
                 case "login": {
-                    String email = request.getParameter("e-mail");
-                    String password = request.getParameter("userpass");
-                    User user = userController.loginUser(email, password);
-                    
-                    if (user != null) {
-                        request.getSession().setAttribute("user", user);
-                        response.sendRedirect("buildings.jsp");
+                    if (request.getSession().getAttribute("user") == null) {
+                        String email = request.getParameter("e-mail");
+                        String password = request.getParameter("userpass");
+                        User user = userController.loginUser(email, password);
+
+                        if (user != null) {
+                            request.getSession().setAttribute("user", user);
+                            response.sendRedirect("buildings.jsp");
+                        } else {
+                            String message = "The user doesn\'t exist, or you typed the wrong password.";
+                            response.sendRedirect("index.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
+                        }
                     } else {
-                        String message = "The user doesn\'t exist, or you typed the wrong password.";
-                        response.sendRedirect("index.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
+                        response.sendRedirect("buildings.jsp");
                     }
                     break;
                 }
                 case "register": {
-                    String email = request.getParameter("e-mail");
-                    String fullname = request.getParameter("fullname");
-                    String password = request.getParameter("userpass");
-                    
-                    if (userController.registerUser(email, fullname, password)) {
-                        String message = "Your account has successfully been created. You can now log in.";
-                        response.sendRedirect("index.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                    if (request.getSession().getAttribute("user") == null) {
+                        String email = request.getParameter("e-mail");
+                        String fullname = request.getParameter("fullname");
+                        String password = request.getParameter("userpass");
+
+                        if (userController.registerUser(email, fullname, password)) {
+                            String message = "Your account has successfully been created. You can now log in.";
+                            response.sendRedirect("index.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                        } else {
+                            String message = "The user already exists, or another error happened.";
+                            response.sendRedirect("register.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
+                        }
                     } else {
-                        String message = "The user already exists, or another error happened.";
-                        response.sendRedirect("register.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
+                        response.sendRedirect("buildings.jsp");
                     }
                     break;
                 }

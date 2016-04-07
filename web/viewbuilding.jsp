@@ -17,7 +17,7 @@
         <%
             User user = (User) session.getAttribute("user");
             String buildingId = request.getParameter("buildingId");
-
+            
             if (user == null) {
                 response.sendRedirect("index.jsp");
                 return;
@@ -25,7 +25,21 @@
                 response.sendRedirect("buildings.jsp");
                 return;
             }
-
+            
+            try {
+                int tempId = Integer.parseInt(buildingId);
+                
+                if (tempId <= 0) {
+                    response.sendRedirect("buildings.jsp");
+                    return;
+                }
+                
+                buildingId = String.valueOf(tempId);
+            } catch (NumberFormatException ex) {
+                response.sendRedirect("buildings.jsp");
+                return;
+            }
+            
             BuildingController buildingController = new BuildingController();
             Building building = buildingController.getCustomerBuilding(Integer.parseInt(buildingId), user.getUserId());
 
@@ -131,7 +145,7 @@
             <input type="hidden" name="directory" value="upload-document">
             Choose file to upload:<br><br>
             <input type="file" name="file"><br><br>
-            Notes about the file: <input type="text" name="note">
+            Notes about the file: <input type="text" name="note" maxlength="100">
             <input type="hidden" name="action" value="upload-document">
             <input type="hidden" name="buildingId" value="<%= buildingId %>">
             <input type="submit" value="Upload document">
