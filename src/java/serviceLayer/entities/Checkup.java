@@ -6,7 +6,7 @@ public class Checkup {
     private String checkupPath;
     private int conditionLevel;
 
-    public Checkup(int checkupId, String checkupDate, String checkupPath, int conditionLevel, String orderDate) {
+    public Checkup(int checkupId, String checkupDate, String checkupPath, int conditionLevel) {
         this.checkupId = checkupId;
         this.checkupDate = checkupDate;
         this.checkupPath = checkupPath;
