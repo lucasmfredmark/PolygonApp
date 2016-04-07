@@ -1,27 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package serviceLayer.entities;
 
-/**
- *
- * @author lucas
- */
 public class Checkup {
     private int checkupId;
     private String checkupDate;
     private String checkupPath;
     private int conditionLevel;
-    private String orderDate;
 
-    public Checkup(int checkupId, String checkupDate, String checkupPath, int conditionLevel, String orderDate) {
+    public Checkup(int checkupId, String checkupDate, String checkupPath, int conditionLevel) {
         this.checkupId = checkupId;
         this.checkupDate = checkupDate;
         this.checkupPath = checkupPath;
         this.conditionLevel = conditionLevel;
-        this.orderDate = orderDate;
     }
 
     public int getCheckupId() {
@@ -54,13 +43,5 @@ public class Checkup {
 
     public void setConditionLevel(int conditionLevel) {
         this.conditionLevel = conditionLevel;
-    }
-
-    public String getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(String orderDate) {
-        this.orderDate = orderDate;
     }
 }

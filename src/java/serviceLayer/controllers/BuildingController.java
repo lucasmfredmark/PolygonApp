@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
+import serviceLayer.entities.Damage;
 import serviceLayer.entities.Document;
 
 /**
@@ -83,5 +84,8 @@ public class BuildingController{
 
     public boolean deleteDamage(int damageId) throws SQLException {
         return buildingMapper.deleteDamage(damageId);
+    }
+    public ArrayList<Damage> getDamage(int buildingId) throws SQLException {
+        return buildingMapper.getBuildingDamages(buildingId);
     }
 }
