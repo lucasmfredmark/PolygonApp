@@ -85,7 +85,7 @@ public class BuildingController{
     public boolean deleteDamage(int damageId) throws SQLException {
         return buildingMapper.deleteDamage(damageId);
     }
-    public ArrayList<Damage> getDamage(int buildingId) throws SQLException {
+    public ArrayList<Damage> getDamages(int buildingId) throws SQLException {
         return buildingMapper.getBuildingDamages(buildingId);
     }
 }

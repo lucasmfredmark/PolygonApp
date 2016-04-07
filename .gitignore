@@ -1,4 +1,5 @@
 /dist/
 /build/
 /nbproject/private/
+/web/WEB-INF/web.xml
 /web/WEB-INF/
