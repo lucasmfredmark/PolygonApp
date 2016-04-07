@@ -95,7 +95,7 @@ public class BuildingController{
         
         return false;
     }
-    public ArrayList<Damage> getDamage(int buildingId) throws SQLException {
+    public ArrayList<Damage> getDamages(int buildingId) throws SQLException {
         return buildingMapper.getBuildingDamages(buildingId);
     }
 }
