@@ -54,7 +54,11 @@ public class BuildingController{
 
     public boolean editCustomerBuilding(String name, String address, String parcelNumber, int size, int buildingId) throws SQLException {
         if (name != null && address != null && parcelNumber != null && size > 0 && buildingId > 0) {
-            return buildingMapper.editCustomerBuilding(name, address, parcelNumber, size, buildingId);
+            if (name.length() <= 40 && address.length() <= 50 && parcelNumber.length() <= 20) {
+                if (parcelNumber.matches("[0-9a-z]+") && String.valueOf(size).matches("\\d*")) {
+                    return buildingMapper.editCustomerBuilding(name, address, parcelNumber, size, buildingId);
+                }
+            }
         }
         
         return false;
