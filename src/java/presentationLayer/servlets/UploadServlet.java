@@ -47,6 +47,7 @@ public class UploadServlet extends HttpServlet {
         note = null;
         buildingId = 0;
         stack = new ArrayList();
+        isPathSet = false;
     }
 
     /**
@@ -110,9 +111,10 @@ public class UploadServlet extends HttpServlet {
                         isWritten = true;
                     } else {
                         stack.add(fi);
-
+                        System.out.println(isPathSet);
                         if (!isPathSet && fi.getFieldName().equals("directory")) {
                             filePath = getServletContext().getInitParameter(fi.getString());
+                            isPathSet = true;
                         }
                     }
                 }
