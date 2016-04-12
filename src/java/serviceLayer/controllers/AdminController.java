@@ -25,8 +25,8 @@ public class AdminController {
         return bm.getAllBuildings(buildingid);
     }
 
-    public ArrayList<User> getAllUsers(int userId, String userType) throws SQLException {
+    public ArrayList<User> getAllUsers(String userType) throws SQLException {
         // The return has been commented out because the method is not implemented yet in Mapper
-        return um.getAllUsers(userId, userType);
+        return um.getAllUsers(userType);
     }
 }

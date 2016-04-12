@@ -62,12 +62,11 @@ public class UserMapper {
 
         return false;
     }
-    public ArrayList<User> getAllUsers(int userid, String usertype) throws SQLException {
+    public ArrayList<User> getAllUsers(String usertype) throws SQLException {
         Connection conn = DBConnector.getConnection();
-        String sql = "SELECT * FROM users WHERE userid = ? AND userype = ?";
+        String sql = "SELECT * FROM users WHERE usertype = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setInt(1, userid);
-        pstmt.setString(2, usertype);
+        pstmt.setString(1, usertype);
         ResultSet rs = pstmt.executeQuery();
         ArrayList<User> userList = new ArrayList();
         while (rs.next()) {
