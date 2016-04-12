@@ -48,17 +48,6 @@ public class AdminServlet extends HttpServlet {
                     }
                     break;
                 }
-                case "viewBuildingByCustomer": {
-                    if (request.getSession().getAttribute("user") != null && user.getUserType().equals(User.userType.ADMIN)) {
-
-                    }
-                    break;
-                }
-                case "viewAllCustomers": {
-                    if (request.getSession().getAttribute("user") != null && user.getUserType().equals(User.userType.ADMIN)) {
-                    }
-                    break;
-                }
                 default:
                     System.out.println("No functionality implemented yet");
                     break;
