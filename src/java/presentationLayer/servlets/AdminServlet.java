@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import serviceLayer.controllers.AdminController;
+import serviceLayer.entities.User;
 
 /**
  *
@@ -36,10 +37,16 @@ public class AdminServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String action = request.getParameter("action");
             AdminController ac = new AdminController();
-            
+            User user = (User) request.getSession().getAttribute("user");
             switch (action) {
                 //cases goes here
                 // Remember to check on the session for a user != null
+                case "addreport": {
+                    if (request.getSession().getAttribute("user") != null && user.getUserType().equals(User.userType.ADMIN)) {
+                        
+                    }
+                    break;
+                }
                 default:
                     System.out.println("No functionality implemented yet");
                     break;
