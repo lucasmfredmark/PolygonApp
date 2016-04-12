@@ -5,14 +5,17 @@
  */
 package presentationLayer.servlets;
 
-import java.io.IOException; 
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import serviceLayer.controllers.AdminController;
+import serviceLayer.controllers.UserController;
 import serviceLayer.entities.User;
 
 /**
@@ -31,28 +34,43 @@ public class AdminServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String action = request.getParameter("action");
-            AdminController ac = new AdminController();
+            UserController uc = new UserController();
             User user = (User) request.getSession().getAttribute("user");
-            switch (action) {
-                //cases goes here
-                // Remember to check on the session for a user != null
-                // Remember to check if the user in the session is actually an admin
-                case "addReport": {
-                    if (request.getSession().getAttribute("user") != null && user.getUserType().equals(User.userType.ADMIN)) {
-
-                    }
-                    break;
+//            switch (action) {
+//                cases goes here
+//                 Remember to check on the session for a user != null
+//                 Remember to check if the user in the session is actually an admin
+//                case "login": {
+//                    if (request.getSession().getAttribute("user") == null) {
+//                        String email = request.getParameter("e-mail");
+//                        String password = request.getParameter("userpass");
+//                        uc.loginUser(email, password);
+//                    }
+//                        
+//                        switch (user.getUserType()) {
+//                            case ADMIN: {
+//                                request.getSession().setAttribute("user", user);
+//                                response.sendRedirect("adminIndex.jsp");
+//                            }
+//                            case CUSTOMER: {
+//                                request.getSession().setAttribute("user", user);
+//                                response.sendRedirect("buildings.jsp");
+//                                
+//                            }
+//                            default:
+//                                request.getSession().setAttribute("user", user);
+//                                response.sendRedirect("buildings.jsp");
+//                                break;
+                        }
+                
                 }
-                default:
-                    System.out.println("No functionality implemented yet");
-                    break;
             }
-
+        
         }
     }
 
@@ -68,7 +86,11 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       try {
+           processRequest(request, response);
+       } catch (SQLException ex) {
+           Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+       }
     }
 
     /**
@@ -82,7 +104,11 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       try {
+           processRequest(request, response);
+       } catch (SQLException ex) {
+           Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+       }
     }
 
     /**

@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import serviceLayer.controllers.UserController;
 import serviceLayer.entities.User;
+import static serviceLayer.entities.User.userType.ADMIN;
+import static serviceLayer.entities.User.userType.CUSTOMER;
 
 /**
  *
@@ -50,7 +52,19 @@ public class UserServlet extends HttpServlet {
 
                         if (user != null) {
                             request.getSession().setAttribute("user", user);
-                            response.sendRedirect("buildings.jsp");
+                      switch (user.getUserType()) {
+                            case ADMIN: {
+                                response.sendRedirect("adminIndex.jsp");
+                            break;
+                            }
+                            case CUSTOMER: {
+                                response.sendRedirect("buildings.jsp");
+                                break;
+                            }
+                            default:
+                                response.sendRedirect("buildings.jsp");
+                                break;
+                      }
                         } else {
                             String message = "The user doesn\'t exist, or you typed the wrong password.";
                             response.sendRedirect("index.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
