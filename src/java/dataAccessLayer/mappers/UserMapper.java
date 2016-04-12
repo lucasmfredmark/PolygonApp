@@ -63,7 +63,7 @@ public class UserMapper {
     }
     public ArrayList<Building> getCustomerBuildings(int buildingid) throws SQLException {
         Connection conn = DBConnector.getConnection();
-        String sql = "SELECT * FROM buildings";
+        String sql = "SELECT * FROM buildings JOIN users ON buildings.fk_userid = users.userid";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, buildingid);
         ResultSet rs = pstmt.executeQuery();
