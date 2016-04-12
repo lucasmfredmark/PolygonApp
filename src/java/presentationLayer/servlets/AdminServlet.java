@@ -41,9 +41,26 @@ public class AdminServlet extends HttpServlet {
             switch (action) {
                 //cases goes here
                 // Remember to check on the session for a user != null
-                case "addreport": {
+                // Remember to check if the user in the session is actually an admin
+                case "addReport": {
                     if (request.getSession().getAttribute("user") != null && user.getUserType().equals(User.userType.ADMIN)) {
-                        
+
+                    }
+                    break;
+                }
+                case "viewBuildingByCustomer": {
+                    if (request.getSession().getAttribute("user") != null && user.getUserType().equals(User.userType.ADMIN)) {
+
+                    }
+                    break;
+                }
+                case "viewAllCustomers": {
+                    if (request.getSession().getAttribute("user") != null && user.getUserType().equals(User.userType.ADMIN)) {
+                    }
+                    break;
+                }
+                case "viewSupportTickets": {
+                    if (request.getSession().getAttribute("user") != null && user.getUserType().equals(User.userType.ADMIN)) {
                     }
                     break;
                 }
@@ -51,8 +68,7 @@ public class AdminServlet extends HttpServlet {
                     System.out.println("No functionality implemented yet");
                     break;
             }
-            
-            
+
         }
     }
 
