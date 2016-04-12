@@ -31,7 +31,7 @@ public class UserMapper {
         if (rs.next()) {
             userType userType = null;
 
-            if (rs.getString(5).equals(User.userType.ADMIN)) {
+            if (rs.getString(5).equals(User.userType.ADMIN.toString())) {
                 userType = User.userType.ADMIN;
             } else {
                 userType = User.userType.CUSTOMER;
