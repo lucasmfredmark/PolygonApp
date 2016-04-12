@@ -39,6 +39,7 @@ public class AdminServlet extends HttpServlet {
             
             switch (action) {
                 //cases goes here
+                // Remember to check on the session for a user != null
                 default:
                     System.out.println("No functionality implemented yet");
                     break;
