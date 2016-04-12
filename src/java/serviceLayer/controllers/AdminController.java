@@ -5,6 +5,7 @@
  */
 package serviceLayer.controllers;
 
+import dataAccessLayer.mappers.BuildingMapper;
 import dataAccessLayer.mappers.UserMapper;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,13 +17,16 @@ import serviceLayer.entities.User;
  * @author HazemSaeid
  */
 public class AdminController {
+
     private final UserMapper um = new UserMapper();
-    
+    private final BuildingMapper bm = new BuildingMapper();
+
     public ArrayList<Building> getCustomerBuildings(int buildingid) throws SQLException {
-       return um.getCustomerBuildings(buildingid);
-    } 
-    
-    public ArrayList<User> getAllUsers() throws SQLException {
-        return null;
+        return bm.getAllBuildings(buildingid);
+    }
+
+    public ArrayList<User> getAllUsers(int userId, String userType) throws SQLException {
+        // The return has been commented out because the method is not implemented yet in Mapper
+        return um.getAllUsers(userId, userType);
     }
 }
