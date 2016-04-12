@@ -5,7 +5,7 @@
  */
 package presentationLayer.servlets;
 
-import java.io.IOException;
+import java.io.IOException; 
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -55,11 +55,6 @@ public class AdminServlet extends HttpServlet {
                     break;
                 }
                 case "viewAllCustomers": {
-                    if (request.getSession().getAttribute("user") != null && user.getUserType().equals(User.userType.ADMIN)) {
-                    }
-                    break;
-                }
-                case "viewSupportTickets": {
                     if (request.getSession().getAttribute("user") != null && user.getUserType().equals(User.userType.ADMIN)) {
                     }
                     break;
