@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import serviceLayer.entities.Building;
 import serviceLayer.entities.User;
 import serviceLayer.entities.User.userType;
 
@@ -58,5 +60,22 @@ public class UserMapper {
         }
         
         return false;
+    }
+    public ArrayList<Building> getCustomerBuildings(int buildingid) throws SQLException {
+        Connection conn = DBConnector.getConnection();
+        String sql = "SELECT * FROM buildings";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, buildingid);
+        ResultSet rs = pstmt.executeQuery();
+
+        // Creates an arraylist to contain all the building entities created from the database query.
+        ArrayList<Building> buildingList = new ArrayList();
+
+        while (rs.next()) {
+            Building building = new Building(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
+            buildingList.add(building);
+        }
+
+        return buildingList;
     }
 }
