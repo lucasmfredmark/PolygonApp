@@ -144,7 +144,12 @@ public class UploadServlet extends HttpServlet {
                                         break;
                                     }
                                     case "buildingId": {
-                                        buildingId = Integer.parseInt(fileItem.getString());
+                                        buildingId = 0;
+                                        
+                                        try {
+                                            buildingId = Integer.parseInt(fileItem.getString());
+                                        } catch (NumberFormatException ex) {
+                                        }
                                         break;
                                     }
                                 }

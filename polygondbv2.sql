@@ -87,5 +87,3 @@ CREATE TABLE images (
     fk_checkupid INT,
     FOREIGN KEY (fk_checkupid) REFERENCES checkups(checkupid)
 );
-
-SELECT * FROM buildings;

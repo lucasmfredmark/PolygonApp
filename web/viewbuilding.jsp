@@ -18,7 +18,7 @@
         <%
             User user = (User) session.getAttribute("user");
             String buildingId = request.getParameter("buildingId");
-
+            
             if (user == null) {
                 response.sendRedirect("index.jsp");
                 return;
@@ -26,7 +26,21 @@
                 response.sendRedirect("buildings.jsp");
                 return;
             }
-
+            
+            try {
+                int tempId = Integer.parseInt(buildingId);
+                
+                if (tempId <= 0) {
+                    response.sendRedirect("buildings.jsp");
+                    return;
+                }
+                
+                buildingId = String.valueOf(tempId);
+            } catch (NumberFormatException ex) {
+                response.sendRedirect("buildings.jsp");
+                return;
+            }
+            
             BuildingController buildingController = new BuildingController();
             Building building = buildingController.getCustomerBuilding(Integer.parseInt(buildingId), user.getUserId());
 
@@ -98,6 +112,30 @@
             %>
         </table>
         <br><br>
+        <h3>Damage reports</h3>
+        <table class="overview">
+            <tr>
+                <th style="width: 200px;">Upload date</th>
+                <th style="width: 200px;">Damage title</th>
+                <th>Damage description</th>
+            </tr>
+            <% 
+                ArrayList<Damage> damage = buildingController.getDamages(Integer.parseInt(buildingId));
+                
+                if (damage.size() > 0) {
+                    for (Damage d : damage) {
+                        out.print("<tr>");
+                        out.print("<td>" + d.getDmgDate() + "</td>");
+                        out.print("<td>" + d.getDmgTitle() + "</td>");
+                        out.print("<td>" + d.getDmgDesc() + "</td>");
+                        out.print("</tr>");
+                    }
+                } else { 
+                     out.print("<tr><td colspan=\"3\">There are no damages available for this building yet.</td></tr>");
+                }
+            %>
+        </table>
+        <br><br>
         <h3>Other documents</h3>
         <table class="overview">
             <tr>
@@ -121,28 +159,6 @@
                 }
             %>
         </table>
-        
-        <h3>Damage reports</h3>
-        <table class="overview">
-            <tr>
-                <th style="width: 200px;">Upload date</th>
-                <th>note</th>
-                <th style="width: 50px;">View</th>
-            </tr>
-            <% 
-            ArrayList<Damage> damage = buildingController.getDamage(Integer.parseInt(buildingId));
-            if(damage.size() > 0) {
-                for(Damage d : damage) {
-                        out.print("<td>" + d.getDmgDate() + "</td>");
-                        out.print("<td>" + d.getDmgTitle() + "</td>");
-                        out.print("<td>" + d.getDmgDesc() + "</td>");
-                        out.print("</tr>");
-                }
-            } else { 
-                 out.print("<tr><td colspan=\"3\">There are no documents available for this building yet.</td></tr>");
-            }
-                %>
-        </table>
         <%
             if (request.getParameter("error") != null) {
                 out.print("<br /><h2 class=\"error-msg\">" + request.getParameter("error") + "</h2>");
@@ -154,7 +170,7 @@
             <input type="hidden" name="directory" value="upload-document">
             Choose file to upload:<br><br>
             <input type="file" name="file"><br><br>
-            Notes about the file: <input type="text" name="note">
+            Notes about the file: <input type="text" name="note" maxlength="100">
             <input type="hidden" name="action" value="upload-document">
             <input type="hidden" name="buildingId" value="<%= buildingId %>">
             <input type="submit" value="Upload document">

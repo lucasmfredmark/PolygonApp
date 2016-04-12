@@ -21,7 +21,9 @@ public class UserController {
     }
     
     public User loginUser(String email, String password) throws SQLException {
-        if (email != null && password != null && !email.isEmpty() && !password.isEmpty()) {
+        if (email != null && password != null &&
+            !email.isEmpty() && !password.isEmpty() &&
+            password.length() <= 20) {
             User user = userMapper.getUserByEmail(email);
             
             if (user != null) {
@@ -36,7 +38,8 @@ public class UserController {
     
     public boolean registerUser(String email, String fullname, String password) throws SQLException {
         if (email != null && fullname != null && password != null &&
-            !email.isEmpty() && !fullname.isEmpty() && !password.isEmpty()) {
+            !email.isEmpty() && !fullname.isEmpty() && !password.isEmpty() &&
+            fullname.length() <= 50 && password.length() <= 20) {
             return userMapper.insertUser(email, fullname, password);
         }
         
