@@ -133,6 +133,31 @@ public class BuildingServlet extends HttpServlet {
                     }
                     break;
                 }
+                case "request-checkup": {
+                    if (request.getSession().getAttribute("user") != null) {
+                        String orderDesc = "Check-up";
+                        int serviceId = 1;
+                        int buildingId = 0;
+                        
+                        try {
+                            buildingId = Integer.parseInt(request.getParameter("buildingId"));
+                        } catch (NumberFormatException ex) {
+                        }
+                        
+                        User user = (User) request.getSession().getAttribute("user");
+                        
+                        if (buildingController.requestCheckup(orderDesc, serviceId, buildingId, user)) {
+                            String message = "A check-up has been requested for your building. An employee will look into your case as soon as possible.";
+                            response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                        } else {
+                            String message = "A check-up could not be requested for your building. Try again later.";
+                            response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                        }
+                    } else {
+                        response.sendRedirect("index.jsp");
+                    }
+                    break;
+                }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

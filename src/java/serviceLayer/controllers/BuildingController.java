@@ -12,6 +12,7 @@ import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
 import serviceLayer.entities.Damage;
 import serviceLayer.entities.Document;
+import serviceLayer.entities.User;
 
 /**
  *
@@ -99,7 +100,48 @@ public class BuildingController{
         
         return false;
     }
+    
     public ArrayList<Damage> getDamages(int buildingId) throws SQLException {
         return buildingMapper.getBuildingDamages(buildingId);
+    }
+    
+    public boolean requestCheckup(String orderDesc, int serviceId, int buildingId, User user) throws SQLException {
+        // A mail server is required for the e-mail to be sent
+        /*
+        String to = "checkup@polygon.dk";
+        String from = user.getUserMail();
+        String host = "localhost";
+        Properties properties = System.getProperties();
+        properties.setProperty("mail.smtp.host", host);
+        Session session = Session.getDefaultInstance(properties);
+        
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject("Check-up requested from " + user.getFullName());
+            
+            Building building = getCustomerBuilding(buildingId, user.getUserId());
+            
+            if (building != null) {
+                message.setText("A check-up has been requested from " + user.getFullName() + " (" + user.getUserMail() + ").\n\n"
+                        + "== Building Information ==\n\n"
+                        + "Building ID: " + building.getBuildingId() + "\n"
+                        + "Building name: " + building.getBuildingName() + "\n"
+                        + "Building address: " + building.getBuildingAddress() + "\n"
+                        + "Building parcel number: " + building.getBuildingParcelNumber() + "\n"
+                        + "Building size: " + building.getBuildingSize());
+                
+                Transport.send(message);
+                */
+                return buildingMapper.addOrder(orderDesc, serviceId, buildingId);
+            /*
+            }
+        } catch (MessagingException ex) {
+            ex.printStackTrace();
+        }
+        
+        return false;
+        */
     }
 }
