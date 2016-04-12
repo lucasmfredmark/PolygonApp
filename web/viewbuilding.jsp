@@ -80,10 +80,22 @@
         <div class="button">
             <a href="adddamage.jsp?buildingId=<%= buildingId %>">Report a damage</a>
         </div>
+        <form action="BuildingServlet" method="POST" style="padding: 0;">
+            <input type="hidden" name="action" value="request-checkup">
+            <input type="hidden" name="buildingId" value="<%= buildingId %>">
+            <input type="submit" value="Request a check-up">
+        </form>
         <div class="button">
             <a href="buildings.jsp"><- Back to overview</a>
         </div>
         <br><hr><br>
+        <%
+            if (request.getParameter("error") != null) {
+                out.print("<h2 class=\"error-msg\">" + request.getParameter("error") + "</h2><br />");
+            } else if (request.getParameter("success") != null) {
+                out.print("<h2 class=\"success-msg\">" + request.getParameter("success") + "</h2><br />");
+            }
+        %>
         <h3>Check-up reports</h3>
         <table class="overview">
             <tr>
@@ -159,13 +171,6 @@
                 }
             %>
         </table>
-        <%
-            if (request.getParameter("error") != null) {
-                out.print("<br /><h2 class=\"error-msg\">" + request.getParameter("error") + "</h2>");
-            } else if (request.getParameter("success") != null) {
-                out.print("<br /><h2 class=\"success-msg\">" + request.getParameter("success") + "</h2>");
-            }
-        %>
         <form method="POST" enctype="multipart/form-data" action="UploadServlet">
             <input type="hidden" name="directory" value="upload-document">
             Choose file to upload:<br><br>
