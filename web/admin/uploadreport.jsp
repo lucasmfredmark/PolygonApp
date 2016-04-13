@@ -33,12 +33,13 @@
                 User user = (User) session.getAttribute("user");
                 String buildingId = request.getParameter("buildingId");
                 if (user == null) {
-                    response.sendRedirect("adminIndex.jsp");
+                    response.sendRedirect("index.jsp");
                     return;
-                }else if (buildingId == null) {
+                } else if (buildingId == null) {
                 response.sendRedirect("building.jsp");
                 return;
             }
+            
                 
 
                 BuildingController bc = new BuildingController();
@@ -63,11 +64,11 @@
             
         </table>
         <form method="POST" enctype="multipart/form-data" action="UploadServlet">
-            <input type="hidden" name="directory" value="upload-document">
+            <input type="hidden" name="directory" value="upload-report">
             Choose file to upload:<br><br>
             <input type="file" name="file"><br><br>
             Notes about the file: <input type="text" name="note" maxlength="100">
-            <input type="hidden" name="action" value="upload-document">
+            <input type="hidden" name="action" value="upload-report">
             <input type="hidden" name="buildingId" value="<%= buildingId%>">
             <input type="submit" value="Upload Report.pdf">
         </form>

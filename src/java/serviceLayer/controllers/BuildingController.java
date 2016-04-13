@@ -76,6 +76,13 @@ public class BuildingController{
     public int getBuildingConditionLevel(int buildingId) throws SQLException {
         return buildingMapper.getBuildingConditionLevel(buildingId);
     }
+    
+    public boolean addEmployeeCheckUp(String checkupNote, String checkupPath, int buildingId, int userId) throws SQLException{
+        if (checkupNote != null && checkupPath != null && buildingId > 0 && userId > 0) {
+            return buildingMapper.addCustomerDocument(checkupNote, checkupPath, buildingId, userId);
+    }
+        return false;
+    }
 
     public boolean addCustomerDocument(String documentNote, String documentPath, int buildingId, int userId) throws SQLException {
         if (documentNote != null && documentPath != null && buildingId > 0 && userId > 0) {
