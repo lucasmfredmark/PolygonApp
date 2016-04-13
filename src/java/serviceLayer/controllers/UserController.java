@@ -7,6 +7,7 @@ package serviceLayer.controllers;
 
 import dataAccessLayer.mappers.UserMapper;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import serviceLayer.entities.User;
 
 /**
@@ -24,7 +25,7 @@ public class UserController {
         if (email != null && password != null &&
             !email.isEmpty() && !password.isEmpty() &&
             password.length() <= 20) {
-            User user = userMapper.getUserByEmail(email);
+            User user = getUserByEmail(email);
             
             if (user != null) {
                 if (user.getUserPass().equals(password)) {
@@ -44,5 +45,13 @@ public class UserController {
         }
         
         return false;
+    }
+    
+    public User getUserByEmail(String email) throws SQLException {
+        return userMapper.getUserByEmail(email);
+    }
+    
+    public ArrayList<User> getAllUsers(String userType) throws SQLException {
+        return userMapper.getAllUsers(userType);
     }
 }

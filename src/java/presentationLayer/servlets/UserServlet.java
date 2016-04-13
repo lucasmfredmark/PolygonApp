@@ -52,7 +52,7 @@ public class UserServlet extends HttpServlet {
                             request.getSession().setAttribute("user", user);
                             
                             if (user.getUserType().equals(User.userType.ADMIN)) {
-                                response.sendRedirect("admin/adminIndex.jsp");
+                                response.sendRedirect("admin/index.jsp");
                                 break;
                             }
                             
@@ -90,7 +90,7 @@ public class UserServlet extends HttpServlet {
 
                     if (session != null) {
                         session.invalidate();
-                    }
+                    } 
 
                     response.sendRedirect("index.jsp");
                     break;

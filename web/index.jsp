@@ -14,7 +14,7 @@
             
             if (user != null) {
                 if (user.getUserType().equals(User.userType.ADMIN.toString())) {
-                    response.sendRedirect("admin/adminIndex.jsp");
+                    response.sendRedirect("admin/index.jsp");
                     return;
                 }
                 

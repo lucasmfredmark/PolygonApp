@@ -1,9 +1,3 @@
-<%-- 
-    Document   : adminIndex
-    Created on : 12-04-2016, 13:54:02
-    Author     : HazemSaeid
---%>
-
 <%@page import="serviceLayer.controllers.AdminController"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="serviceLayer.entities.Building"%>
@@ -16,7 +10,7 @@
         <link rel="stylesheet" type="text/css" href="css/resets.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Polygon - Overview</title>
+        <title>Polygon - Admin index</title>
     </head>
     <body>
         
