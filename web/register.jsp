@@ -1,3 +1,4 @@
+<%@page import="serviceLayer.entities.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -9,7 +10,14 @@
     </head>
     <body>
         <%
-            if (session.getAttribute("user") != null) {
+            User user = (User) session.getAttribute("user");
+            
+            if (user != null) {
+                if (user.getUserType().equals(User.userType.ADMIN.toString())) {
+                    response.sendRedirect("viewcustomers.jsp");
+                    return;
+                }
+                
                 response.sendRedirect("buildings.jsp");
                 return;
             }
