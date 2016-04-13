@@ -7,6 +7,7 @@ package serviceLayer.controllers;
 
 import dataAccessLayer.mappers.UserMapper;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import serviceLayer.entities.User;
 
 /**
@@ -48,5 +49,9 @@ public class UserController {
     
     public User getUserByEmail(String email) throws SQLException {
         return userMapper.getUserByEmail(email);
+    }
+    
+    public ArrayList<User> getAllUsers(String userType) throws SQLException {
+        return userMapper.getAllUsers(userType);
     }
 }

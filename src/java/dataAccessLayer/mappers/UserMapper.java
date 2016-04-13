@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import serviceLayer.entities.Building;
 import serviceLayer.entities.User;
 import serviceLayer.entities.User.userType;
 
@@ -29,7 +28,7 @@ public class UserMapper {
         ResultSet rs = pstmt.executeQuery();
 
         if (rs.next()) {
-            userType userType = null;
+            userType userType;
 
             if (rs.getString(5).equals(User.userType.ADMIN.toString())) {
                 userType = User.userType.ADMIN;
@@ -62,6 +61,7 @@ public class UserMapper {
 
         return false;
     }
+    
     public ArrayList<User> getAllUsers(String usertype) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "SELECT * FROM users WHERE usertype = ?";
@@ -70,12 +70,14 @@ public class UserMapper {
         ResultSet rs = pstmt.executeQuery();
         ArrayList<User> userList = new ArrayList();
         while (rs.next()) {
-            userType userType = null;
-            if (rs.getString(5).equals(User.userType.ADMIN)) {
+            userType userType;
+
+            if (rs.getString(5).equals(User.userType.ADMIN.toString())) {
                 userType = User.userType.ADMIN;
             } else {
                 userType = User.userType.CUSTOMER;
             }
+            
             User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), userType, rs.getString(6));
             userList.add(user);
         }
