@@ -210,13 +210,12 @@ public class BuildingMapper {
         return dmgList;
     }
     
-    public boolean addOrder(String orderDesc, int serviceId, int buildingId) throws SQLException {
+    public boolean addOrder(String orderDesc, int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
-        String sql = "INSERT INTO orders (odesc, fk_serviceid, fk_buildingid) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO orders (odesc, fk_buildingid) VALUES (?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, orderDesc);
-        pstmt.setInt(2, serviceId);
-        pstmt.setInt(3, buildingId);
+        pstmt.setInt(2, buildingId);
         
         // Returns true if the number of rows affected in the database is 1, else returns false.
         int rowCount = pstmt.executeUpdate();

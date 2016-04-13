@@ -146,7 +146,7 @@ public class BuildingServlet extends HttpServlet {
                         
                         User user = (User) request.getSession().getAttribute("user");
                         
-                        if (buildingController.requestCheckup(orderDesc, serviceId, buildingId, user)) {
+                        if (buildingController.requestCheckup(orderDesc, buildingId, user)) {
                             String message = "A check-up has been requested for your building. An employee will look into your case as soon as possible.";
                             response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
                         } else {

@@ -20,6 +20,7 @@ import org.junit.Test;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.Damage;
 import serviceLayer.entities.Document;
+import serviceLayer.entities.User;
 
 /**
  *
@@ -32,6 +33,8 @@ public class BuildingControllerTest {
     private static final String USER = "root";
     private static final String PWD = "root";
     public static Connection conn;
+    private UserController uc;
+    private User user;
 
     public enum userType {
         CUSTOMER, ADMIN
@@ -55,7 +58,7 @@ public class BuildingControllerTest {
             conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
             conn.setAutoCommit(false);
-            
+
             // create
             st.addBatch("DROP DATABASE IF EXISTS polygon");
             st.addBatch("CREATE DATABASE polygon");
@@ -79,30 +82,39 @@ public class BuildingControllerTest {
                     + "FOREIGN KEY (fk_userid) REFERENCES users(userid) ON DELETE CASCADE"
                     + ")");
             st.addBatch("CREATE TABLE documents ("
-                    +"documentid INT AUTO_INCREMENT PRIMARY KEY,"
-                    +"ddate DATETIME DEFAULT CURRENT_TIMESTAMP,"
-                    +"dnote VARCHAR(100),"
-                    +"dpath VARCHAR(255),"
-                    +"fk_buildingid INT,"
-                    +"fk_userid INT,"
-                    +"FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid),"
-                    +"FOREIGN KEY (fk_userid) REFERENCES users(userid)"
-                    +")");
+                    + "documentid INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "ddate DATETIME DEFAULT CURRENT_TIMESTAMP,"
+                    + "dnote VARCHAR(100),"
+                    + "dpath VARCHAR(255),"
+                    + "fk_buildingid INT,"
+                    + "fk_userid INT,"
+                    + "FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid),"
+                    + "FOREIGN KEY (fk_userid) REFERENCES users(userid)"
+                    + ")");
+            st.addBatch("CREATE TABLE orders ("
+                    + "orderid INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "odate DATETIME DEFAULT CURRENT_TIMESTAMP,"
+                    + "ostatus INT, /* 0 = Incomplete, 1 = Complete */"
+                    + "odone DATETIME, /* DATO FOR COMPLETION */"
+                    + "odesc TEXT, /* Valgfri beskrivelse af problem */"
+                    + "fk_buildingid INT,"
+                    + "FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid)"
+                    + ")");
             st.addBatch("CREATE TABLE damages ("
-                    +"damageid INT AUTO_INCREMENT PRIMARY KEY,"
-                    +"dmgdate DATETIME DEFAULT CURRENT_TIMESTAMP, /* Hvornår den er oprettet */"
+                    + "damageid INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "dmgdate DATETIME DEFAULT CURRENT_TIMESTAMP, /* Hvornår den er oprettet */"
                     + "dmgtitle VARCHAR(50),"
                     + "dmgdesc TEXT,"
                     + "fk_buildingid INT,"
                     + "FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid)"
                     + ")");
-            
+
             // insert
             st.addBatch("INSERT INTO users (usermail, userpass, fullname) VALUES ('test@polygon.dk','test','Power User')");
             st.addBatch("INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('test', 'test', 'test', 100, 1)");
-            
+
             st.executeBatch();
-            
+
             // end transaction
             conn.commit();
         } catch (ClassNotFoundException | SQLException ex) {
@@ -110,6 +122,8 @@ public class BuildingControllerTest {
         } finally {
             conn.close();
         }
+        uc = new UserController();
+        uc.registerUser("emailForBuildingTests@test.dk", "test johansen", "123");
     }
 
     @After
@@ -125,7 +139,7 @@ public class BuildingControllerTest {
         assertEquals("some address", b.getBuildingAddress());
         assertTrue(bc.deleteCustomerBuilding(2));
     }
-    
+
     @Test
     public void getAllBuildingsTest() throws SQLException {
         BuildingController bc = new BuildingController();
@@ -135,7 +149,7 @@ public class BuildingControllerTest {
         int size = buildings.size();
         assertTrue(size > 1);
     }
-    
+
     @Test
     public void editBuildingTest() throws SQLException {
         BuildingController bc = new BuildingController();
@@ -145,6 +159,7 @@ public class BuildingControllerTest {
         assertTrue(bc.editCustomerBuilding("editTest", "edit address", "edit8", 160, 2));
         System.out.println("After editing: " + bc.getCustomerBuilding(2, 1).getBuildingParcelNumber());
     }
+
     @Test
     public void addAndGetDocumentTest() throws SQLException {
         BuildingController bc = new BuildingController();
@@ -155,7 +170,7 @@ public class BuildingControllerTest {
         int expResult = 1;
         assertEquals(expResult, stack.size());
     }
-    
+
     @Test
     public void addAndDeleteDamageTest() throws SQLException {
         BuildingController bc = new BuildingController();
@@ -164,19 +179,31 @@ public class BuildingControllerTest {
         System.out.println("Can we delete a damage?");
         assertTrue(bc.deleteDamage(1));
     }
-    
+
     @Test
-    public void addAndGetDamages() throws SQLException {
+    public void addAndGetDamagesTest() throws SQLException {
         BuildingController bc = new BuildingController();
         bc.addDamage("vandskade", "my basement is flooded", 1);
         bc.addDamage("svamp", "spongebob lives in my basement", 1);
         ArrayList<Damage> stack = bc.getDamages(1);
         assertTrue(stack.size() > 1);
     }
-    
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+
+    @Test
+    public void addOrderTest() throws SQLException {
+        BuildingController bc = new BuildingController();
+        String orderDescription = "this is a test order";
+        
+        // User entity sent
+        User user = uc.getUserByEmail("emailForBuildingTests@test.dk");
+        int userId = user.getUserId();
+        
+        // Setup building
+        bc.addCustomerBuilding("addOrderTestBuilding", "order address", "test4", 9999, userId);
+        ArrayList<Building> buildings = bc.getCustomerBuildings(user.getUserId());
+        Building building = buildings.get(buildings.size() - 1);
+        int buildingId = building.getBuildingId();
+        // The test
+        assertTrue(bc.requestCheckup(orderDescription, buildingId, user));
+    }
 }
