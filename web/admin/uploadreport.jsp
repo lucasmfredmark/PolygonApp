@@ -31,7 +31,10 @@
             <%
 
                 User user = (User) session.getAttribute("user");
-                String buildingId = request.getParameter("buildingId");
+                //String buildingId = request.getParameter("buildingId");
+                // String orderId = request.getParameter("orderId");
+                String buildingId = "1";
+                String orderId = "1";
                 if (user == null) {
                     response.sendRedirect("index.jsp");
                     return;
@@ -67,9 +70,10 @@
             <input type="hidden" name="directory" value="upload-report">
             Choose file to upload:<br><br>
             <input type="file" name="file"><br><br>
-            Notes about the file: <input type="text" name="note" maxlength="100">
+            Condition Level: <input type="text" name="conditionLevel" maxlength="1">
             <input type="hidden" name="action" value="upload-report">
             <input type="hidden" name="buildingId" value="<%= buildingId%>">
+            <input type="hidden" name="orderId" value="<%= orderId%>">
             <input type="submit" value="Upload Report.pdf">
         </form>
     </body>
