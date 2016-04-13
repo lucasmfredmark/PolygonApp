@@ -132,6 +132,33 @@ public class UploadServlet extends HttpServlet {
 
                     switch (action) {
                         case "upload-report": {
+                             for (FileItem fileItem : stack) {
+                                String fieldName = fileItem.getFieldName();
+                                
+                                switch (fieldName) {
+                                    case "note": {
+                                        note = fileItem.getString();
+                                        break;
+                                    }
+                                    case "buildingId": {
+                                        buildingId = 0;
+                                        
+                                        try {
+                                            buildingId = Integer.parseInt(fileItem.getString());
+                                        } catch (NumberFormatException ex) {
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                            
+                            if (bc.addEmployeeCheckUp(note, fileName, buildingId, user.getUserId())) {
+                                String message = "The checkup has been added to the checkup list.";
+                                response.sendRedirect("building.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                            } else {
+                                String message = "The document couldn't be added to the document list.";
+                                response.sendRedirect("building.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                            }
                             break;
                         }
                         case "upload-document": {
