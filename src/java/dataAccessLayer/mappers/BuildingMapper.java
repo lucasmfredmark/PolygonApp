@@ -31,7 +31,7 @@ public class BuildingMapper {
     }
     
     // Fetches all the buildings a userid possesses from the database.
-    public ArrayList<Building> getCustomerBuildings(int userId) throws SQLException {
+    public ArrayList<Building> getAllBuildings(int userId) throws SQLException {
         Connection conn = DBConnector.getConnection();
         String sql = "SELECT * FROM buildings WHERE fk_userid = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);

@@ -40,7 +40,7 @@ public class UserServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String action = request.getParameter("action");
             UserController userController = new UserController();
-            
+
             switch (action) {
                 case "login": {
                     if (request.getSession().getAttribute("user") == null) {
@@ -50,7 +50,14 @@ public class UserServlet extends HttpServlet {
 
                         if (user != null) {
                             request.getSession().setAttribute("user", user);
+                            
+                            if (user.getUserType().equals(User.userType.ADMIN)) {
+                                response.sendRedirect("admin/adminIndex.jsp");
+                                break;
+                            }
+                            
                             response.sendRedirect("buildings.jsp");
+                            break;
                         } else {
                             String message = "The user doesn\'t exist, or you typed the wrong password.";
                             response.sendRedirect("index.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
@@ -80,11 +87,11 @@ public class UserServlet extends HttpServlet {
                 }
                 case "logout": {
                     HttpSession session = request.getSession(false);
-                    
+
                     if (session != null) {
                         session.invalidate();
                     }
-                    
+
                     response.sendRedirect("index.jsp");
                     break;
                 }

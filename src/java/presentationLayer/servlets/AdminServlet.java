@@ -12,8 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import serviceLayer.controllers.AdminController;
-import serviceLayer.entities.User;
 
 /**
  *
@@ -31,44 +29,11 @@ public class AdminServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String action = request.getParameter("action");
-            AdminController ac = new AdminController();
-            User user = (User) request.getSession().getAttribute("user");
-            switch (action) {
-                //cases goes here
-                // Remember to check on the session for a user != null
-                // Remember to check if the user in the session is actually an admin
-                case "addReport": {
-                    if (request.getSession().getAttribute("user") != null && user.getUserType().equals(User.userType.ADMIN)) {
-
-                    }
-                    break;
-                }
-                case "viewBuildingByCustomer": {
-                    if (request.getSession().getAttribute("user") != null && user.getUserType().equals(User.userType.ADMIN)) {
-
-                    }
-                    break;
-                }
-                case "viewAllCustomers": {
-                    if (request.getSession().getAttribute("user") != null && user.getUserType().equals(User.userType.ADMIN)) {
-                    }
-                    break;
-                }
-                case "viewSupportTickets": {
-                    if (request.getSession().getAttribute("user") != null && user.getUserType().equals(User.userType.ADMIN)) {
-                    }
-                    break;
-                }
-                default:
-                    System.out.println("No functionality implemented yet");
-                    break;
-            }
-
+            
         }
     }
 
