@@ -105,7 +105,7 @@ public class BuildingController{
         return buildingMapper.getBuildingDamages(buildingId);
     }
     
-    public boolean requestCheckup(String orderDesc, int serviceId, int buildingId, User user) throws SQLException {
+    public boolean requestCheckup(String orderDesc, int buildingId, User user) throws SQLException {
         // A mail server is required for the e-mail to be sent
         /*
         String to = "checkup@polygon.dk";
@@ -134,7 +134,7 @@ public class BuildingController{
                 
                 Transport.send(message);
                 */
-                return buildingMapper.addOrder(orderDesc, serviceId, buildingId);
+                return buildingMapper.addOrder(orderDesc, buildingId);
             /*
             }
         } catch (MessagingException ex) {
