@@ -10,6 +10,7 @@ import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
 import serviceLayer.entities.Damage;
 import serviceLayer.entities.Document;
+import serviceLayer.entities.Order;
 
 public class BuildingMapper {
     
@@ -237,5 +238,19 @@ public class BuildingMapper {
         int rowCount = pstmt.executeUpdate();
         
         return rowCount == 1;
+    }
+    
+    public Order getOrderByBuildingId(int buildingId) throws SQLException {
+        Connection conn = DBConnector.getConnection();
+        String sql = "SELECT * FROM orders WHERE fk_buildingid = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, buildingId);
+        ResultSet rs = pstmt.executeQuery();
+        
+        if (rs.next()) {
+            return new Order(rs.getInt("orderid"),rs.getString("odate"), rs.getString("ostatus"),rs.getString("odone"));
+        }
+        
+        return null;
     }
 }

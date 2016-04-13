@@ -12,6 +12,7 @@ import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
 import serviceLayer.entities.Damage;
 import serviceLayer.entities.Document;
+import serviceLayer.entities.Order;
 import serviceLayer.entities.User;
 
 /**
@@ -151,4 +152,9 @@ public class BuildingController{
         return false;
         */
     }
+    
+    public Order getOrderByBuildingId(int buildingId) throws SQLException {
+        return buildingMapper.getOrderByBuildingId(buildingId);
+    }
+    
 }
