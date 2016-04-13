@@ -1,17 +1,7 @@
 <%@page import="serviceLayer.entities.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
-        <link href="css/resets.css" rel="stylesheet" type="text/css">
-        <link href="css/new_style.css" rel="stylesheet" type="text/css">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Polygon - Register</title>
-    </head>
-    <body class="index">
-        <!-- Session check -->
-        <%
+<%
+            // SESSION CHECK
             User user = (User) session.getAttribute("user");
             
             if (user != null) {
@@ -24,7 +14,16 @@
                 return;
             }
         %>
-        
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+        <link href="css/resets.css" rel="stylesheet" type="text/css">
+        <link href="css/new_style.css" rel="stylesheet" type="text/css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Polygon - Register</title>
+    </head>
+    <body class="index">
         <!-- Content Include -->
         <div id="register">
             <img class="logo" src="images/polygon-logo.svg" alt="Polygon">
