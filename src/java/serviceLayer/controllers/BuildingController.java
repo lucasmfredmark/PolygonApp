@@ -77,9 +77,9 @@ public class BuildingController{
         return buildingMapper.getBuildingConditionLevel(buildingId);
     }
     
-    public boolean addEmployeeCheckUp(String checkupNote, String checkupPath, int buildingId, int userId) throws SQLException{
-        if (checkupNote != null && checkupPath != null && buildingId > 0 && userId > 0) {
-            return buildingMapper.addCustomerDocument(checkupNote, checkupPath, buildingId, userId);
+    public boolean addCheckUpReport(String checkupPath, int conditionLevel, int buildingId, int orderId) throws SQLException{
+        if (checkupPath != null && buildingId > 0 && orderId > 0 && conditionLevel >= 0 && conditionLevel <= 3) {
+            return buildingMapper.addCheckUpReport(checkupPath, conditionLevel, buildingId, orderId);
     }
         return false;
     }

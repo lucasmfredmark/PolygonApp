@@ -151,14 +151,14 @@ public class UploadServlet extends HttpServlet {
                                     }
                                 }
                             }
-                            
-                            if (bc.addEmployeeCheckUp(note, fileName, buildingId, user.getUserId())) {
+                            /* Un comment this when we can pass orderId to the method
+                            if (bc.addCheckUpReport(path, conditionLevel, buildingId, orderId)) {
                                 String message = "The checkup has been added to the checkup list.";
                                 response.sendRedirect("building.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
                             } else {
                                 String message = "The document couldn't be added to the document list.";
                                 response.sendRedirect("building.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
-                            }
+                            } */
                             break;
                         }
                         case "upload-document": {
