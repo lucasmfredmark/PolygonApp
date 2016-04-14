@@ -16,16 +16,23 @@
     
     <context-param>
         <description>Location to store uploaded reports</description>
-        <param-name>report-upload</param-name>
+        <param-name>upload-report</param-name>
         <param-value>
-            C:\Users\hazem\Documents\NetBeansProjects\PolygonApp\PolygonApp\web\uploads\reports
+            C:\Users\Patrick\Documents\NetBeansProjects\PolygonApp\web\uploads\reports\
         </param-value>
     </context-param>
     <context-param>
         <description>Location to store uploaded documents</description>
-        <param-name>document-upload</param-name>
+        <param-name>upload-document</param-name>
         <param-value>
-            C:\Users\hazem\Documents\NetBeansProjects\PolygonApp\PolygonApp\web\uploads\documents
+            C:\Users\Patrick\Documents\NetBeansProjects\PolygonApp\web\uploads\documents\
+        </param-value>
+    </context-param>
+    <context-param>
+        <description>Location to store uploaded documents</description>
+        <param-name>upload-image</param-name>
+        <param-value>
+            C:\Users\Patrick\Documents\NetBeansProjects\PolygonApp\web\uploads\images\
         </param-value>
     </context-param>
     

@@ -42,10 +42,10 @@ public class UploadServlet extends HttpServlet {
     private ArrayList<FileItem> stack;
     boolean isPathSet;
     boolean isWritten;
-
+    
     @Override
     public void init() {
-        // The file path is specified in folder Configuration Files -> web.xml. 
+        // The file path is specified in folder Configuration Files -> web.xml.
         // The file path is set to work for a user, so it won't run on your computer. Fow now.
         bc = new BuildingController();
         fileName = null;
@@ -57,7 +57,7 @@ public class UploadServlet extends HttpServlet {
         stack = new ArrayList();
         isPathSet = false;
     }
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -72,9 +72,9 @@ public class UploadServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         // Check that we have a file upload request
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-
+        
         try (PrintWriter out = response.getWriter()) {
-
+            
             if (!isMultipart) {
                 /* TODO output your page here. You may use following sample code. */
                 out.println("<!DOCTYPE html>");
@@ -100,7 +100,7 @@ public class UploadServlet extends HttpServlet {
                 List fileItems = uploadHandler.parseRequest(request);
                 // Process the uploaded file items
                 Iterator i = fileItems.iterator();
-
+                
                 while (i.hasNext()) {
                     FileItem fi = (FileItem) i.next();
                     if (!fi.isFormField()) {
@@ -126,7 +126,7 @@ public class UploadServlet extends HttpServlet {
                         }
                     }
                 }
-
+                
                 if (isWritten) {
                     String action = null;
                     for (FileItem fileItem : stack) {
@@ -135,13 +135,13 @@ public class UploadServlet extends HttpServlet {
                             break;
                         }
                     }
-
+                    
                     User user = (User) request.getSession().getAttribute("user");
                     action = request.getParameter("action").toLowerCase();
-
+                    
                     switch (action) {
                         case "upload-report": {
-                             for (FileItem fileItem : stack) {
+                            for (FileItem fileItem : stack) {
                                 String fieldName = fileItem.getFieldName();
                                 path = fileItem.getFieldName();
                                 
@@ -168,18 +168,18 @@ public class UploadServlet extends HttpServlet {
                                         }
                                         break;
                                     }
-                                        
-                                    }
+                                    
                                 }
+                            }
                             if (bc.addCheckUpReport(path, conditionLevel, buildingId, orderId)) {
                                 String message = "The checkup has been added to the checkup list.";
                                 response.sendRedirect("uploadreport.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
                             } else {
                                 String message = "The document couldn't be added to the document list.";
                                 response.sendRedirect("uploadreport.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
-                            } 
+                            }
                             break;
-                        }   
+                        }
                         case "upload-document": {
                             for (FileItem fileItem : stack) {
                                 String fieldName = fileItem.getFieldName();
@@ -210,6 +210,35 @@ public class UploadServlet extends HttpServlet {
                             }
                             break;
                         }
+                        
+                        case "upload-image": {
+                            for (FileItem fileItem : stack) {
+                                String fieldName = fileItem.getFieldName();
+                                path = fileItem.getFieldName();
+                                
+                                switch (fieldName) {
+                                    case "buildingId": {
+                                        buildingId = 0;
+                                        
+                                        try {
+                                            buildingId = Integer.parseInt(fileItem.getString());
+                                        } catch (NumberFormatException ex) {
+                                        }
+                                        break;
+                                    }
+                                    
+                                }
+                            }
+                            if (bc.addCheckUpReport(path, conditionLevel, buildingId, orderId)) {
+                                String message = "The checkup has been added to the checkup list.";
+                                response.sendRedirect("uploadimg.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                            } else {
+                                String message = "The document couldn't be added to the document list.";
+                                response.sendRedirect("uploadimg.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                            }
+                            break;
+                        }
+                        
                     }
                 }
             }

@@ -94,6 +94,14 @@
         <div class="button">
             <a href='uploadreport.jsp?userId=<%=userId%>&buildingId=<%=buildingId%>'><-Upload a report to this building</a>
         </div>
+        
+        <br>
+        
+         <div class="button">
+            <a href='uploadimg.jsp?userId=<%=userId%>&buildingId=<%=buildingId%>'><-Upload an image to this building</a>
+        </div>
+        
+        <br>
        
         <div class="button">
             <a href="buildings.jsp"><- Back to overview</a>
