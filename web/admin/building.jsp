@@ -7,6 +7,7 @@
 <%@page import="serviceLayer.controllers.AdminController"%>
 <%@page import="serviceLayer.entities.Building"%>
 <%@page import="serviceLayer.entities.Checkup"%>
+<%@page import="serviceLayer.entities.Document"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="serviceLayer.controllers.BuildingController"%>
 <%@page import="serviceLayer.entities.User"%>
@@ -87,6 +88,30 @@
                     }
                 } else {
                     out.print("<tr><td colspan=\"5\">There are no check-up reports available for this building yet.</td></tr>");
+                }
+            %>
+        </table>
+        
+        <h3>Other documents</h3>
+        <table class="overview">
+            <tr>
+                <th style="width: 200px;">Upload date</th>
+                <th>Document note</th>
+                <th style="width: 50px;">View</th>
+            </tr>
+            <%
+                ArrayList<Document> documents = bc.getBuildingDocuments(buildingId);
+                
+                if (documents.size() > 0) {
+                    for (Document d : documents) {
+                        out.print("<tr onclick=\"document.location = 'uploads/documents/" + d.getDocumentPath() + "';\">");
+                        out.print("<td>" + d.getDocumentDate() + "</td>");
+                        out.print("<td>" + d.getDocumentNote() + "</td>");
+                        out.print("<td><a href=\"uploads/documents/" + d.getDocumentPath() + "\">View</a></td>");
+                        out.print("</tr>");
+                    }
+                } else {
+                    out.print("<tr><td colspan=\"3\">There are no documents available for this building yet.</td></tr>");
                 }
             %>
         </table>
