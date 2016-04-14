@@ -41,7 +41,7 @@
 
             <%
                 AdminController ac = new AdminController();
-                ArrayList<User> users = ac.getAllUsers("ADMIN");
+                ArrayList<User> users = ac.getAllUsers("CUSTOMER");
 
                 if (users.size() > 0) {
                     for (User u : users) {
