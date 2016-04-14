@@ -12,6 +12,7 @@ import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
 import serviceLayer.entities.Damage;
 import serviceLayer.entities.Document;
+import serviceLayer.entities.Order;
 import serviceLayer.entities.User;
 
 /**
@@ -77,9 +78,9 @@ public class BuildingController{
         return buildingMapper.getBuildingConditionLevel(buildingId);
     }
     
-    public boolean addEmployeeCheckUp(String checkupNote, String checkupPath, int buildingId, int userId) throws SQLException{
-        if (checkupNote != null && checkupPath != null && buildingId > 0 && userId > 0) {
-            return buildingMapper.addCustomerDocument(checkupNote, checkupPath, buildingId, userId);
+    public boolean addCheckUpReport(String checkupPath, int conditionLevel, int buildingId, int orderId) throws SQLException{
+        if (checkupPath != null && buildingId > 0 && orderId > 0 && conditionLevel >= 0 && conditionLevel <= 3) {
+            return buildingMapper.addCheckUpReport(checkupPath, conditionLevel, buildingId, orderId);
     }
         return false;
     }
@@ -151,4 +152,9 @@ public class BuildingController{
         return false;
         */
     }
+    
+    public Order getOrderByBuildingId(int buildingId) throws SQLException {
+        return buildingMapper.getOrderByBuildingId(buildingId);
+    }
+    
 }

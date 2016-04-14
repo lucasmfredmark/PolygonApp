@@ -12,6 +12,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,10 +32,13 @@ import serviceLayer.entities.User;
 public class UploadServlet extends HttpServlet {
     private File file;
     private String filePath;
+    private String path;
     private String fileName;
+    private int conditionLevel;
     private BuildingController bc;
     private String note;
     private int buildingId;
+    private int orderId;
     private ArrayList<FileItem> stack;
     boolean isPathSet;
     boolean isWritten;
@@ -44,7 +49,10 @@ public class UploadServlet extends HttpServlet {
         // The file path is set to work for a user, so it won't run on your computer. Fow now.
         bc = new BuildingController();
         fileName = null;
+        path = null;
         note = null;
+        conditionLevel = Integer.MIN_VALUE;
+        orderId = 0;
         buildingId = 0;
         stack = new ArrayList();
         isPathSet = false;
@@ -60,7 +68,7 @@ public class UploadServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, FileUploadException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         // Check that we have a file upload request
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
@@ -134,10 +142,11 @@ public class UploadServlet extends HttpServlet {
                         case "upload-report": {
                              for (FileItem fileItem : stack) {
                                 String fieldName = fileItem.getFieldName();
+                                path = fileItem.getFieldName();
                                 
                                 switch (fieldName) {
-                                    case "note": {
-                                        note = fileItem.getString();
+                                    case "conditionLevel": {
+                                        conditionLevel = Integer.parseInt(fileItem.getString());
                                         break;
                                     }
                                     case "buildingId": {
@@ -149,18 +158,27 @@ public class UploadServlet extends HttpServlet {
                                         }
                                         break;
                                     }
+                                    case "orderId": {
+                                        orderId = 0;
+                                        
+                                        try {
+                                            orderId = Integer.parseInt(fileItem.getString());
+                                        } catch (NumberFormatException ex) {
+                                        }
+                                        break;
+                                    }
+                                        
+                                    }
                                 }
-                            }
-                            
-                            if (bc.addEmployeeCheckUp(note, fileName, buildingId, user.getUserId())) {
+                            if (bc.addCheckUpReport(path, conditionLevel, buildingId, orderId)) {
                                 String message = "The checkup has been added to the checkup list.";
-                                response.sendRedirect("building.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                                response.sendRedirect("uploadreport.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
                             } else {
                                 String message = "The document couldn't be added to the document list.";
-                                response.sendRedirect("building.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
-                            }
+                                response.sendRedirect("uploadreport.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                            } 
                             break;
-                        }
+                        }   
                         case "upload-document": {
                             for (FileItem fileItem : stack) {
                                 String fieldName = fileItem.getFieldName();
@@ -195,9 +213,7 @@ public class UploadServlet extends HttpServlet {
                 }
             }
         } catch (FileUploadException ex) {
-            ex.printStackTrace();
         } catch (Exception ex) {
-            ex.printStackTrace();
         }
     }
     
@@ -213,7 +229,11 @@ public class UploadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**
@@ -227,7 +247,11 @@ public class UploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**

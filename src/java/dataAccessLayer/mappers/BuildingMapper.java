@@ -10,6 +10,7 @@ import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
 import serviceLayer.entities.Damage;
 import serviceLayer.entities.Document;
+import serviceLayer.entities.Order;
 
 public class BuildingMapper {
     
@@ -163,6 +164,22 @@ public class BuildingMapper {
         return rowCount == 1;
     }
     
+    // Adds a report to a building
+    public boolean addCheckUpReport(String checkupPath, int conditionLevel, int buildingId, int orderId) throws SQLException {
+        Connection conn = DBConnector.getConnection();
+        String sql = "INSERT INTO checkups (cpath, conditionlevel, fk_buildingid, fk_orderid) VALUES (?, ?, ?, ?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, checkupPath);
+        pstmt.setInt(2, conditionLevel);
+        pstmt.setInt(3, buildingId);
+        pstmt.setInt(4, orderId);
+        
+        // Returns true if the number of rows affected in the database is 1, else returns false.
+        int rowCount = pstmt.executeUpdate();
+
+        return rowCount == 1;
+    }
+    
     // Adds a damage record to a building.
     public boolean addDamage(String dmgTitle, String dmgDesc, int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
@@ -221,5 +238,19 @@ public class BuildingMapper {
         int rowCount = pstmt.executeUpdate();
         
         return rowCount == 1;
+    }
+    
+    public Order getOrderByBuildingId(int buildingId) throws SQLException {
+        Connection conn = DBConnector.getConnection();
+        String sql = "SELECT * FROM orders WHERE fk_buildingid = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, buildingId);
+        ResultSet rs = pstmt.executeQuery();
+        
+        if (rs.next()) {
+            return new Order(rs.getInt("orderid"),rs.getString("odate"), rs.getString("ostatus"),rs.getString("odone"));
+        }
+        
+        return null;
     }
 }

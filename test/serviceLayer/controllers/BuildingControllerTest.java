@@ -20,6 +20,7 @@ import org.junit.Test;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.Damage;
 import serviceLayer.entities.Document;
+import serviceLayer.entities.Order;
 import serviceLayer.entities.User;
 
 /**
@@ -123,7 +124,7 @@ public class BuildingControllerTest {
             conn.close();
         }
         uc = new UserController();
-        uc.registerUser("emailForBuildingTests@test.dk", "test johansen", "123");
+        uc.registerUser("emailfortests@test.dk", "test johansen", "123");
     }
 
     @After
@@ -195,7 +196,7 @@ public class BuildingControllerTest {
         String orderDescription = "this is a test order";
         
         // User entity sent
-        User user = uc.getUserByEmail("emailForBuildingTests@test.dk");
+        User user = uc.getUserByEmail("emailfortests@test.dk");
         int userId = user.getUserId();
         
         // Setup building
@@ -205,5 +206,22 @@ public class BuildingControllerTest {
         int buildingId = building.getBuildingId();
         // The test
         assertTrue(bc.requestCheckup(orderDescription, buildingId, user));
+    }
+    
+    @Test
+    public void getOrderTest() throws SQLException {
+        BuildingController bc = new BuildingController();
+        User user = uc.getUserByEmail("emailfortests@test.dk");
+        int userId = user.getUserId();
+        // Setup building
+        bc.addCustomerBuilding("getOrderTestBuilding", "getOrder address", "test8", 120, userId);
+        ArrayList<Building> buildings = bc.getCustomerBuildings(user.getUserId());
+        Building building = buildings.get(buildings.size() - 1);
+        int buildingId = building.getBuildingId();
+        String orderDescription = "this is a get order test";
+        bc.requestCheckup(orderDescription, buildingId, user);
+        int expResult = 1;
+        Order order = bc.getOrderByBuildingId(buildingId);
+        assertEquals(expResult, order.getOrderId());
     }
 }
