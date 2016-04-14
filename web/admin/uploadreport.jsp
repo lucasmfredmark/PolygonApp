@@ -31,40 +31,21 @@
             </tr>
             <%
                 User user = (User) session.getAttribute("user");
-                String buildingId = request.getParameter("buildingId");
-                String customerId = request.getParameter("userId");
-
+                
                 if (user == null) {
                     response.sendRedirect("index.jsp");
                     return;
-                } else if (buildingId == null) {
-                    response.sendRedirect("building.jsp");
-                    return;
-                } else if (customerId == null) {
-                    response.sendRedirect("building.jsp");
+                } 
+                if (request.getParameter("userId") == null || request.getParameter("buildingId") == null) {
+                    response.sendRedirect("index.jsp");
                 }
+                //int customerId = Integer.parseInt(request.getParameter("userId")); UNUSED VARIABLE SO FAR
+                int buildingId = Integer.parseInt(request.getParameter("buildingId"));
 
                 BuildingController bc = new BuildingController();
-                int conditionLevel = bc.getBuildingConditionLevel(Integer.parseInt(buildingId));
-                Order order = bc.getOrderByBuildingId(Integer.parseInt(buildingId));
+                int conditionLevel = bc.getBuildingConditionLevel(buildingId);
+                Order order = bc.getOrderByBuildingId(buildingId);
                 int orderId = order.getOrderId();
-
-                ArrayList<Checkup> checkups = bc.getBuildingCheckups(Integer.parseInt(buildingId));
-
-                if (checkups.size() > 0) {
-                    for (Checkup c : checkups) {
-                        out.print("<tr onclick=\"document.location = 'uploads/reports/" + c.getCheckupPath() + "';\">");
-                        out.print("<td>" + c.getCheckupDate() + "</td>");
-                        out.print("<td>" + c.getCheckupPath() + "</td>");
-                        out.print("<td>kek</td>");
-                        out.print("<td>" + c.getConditionLevel() + "</td>");
-                        out.print("<td><a href=\"uploads/reports/" + c.getCheckupPath() + "\">View</a></td>");
-                        out.print("</tr>");
-                    }
-                } else {
-                    out.print("<tr><td colspan=\"5\">There are no check-up reports available for this building yet.</td></tr>");
-                }
-
             %>
 
         </table>
@@ -76,7 +57,7 @@
             <input type="hidden" name="buildingId" value="<%= buildingId%>">
             <input type="hidden" name="orderId" value="<%= orderId%>">
             <input type="hidden" name="conditionLevel" value="<%= conditionLevel%>">
-            <input type="submit" value="Upload Report.pdf">
+            <input type="submit" value="Upload Report">
         </form>
     </body>
 </html>

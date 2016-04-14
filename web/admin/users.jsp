@@ -9,6 +9,7 @@
 <%@page import="serviceLayer.entities.Building"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="serviceLayer.controllers.AdminController"%>
+<%@page import="serviceLayer.controllers.UserController"%>
 <%@page import="serviceLayer.entities.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -39,15 +40,30 @@
         %>
         <br>
 
-            <%
-                AdminController ac = new AdminController();
-                ArrayList<User> users = ac.getAllUsers("ADMIN");
-
-                if (users.size() > 0) {
-                    for (User u : users) {
-                        out.print("<td>" + u.getFullName() + "</td>");
-                    }
-                }
-            %>
+            <table class="btable">
+                    <!-- TABLE HEADER -->
+                    <tr>
+                        <td>Building name</td>
+                        <td>Address</td>
+                        <td>Parcel number</td>
+                        <td>Size(m&sup2)</td>
+                        <td>Condition level</td>
+                    </tr>
+                    <%
+                        UserController uc = new UserController();
+                        ArrayList<User> users = uc.getAllUsers("CUSTOMER");
+                        for (User u : users) {
+                    %>
+                    <!-- Pass userId parameter (done) but also userName parameter in one line below: (not done)   -->
+                    <tr onclick="document.location='userBuildings.jsp?userId=<%= u.getUserId() %>';">
+                        <td><%= u.getUserMail() %></td>
+                        <td><%= u.getFullName() %></td>
+                        <td><%= u.getUserId() %></td>
+                        <td><%= u.getUserDate() %></td>
+                    </tr>
+                    <%
+                        }
+                    %>
+                </table>
     </body>
 </html>
