@@ -16,6 +16,12 @@
 
     try {
         int tempId = Integer.parseInt(buildingId);
+
+        if (tempId <= 0) {
+            response.sendRedirect("buildings.jsp");
+            return;
+        }
+
         buildingId = String.valueOf(tempId);
     } catch (NumberFormatException ex) {
         response.sendRedirect("buildings.jsp");
@@ -47,7 +53,7 @@
         <link href="css/resets.css" rel="stylesheet" type="text/css">
         <link href="css/new_style.css" rel="stylesheet" type="text/css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Polygon - Report damage</title>
+        <title>Polygon - Add document</title>
     </head>
     <body>
     <div id="site">
@@ -59,13 +65,13 @@
         </div>
         <div id="navigation">
             <div class="wrapper">
-                <h2>Reporting damage to building: <%= building.getBuildingName() %></h2>
+                <h2>Add document to building: <%= building.getBuildingName() %></h2>
                 <ul>
                     <li class="inactive"><a href="buildings.jsp">Your buildings</a></li>
                     <li class="inactive"><a href="viewbuilding.jsp?buildingId=<%= buildingId %>">Building</a></li>
                     <li class="inactive"><a href="editbuilding.jsp?buildingId=<%= buildingId %>">Edit building</a></li>
-                    <li class="active"><a href="adddamage.jsp?buildingId=<%= buildingId %>">Report damage</a></li>
-                    <li class="inactive"><a href="adddocument.jsp?buildingId=<%= buildingId %>">Add document</a></li>
+                    <li class="inactive"><a href="adddamage.jsp?buildingId=<%= buildingId %>">Report damage</a></li>
+                    <li class="active"><a href="adddocument.jsp?buildingId=<%= buildingId %>">Add document</a></li>
                     <li class="inactive"><a href="#">Services</a></li>
                 </ul>
             </div>
@@ -73,20 +79,16 @@
         <div id="content">
             <div class="wrapper">
                 <!-- BREADCRUMBS -->
-                <p class="breadcrumbs"><a href="buildings.jsp">Your buildings</a> &raquo; <a href="viewbuilding.jsp?buildingId=<%= buildingId %>">Building</a> &raquo; <span>Report damage</span></p>
-                <%
-                    if (request.getParameter("error") != null) {
-                        out.print("<h3>" + request.getParameter("error") + "</h3><br>");
-                    } else if (request.getParameter("success") != null) {
-                        out.print("<h3>" + request.getParameter("success") + "</h3><br>");
-                    }
-                %>
-                <form class="building" method="POST" action="BuildingServlet">
-                    <input type="text" name="dmgtitle" placeholder="Damage" maxlength="50" required autofocus>
-                    <textarea rows="6" maxlength="500" name="dmgdesc" placeholder="Describe the damage" required></textarea>
+                <p class="breadcrumbs"><a href="buildings.jsp">Your buildings</a> &raquo; <a href="viewbuilding.jsp?buildingId=<%= buildingId %>">Building</a> &raquo; <span>Add document</span></p>
+                <form enctype="multipart/form-data" class="building" method="POST" action="UploadServlet">
+                    <input type="hidden" name="directory" value="upload-document">
+                    <p>Choose file to upload:</p>
+                    <input type="file" name="file">
+                    <p>Notes about the file:</p>
+                    <input type="text" name="note" maxlength="100" required autofocus>
+                    <input type="hidden" name="action" value="upload-document">
                     <input type="hidden" name="buildingId" value="<%= buildingId %>">
-                    <input type="hidden" name="action" value="adddmg">
-                    <input type="submit" value="Report damage">
+                    <input type="submit" value="Upload document">
                 </form>
             </div>
         </div>

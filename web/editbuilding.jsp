@@ -55,10 +55,10 @@
                 <h2>Editing building: <%= building.getBuildingName() %></h2>
                 <ul>
                     <li class="inactive"><a href="buildings.jsp">Your buildings</a></li>
-                    <li class="inactive"><a href="viewbuilding.jsp?buildingId=<%= request.getParameter("buildingId") %>">Building</a></li>
-                    <li class="active"><a href="editbuilding.jsp?buildingId=<%= request.getParameter("buildingId") %>">Edit building</a></li>
-                    <li class="inactive"><a href="adddamage.jsp?buildingId=<%= request.getParameter("buildingId") %>">Report damage</a></li>
-                    <li class="inactive"><a href="adddocument.jsp?buildingId=<%= request.getParameter("buildingId") %>">Add document</a></li>
+                    <li class="inactive"><a href="viewbuilding.jsp?buildingId=<%= buildingId %>">Building</a></li>
+                    <li class="active"><a href="editbuilding.jsp?buildingId=<%= buildingId %>">Edit building</a></li>
+                    <li class="inactive"><a href="adddamage.jsp?buildingId=<%= buildingId %>">Report damage</a></li>
+                    <li class="inactive"><a href="adddocument.jsp?buildingId=<%= buildingId %>">Add document</a></li>
                     <li class="inactive"><a href="#">Services</a></li>
                 </ul>
             </div>
@@ -66,7 +66,7 @@
         <div id="content">
             <div class="wrapper">
                 <!-- BREADCRUMBS -->
-                <p class="breadcrumbs"><a href="buildings.jsp">Your buildings</a> &raquo; <a href="viewbuilding.jsp?buildingId=<%= request.getParameter("buildingId") %>">Building</a> &raquo; <span>Edit building</span></p>
+                <p class="breadcrumbs"><a href="buildings.jsp">Your buildings</a> &raquo; <a href="viewbuilding.jsp?buildingId=<%= buildingId %>">Building</a> &raquo; <span>Edit building</span></p>
                 <%
                     if (request.getParameter("error") != null) {
                         out.print("<h3>" + request.getParameter("error") + "</h3><br>");
