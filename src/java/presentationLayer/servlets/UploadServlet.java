@@ -137,7 +137,6 @@ public class UploadServlet extends HttpServlet {
                     }
                     
                     User user = (User) request.getSession().getAttribute("user");
-                    action = request.getParameter("action").toLowerCase();
                     
                     switch (action) {
                         case "upload-report": {
@@ -147,7 +146,12 @@ public class UploadServlet extends HttpServlet {
                                 
                                 switch (fieldName) {
                                     case "conditionLevel": {
-                                        conditionLevel = Integer.parseInt(fileItem.getString());
+                                        conditionLevel = 0;
+                                        try {
+                                            conditionLevel = Integer.parseInt(fileItem.getString());
+                                        } catch (NumberFormatException ex) {
+                                        }
+                                        System.out.println(conditionLevel);
                                         break;
                                     }
                                     case "buildingId": {
@@ -157,6 +161,7 @@ public class UploadServlet extends HttpServlet {
                                             buildingId = Integer.parseInt(fileItem.getString());
                                         } catch (NumberFormatException ex) {
                                         }
+                                        System.out.println(buildingId);
                                         break;
                                     }
                                     case "orderId": {
@@ -166,6 +171,7 @@ public class UploadServlet extends HttpServlet {
                                             orderId = Integer.parseInt(fileItem.getString());
                                         } catch (NumberFormatException ex) {
                                         }
+                                        System.out.println(orderId);
                                         break;
                                     }
                                     
@@ -173,10 +179,10 @@ public class UploadServlet extends HttpServlet {
                             }
                             if (bc.addCheckUpReport(path, conditionLevel, buildingId, orderId)) {
                                 String message = "The checkup has been added to the checkup list.";
-                                response.sendRedirect("uploadreport.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                                response.sendRedirect("/PolygonApp/admin/uploadreport.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
                             } else {
                                 String message = "The document couldn't be added to the document list.";
-                                response.sendRedirect("uploadreport.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                                response.sendRedirect("/PolygonApp/admin/uploadreport.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
                             }
                             break;
                         }
@@ -215,7 +221,6 @@ public class UploadServlet extends HttpServlet {
                             for (FileItem fileItem : stack) {
                                 String fieldName = fileItem.getFieldName();
                                 path = fileItem.getFieldName();
-                                
                                 switch (fieldName) {
                                     case "buildingId": {
                                         buildingId = 0;
@@ -226,15 +231,14 @@ public class UploadServlet extends HttpServlet {
                                         }
                                         break;
                                     }
-                                    
                                 }
                             }
                             if (bc.addCheckUpReport(path, conditionLevel, buildingId, orderId)) {
                                 String message = "The checkup has been added to the checkup list.";
-                                response.sendRedirect("uploadimg.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                                response.sendRedirect("/PolygonApp/admin/uploadimg.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
                             } else {
                                 String message = "The document couldn't be added to the document list.";
-                                response.sendRedirect("uploadimg.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                                response.sendRedirect("/PolygonApp/admin/uploadimg.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
                             }
                             break;
                         }

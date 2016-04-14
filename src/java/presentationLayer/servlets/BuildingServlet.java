@@ -135,7 +135,7 @@ public class BuildingServlet extends HttpServlet {
                 }
                 case "request-checkup": {
                     if (request.getSession().getAttribute("user") != null) {
-                        String orderDesc = "Check-up";
+                        int orderStatus = 0;
                         int serviceId = 1;
                         int buildingId = 0;
                         
@@ -145,8 +145,9 @@ public class BuildingServlet extends HttpServlet {
                         }
                         
                         User user = (User) request.getSession().getAttribute("user");
+                        System.out.println("buildingId: " + buildingId + "User: " + user.getFullName());
                         
-                        if (buildingController.requestCheckup(orderDesc, buildingId, user)) {
+                        if (buildingController.requestCheckup(orderStatus, buildingId, user)) {
                             String message = "A check-up has been requested for your building. An employee will look into your case as soon as possible.";
                             response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
                         } else {

@@ -66,9 +66,9 @@
         <h3>Check-up reports</h3>
         <table class="overview">
             <tr>
-                <th style="width: 200px;">Check-up date</th>
+                <th style="width: 200px;">Uploade date</th>
                 <th>Report name</th>
-                <th style="width: 200px;">Order date</th>
+                <th style="width: 200px;">Path</th>
                 <th style="width: 150px;">Condition level</th>
                 <th style="width: 50px;">View</th>
             </tr>

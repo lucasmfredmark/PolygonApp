@@ -79,7 +79,7 @@ public class BuildingController{
     }
     
     public boolean addCheckUpReport(String checkupPath, int conditionLevel, int buildingId, int orderId) throws SQLException{
-        if (checkupPath != null && buildingId > 0 && orderId > 0 && conditionLevel >= 0 && conditionLevel <= 3) {
+        if (checkupPath != null && buildingId > 0 && orderId > 0 && conditionLevel >= -1 && conditionLevel <= 3) {
             return buildingMapper.addCheckUpReport(checkupPath, conditionLevel, buildingId, orderId);
     }
         return false;
@@ -113,7 +113,7 @@ public class BuildingController{
         return buildingMapper.getBuildingDamages(buildingId);
     }
     
-    public boolean requestCheckup(String orderDesc, int buildingId, User user) throws SQLException {
+    public boolean requestCheckup(int orderStatus, int buildingId, User user) throws SQLException {
         // A mail server is required for the e-mail to be sent
         /*
         String to = "checkup@polygon.dk";
@@ -142,7 +142,7 @@ public class BuildingController{
                 
                 Transport.send(message);
                 */
-                return buildingMapper.addOrder(orderDesc, buildingId);
+                return buildingMapper.addOrder(orderStatus, buildingId);
             /*
             }
         } catch (MessagingException ex) {
