@@ -6,6 +6,7 @@
 
 <%@page import="serviceLayer.controllers.AdminController"%>
 <%@page import="serviceLayer.entities.Building"%>
+<%@page import="serviceLayer.entities.Checkup"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="serviceLayer.controllers.BuildingController"%>
 <%@page import="serviceLayer.entities.User"%>
@@ -14,16 +15,22 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Customer building</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
         <%
             
             User user = (User) session.getAttribute("user");
-            int buildingId = 1;
-            BuildingController buildingController = new BuildingController();
-            Building building = buildingController.getCustomerBuilding((buildingId), user.getUserId());
+            if (request.getParameter("buildingId") == null) {
+                response.sendRedirect("users.jsp");
+            } else if(request.getParameter("userId") == null) {
+               response.sendRedirect("users.jsp");
+            }
+            
+            int buildingId = Integer.parseInt(request.getParameter("buildingId"));
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            BuildingController bc = new BuildingController();
+            Building building = bc.getCustomerBuilding((buildingId), userId);
             
 
         %>
@@ -48,12 +55,44 @@
                 </tr>
                 <tr>
                     <td><h3 style="font-weight: bold; text-align: left;">Condition level:</h3></td>
-                    <td><h3 style="text-align: left;"><%= buildingController.getBuildingConditionLevel(buildingId) %></h3></td>
+                    <td><h3 style="text-align: left;"><%= bc.getBuildingConditionLevel(buildingId) %></h3></td>
                 </tr>
             </table>
         </div>
         <div class="button">
             <a href="editbuilding.jsp?buildingId=<%= buildingId %>">Edit building</a>
+        </div>
+        
+        <h3>Check-up reports</h3>
+        <table class="overview">
+            <tr>
+                <th style="width: 200px;">Check-up date</th>
+                <th>Report name</th>
+                <th style="width: 200px;">Order date</th>
+                <th style="width: 150px;">Condition level</th>
+                <th style="width: 50px;">View</th>
+            </tr>
+            <%
+                ArrayList<Checkup> checkups = bc.getBuildingCheckups(buildingId);
+
+                if (checkups.size() > 0) {
+                    for (Checkup c : checkups) {
+                        out.print("<tr onclick=\"document.location = 'uploads/reports/" + c.getCheckupPath() + "';\">");
+                        out.print("<td>" + c.getCheckupDate() + "</td>");
+                        out.print("<td>" + c.getCheckupPath() + "</td>");
+                        out.print("<td>kek</td>");
+                        out.print("<td>" + c.getConditionLevel() + "</td>");
+                        out.print("<td><a href=\"uploads/reports/" + c.getCheckupPath() + "\">View</a></td>");
+                        out.print("</tr>");
+                    }
+                } else {
+                    out.print("<tr><td colspan=\"5\">There are no check-up reports available for this building yet.</td></tr>");
+                }
+            %>
+        </table>
+        
+        <div class="button">
+            <a href='uploadreport.jsp?userId=<%=userId%>&buildingId=<%=buildingId%>'><-Upload a report to this building</a>
         </div>
        
         <div class="button">

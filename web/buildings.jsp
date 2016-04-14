@@ -76,7 +76,7 @@
                     <%
                         for (Building b : buildings) {
                     %>
-                    <tr onclick="document.location='viewbuilding.jsp?buildingId=<%= b.getBuildingId() %>';">
+                    <tr onclick="document.location='viewbuilding.jsp?buildingId=<%= b.getBuildingId()%>';">
                         <td><%= b.getBuildingName() %></td>
                         <td><%= b.getBuildingAddress()%></td>
                         <td><%= b.getBuildingParcelNumber()%></td>

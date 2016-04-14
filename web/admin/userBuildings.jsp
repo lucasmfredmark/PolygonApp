@@ -19,12 +19,20 @@
     <body>
 
 
-        <p class="breadcrumbs"><span>Your buildings</span></p>
+        <p class="breadcrumbs"><span> Viewing all buildings for user with id: <%= request.getParameter("userId") %> </span></p>
         <%
-            User user = (User) session.getAttribute("user");
-            String buildingId = request.getParameter("buildingId");
+            
+            //String buildingId = request.getParameter("buildingId");   WHAT IS THIS USED FOR?
             AdminController ac = new AdminController();
-            ArrayList<Building> buildings = ac.getCustomerBuildings(user.getUserId());
+            BuildingController bc = new BuildingController();
+            
+            if (request.getParameter("userId") == null) {
+                response.sendRedirect("users.jsp");
+            }
+                int userId = Integer.parseInt(request.getParameter("userId"));
+                ArrayList<Building> buildings = ac.getCustomerBuildings(userId);
+            
+            
             if (buildings.size() > 0) {
         %>
         <table class="btable">
@@ -40,7 +48,7 @@
                 for (Building b : buildings) {
             %>
             <!-- Link virker ikke -->
-            <tr onclick="document.location = 'viewbuilding.jsp?buildingId=<%= b.getBuildingId()%>';">
+            <tr onclick="document.location = 'building.jsp?buildingId=<%= b.getBuildingId()%>&userId=<%=userId%>';">
                 <td><%= b.getBuildingName()%></td>
                 <td><%= b.getBuildingAddress()%></td>
                 <td><%= b.getBuildingParcelNumber()%></td>
@@ -51,10 +59,12 @@
                 }
             %>
         </table>
+        
         <%
             } else { // If there are currently no buildings linked to this user. MANGLER HTML 
-                out.print("You haven't added any buildings yet. Click on the button below to add one.");
+                out.print("There were no buildings found for this user");
             }
         %>
+        
     </body>
 </html>

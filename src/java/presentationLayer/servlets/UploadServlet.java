@@ -137,6 +137,7 @@ public class UploadServlet extends HttpServlet {
                     }
 
                     User user = (User) request.getSession().getAttribute("user");
+                    action = request.getParameter("action").toLowerCase();
 
                     switch (action) {
                         case "upload-report": {

@@ -14,6 +14,6 @@
     </head>
     <body>
         <a href="userBuildings.jsp"> buildings </a> <br>
-        <a href="user.jsp"> users </a>
+        <a href="users.jsp"> users </a>
     </body>
 </html>
