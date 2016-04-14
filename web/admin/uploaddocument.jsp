@@ -4,6 +4,8 @@
     Author     : Staal
 --%>
 
+<%@page import="serviceLayer.entities.User"%>
+<%@page import="serviceLayer.controllers.BuildingController"%>
 <%@page import="serviceLayer.entities.Document"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.ArrayList"%>
@@ -15,7 +17,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-               <h3>Other documents</h3>
+        <h3>Documents</h3>
         <table class="overview">
             <tr>
                 <th style="width: 200px;">Upload date</th>
@@ -23,8 +25,10 @@
                 <th style="width: 50px;">View</th>
             </tr>
             <%
-                ArrayList<CheckUpReport> checkupreports = buildingController.getBuildingDocuments(Integer.parseInt(buildingId));
-                
+                BuildingController bc = new BuildingController();               
+                int buildingId = 1;
+                ArrayList<Document> documents = bc.getBuildingDocuments(buildingId);
+
                 if (documents.size() > 0) {
                     for (Document d : documents) {
                         out.print("<tr onclick=\"document.location = 'uploads/documents/" + d.getDocumentPath() + "';\">");
@@ -44,7 +48,7 @@
             <input type="file" name="file"><br><br>
             Notes about the file: <input type="text" name="note" maxlength="100">
             <input type="hidden" name="action" value="upload-document">
-            <input type="hidden" name="buildingId" value="<%= buildingId %>">
+            <input type="hidden" name="buildingId" value="=1">
             <input type="submit" value="Upload document">
         </form>
     </body>
