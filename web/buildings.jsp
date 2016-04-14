@@ -4,23 +4,23 @@
 <%@page import="serviceLayer.controllers.BuildingController"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-            // SESSION CHECK
-            User user = (User) session.getAttribute("user");
+    // SESSION CHECK
+    User user = (User) session.getAttribute("user");
 
-            if (user == null) {
-                response.sendRedirect("index.jsp");
-                return;
-            }
-            
-            if(request.getParameter("logout") != null) {
+    if (user == null) {
+        response.sendRedirect("index.jsp");
+        return;
+    }
 
-                if (request.getSession(false) != null) {
-                    session.invalidate();
-                } 
+    if(request.getParameter("logout") != null) {
 
-                response.sendRedirect("index.jsp");
-                return;
-            }
+        if (request.getSession(false) != null) {
+            session.invalidate();
+        } 
+
+        response.sendRedirect("index.jsp");
+        return;
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -43,7 +43,7 @@
             <div class="wrapper">
                 <h1>Overview of your buildings</h1>
                 <ul>
-                    <li class="active"><a href="buildings.jsp">Overview</a></li>
+                    <li class="active"><a href="buildings.jsp">Your buildings</a></li>
                     <li class="inactive"><a href="addbuilding.jsp">Add building</a></li>
                 </ul>
             </div>
