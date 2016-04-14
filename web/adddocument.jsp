@@ -80,7 +80,7 @@
             <div class="wrapper">
                 <!-- BREADCRUMBS -->
                 <p class="breadcrumbs"><a href="buildings.jsp">Your buildings</a> &raquo; <a href="viewbuilding.jsp?buildingId=<%= buildingId %>">Building</a> &raquo; <span>Add document</span></p>
-                <form enctype="multipart/form-data" class="building" method="POST" action="UploadServlet">
+                <form method="POST" enctype="multipart/form-data" action="UploadServlet" class="building">
                     <input type="hidden" name="directory" value="upload-document">
                     <p>Choose file to upload:</p>
                     <input type="file" name="file">
