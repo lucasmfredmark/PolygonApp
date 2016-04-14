@@ -9,47 +9,42 @@ body {
 
 .index { background:#fff; }
 
-h1 { color:#354052; } /* Mørk blå */
-h2 { color:#9fabbe; } /* Grå blå */
-h3 { color:#009fe3; } /* Polygon Blå */
-p { color:#354052; }
-a { color:#009fe3;text-decoration:none; }
+h1 { color:#354052; font-weight:700; line-height:16pt; } /* Headline bold */ 
+h2 { color:#354052; } /* Headline normal */
+h3 { color:#009fe3; font-weight:700; line-height:16pt; } /* Error message */
+p { color:#354052; line-height:16pt; }
+a { color:#009fe3; text-decoration:none; }
 a:hover { text-decoration:underline; }
-input, textarea { margin:5px 0; font-family:'Open Sans', sans-serif; }
+
+input, textarea {
+    margin:5px 0;
+    font-size:10pt;
+    font-family:'Open Sans', sans-serif;
+    display:block;
+    padding:0;
+    outline:0;
+    border-radius:3px;
+}
 
 form input[type=text], form input[type=password], form input[type=email] {
     background:#f5f5f5;
     color:#354052;
     text-indent:5px;
-    font-size:10pt;
     font-weight:normal;
-    display:block;
     width:calc(100% - 2px);
     height:24px;
-    padding:0;
-    outline:0;
     border:1px solid #bbb;
-    border-radius:3px;
 }
 
 form input[type=submit] {
     background:#009fe3;
     color:#fff;
-    font-size:10pt;
     font-weight:700;
-    display:block;
     width:100%;
     height:26px;
-    padding:0;
-    outline:0;
     cursor:pointer;
     border:0;
-    border-radius:3px;
-}
-
-form input[type=text]:focus, form input[type=password]:focus, form input[type=email]:focus {
-    background:#fff;
-    color:#354052;
+    margin:10px 0;
 }
 
 textarea {
@@ -65,7 +60,13 @@ textarea {
     resize:none;
 }
 
-textarea:focus { background:#fff; }
+form input[type=text]:focus,
+form input[type=password]:focus,
+form input[type=email]:focus,
+textarea:focus {
+    background:#fff;
+    color:#354052;
+}
 
 /* FORMATTING CLASSES */
 
@@ -78,29 +79,22 @@ textarea:focus { background:#fff; }
 /* LOGIN PAGE */
 
 #login {
-    width:360px;
+    width:400px;
     margin:100px auto;
 }
 
 #login .logo {
     width:75%;
     display:block;
-    margin:0 auto;
+    margin:10px auto;
 }
 
 #login h1 {
-    margin:20px 0;
-    font-size:10pt;
-    font-weight:700;
-}
-
-#login h3 {
-    font-weight:bold;
-    margin-bottom:20px;
+    line-height:32pt;
 }
 
 #login form {
-    margin:0 auto;
+    margin:10px auto;
     width:240px;
 }
 
@@ -110,54 +104,30 @@ textarea:focus { background:#fff; }
 }
 
 #login input[type=password] {
-    margin-top:-1px;
-    margin-bottom:0;
+    margin:-1px 0 0 0;
     border-radius:0 0 5px 5px;
-}
-
-#login input[type=submit] {
-    margin-top:10px;
-}
-
-#login p {
-    margin-top:20px;
 }
 
 /* REGISTER PAGE */
 
 #register {
-    width:360px;
+    width:400px;
     margin:100px auto;
 }
 
 #register .logo {
     width:75%;
     display:block;
-    margin:0 auto;
+    margin:10px auto;
 }
 
 #register h1 {
-    margin:20px 0;
-    font-size:10pt;
-    font-weight:700;
-}
-
-#register h3 {
-    font-weight:bold;
-    margin-bottom:20px;
+    line-height:32pt;
 }
 
 #register form {
-    margin:0 auto;
+    margin:10px auto;
     width:240px;
-}
-
-#register input[type=submit] {
-    margin-top:10px;
-}
-
-#register p {
-    margin-top:20px;
 }
 
 /* SITE STRUCTURE */

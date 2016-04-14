@@ -1,18 +1,18 @@
 <%@page import="serviceLayer.entities.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-            // SESSION CHECK
-            User user = (User) session.getAttribute("user");
-            
-            if (user != null) {
-                if (user.getUserType().equals(User.userType.ADMIN.toString())) {
-                    response.sendRedirect("admin/index.jsp");
-                    return;
-                }
-                
-                response.sendRedirect("buildings.jsp");
-                return;
-            }
+    // SESSION CHECK
+    User user = (User) session.getAttribute("user");
+
+    if (user != null) {
+        if (user.getUserType().equals(User.userType.ADMIN.toString())) {
+            response.sendRedirect("admin/index.jsp");
+            return;
+        }
+
+        response.sendRedirect("buildings.jsp");
+        return;
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -27,7 +27,7 @@
         <!-- Content Include -->
         <div id="login">
             <img class="logo" src="images/polygon-logo.svg" alt="Polygon">
-            <h1 class="center">Sign in with your e-mail and password</h1>
+            <h1 class="center">Sign in with your e-mail and password.</h1>
             <!-- Error message-->
             <%
                 if (request.getParameter("error") != null) {
