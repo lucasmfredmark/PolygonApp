@@ -36,12 +36,12 @@
         <div id="header">
             <div class="wrapper">
                 <img src="images/polygon-logo.svg" class="header_logo" alt="Polygon">
-                <p class="signout">Hello, <%= user.getFullName() %> (<a href="?logout">Sign out</a>)</p>
+                <p>Hello, <%= user.getFullName() %> (<a href="?logout">Sign out</a>)</p>
             </div>
         </div>
         <div id="navigation">
             <div class="wrapper">
-                <h1>Overview of your buildings</h1>
+                <h2>Overview of your buildings</h2>
                 <ul>
                     <li class="active"><a href="buildings.jsp">Your buildings</a></li>
                     <li class="inactive"><a href="addbuilding.jsp">Add building</a></li>
@@ -54,12 +54,11 @@
                 <p class="breadcrumbs"><span>Your buildings</span></p>
                 <%
                     if (request.getParameter("error") != null) {
-                        out.print("<h3 class='errormsg'>" + request.getParameter("error") + "</h3>");
+                        out.print("<h3 class='errormsg'>" + request.getParameter("error") + "</h3><br>");
                     } else if (request.getParameter("success") != null) {
-                        out.print("<h3 class='errormsg'>" + request.getParameter("success") + "</h3>");
+                        out.print("<h3 class='errormsg'>" + request.getParameter("success") + "</h3><br>");
                     }
-                %>
-                <%
+
                     BuildingController bc = new BuildingController();
                     ArrayList<Building> buildings = bc.getCustomerBuildings(user.getUserId());
                     if (buildings.size() > 0) {
@@ -90,7 +89,7 @@
                 </table>
                 <% 
                     } else { // If there are currently no buildings linked to this user. MANGLER HTML 
-                        out.print("You haven't added any buildings yet. Click on the button below to add one.");
+                        out.print("<h3>You haven't added any buildings yet. Click on the button above to add one.</h3>");
                     }
                 %>
             </div>

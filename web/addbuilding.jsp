@@ -38,7 +38,7 @@
         </div>
         <div id="navigation">
             <div class="wrapper">
-                <h1>Add a new building</h1>
+                <h2>Add a new building</h2>
                 <ul>
                     <li class="inactive"><a href="buildings.jsp">Your buildings</a></li>
                     <li class="active"><a href="addbuilding.jsp">Add building</a></li>
@@ -51,9 +51,9 @@
                 <p class="breadcrumbs"><a href="buildings.jsp">Your buildings</a> &raquo; <span>Add building</span></p>
                 <%
                     if (request.getParameter("error") != null) {
-                        out.print("<h3>" + request.getParameter("error") + "</h3>");
+                        out.print("<h3>" + request.getParameter("error") + "</h3><br>");
                     } else if (request.getParameter("success") != null) {
-                        out.print("<h3>" + request.getParameter("success") + "</h3>");
+                        out.print("<h3>" + request.getParameter("success") + "</h3><br>");
                     }
                 %>
                 <form class="building" method="POST" action="BuildingServlet">
