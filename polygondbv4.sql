@@ -13,7 +13,7 @@ CREATE TABLE users (
 INSERT INTO users (usermail, userpass, fullname) VALUES ('test@user.dk','test','Test User');
 INSERT INTO users (usermail, userpass, usertype, fullname) VALUES ('admin@polygon.dk','admin','ADMIN','Admin User');
 INSERT INTO users (usermail, userpass, fullname) VALUES ('test','test','Test User');
-INSERT INTO users (usermail, userpass, fullname) VALUES ('admin','admin','ADMIN','Admin User');
+INSERT INTO users (usermail, userpass, usertype, fullname) VALUES ('admin','admin','ADMIN','Admin User');
 
 CREATE TABLE buildings (
     buildingid INT AUTO_INCREMENT PRIMARY KEY,
