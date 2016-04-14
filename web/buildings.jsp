@@ -14,12 +14,12 @@
             
             if(request.getParameter("logout") != null) {
 
-                    if (request.getSession(false) != null) {
-                        session.invalidate();
-                    } 
+                if (request.getSession(false) != null) {
+                    session.invalidate();
+                } 
 
-                    response.sendRedirect("index.jsp");
-                    return;
+                response.sendRedirect("index.jsp");
+                return;
             }
 %>
 <!DOCTYPE html>
