@@ -32,6 +32,7 @@ CREATE TABLE documents (
     FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid),
     FOREIGN KEY (fk_userid) REFERENCES users(userid)
 );
+INSERT INTO users(usermail, userpass,usertype,fullname) VALUES('admin@admin.dk','123','ADMIN','admin');
 
 CREATE TABLE orders (
 	orderid INT AUTO_INCREMENT PRIMARY KEY,
