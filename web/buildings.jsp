@@ -4,23 +4,23 @@
 <%@page import="serviceLayer.controllers.BuildingController"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-            // SESSION CHECK
-            User user = (User) session.getAttribute("user");
+    // SESSION CHECK
+    User user = (User) session.getAttribute("user");
 
-            if (user == null) {
-                response.sendRedirect("index.jsp");
-                return;
-            }
-            
-            if(request.getParameter("logout") != null) {
+    if (user == null) {
+        response.sendRedirect("index.jsp");
+        return;
+    }
 
-                if (request.getSession(false) != null) {
-                    session.invalidate();
-                } 
+    if(request.getParameter("logout") != null) {
 
-                response.sendRedirect("index.jsp");
-                return;
-            }
+        if (request.getSession(false) != null) {
+            session.invalidate();
+        } 
+
+        response.sendRedirect("index.jsp");
+        return;
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -43,7 +43,7 @@
             <div class="wrapper">
                 <h1>Overview of your buildings</h1>
                 <ul>
-                    <li class="active"><a href="buildings.jsp">Overview</a></li>
+                    <li class="active"><a href="buildings.jsp">Your buildings</a></li>
                     <li class="inactive"><a href="addbuilding.jsp">Add building</a></li>
                 </ul>
             </div>
@@ -52,6 +52,13 @@
             <div class="wrapper">
                 <!-- BREADCRUMBS -->
                 <p class="breadcrumbs"><span>Your buildings</span></p>
+                <%
+                    if (request.getParameter("error") != null) {
+                        out.print("<h3 class='errormsg'>" + request.getParameter("error") + "</h3>");
+                    } else if (request.getParameter("success") != null) {
+                        out.print("<h3 class='errormsg'>" + request.getParameter("success") + "</h3>");
+                    }
+                %>
                 <%
                     BuildingController bc = new BuildingController();
                     ArrayList<Building> buildings = bc.getCustomerBuildings(user.getUserId());
@@ -69,12 +76,12 @@
                     <%
                         for (Building b : buildings) {
                     %>
-                    <!-- Link virker ikke -->
                     <tr onclick="document.location='viewbuilding.jsp?buildingId=<%= b.getBuildingId() %>';">
                         <td><%= b.getBuildingName() %></td>
                         <td><%= b.getBuildingAddress()%></td>
                         <td><%= b.getBuildingParcelNumber()%></td>
                         <td><%= b.getBuildingSize() %></td>
+                        <!-- Skal fortolke værdien. -->
                         <td><%= bc.getBuildingConditionLevel(b.getBuildingId()) %></td>
                     </tr>
                     <%
@@ -86,43 +93,8 @@
                         out.print("You haven't added any buildings yet. Click on the button below to add one.");
                     }
                 %>
-                <br><br><br>
-
-                    
-                    
-                    
-                    
             </div>
         </div>
     </div>
-    
-    
-    
-    
-    
-                
-                
-    
-    
-    
-        <!-- LOG OUT 
-        <form action="UserServlet" method="POST" style="padding: 0;">
-            <input type="hidden" name="action" value="logout">
-            <input type="submit" value="Log out">
-        </form>
-                -->
-                
-        <!-- ADD BUILDING ERROR MSGS? -->
-        <%
-            if (request.getParameter("error") != null) {
-                out.print("<br /><h2 class=\"error-msg\">" + request.getParameter("error") + "</h2>");
-            } else if (request.getParameter("success") != null) {
-                out.print("<br /><h2 class=\"success-msg\">" + request.getParameter("success") + "</h2>");
-            }
-        %>
-        
-         
-            
-
     </body>
 </html>
