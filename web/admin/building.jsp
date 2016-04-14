@@ -19,52 +19,44 @@
     <body>
         <h1>Hello World!</h1>
         <%
+            
             User user = (User) session.getAttribute("user");
-        %>
-        <h3>Hello, <span><%= user.getFullName()%></span> (<%= user.getUserType()%>)</h3>
-        <h3><%= user.getUserMail()%></h3>
-        <form action="UserServlet" method="POST" style="padding: 0;">
-            <input type="hidden" name="action" value="logout">
-            <input type="submit" value="Log out">
-        </form>
-        <br><hr><br>
-        <h1 class="center">Overview</h1>
-        <%
-            if (request.getParameter("error") != null) {
-                out.print("<br /><h2 class=\"error-msg\">" + request.getParameter("error") + "</h2>");
-            } else if (request.getParameter("success") != null) {
-                out.print("<br /><h2 class=\"success-msg\">" + request.getParameter("success") + "</h2>");
-            }
-        %>
-        <br>
-        <table class="overview">
-            <tr>
-                <th class="t1">Name</th>
-                <th class="t2">Address</th>
-                <th class="t3">Parcel number</th>
-                <th class="t4">Size in m&sup2;</th>
-                <th class="t5">Condition level</th>
-                <th class="t6">Actions</th>
-            </tr>
-            <%
-                AdminController ac = new AdminController();
-                ArrayList<Building> buildings = ac.getCustomerBuildings();
-                BuildingController bc = new BuildingController();
+            int buildingId = 1;
+            BuildingController buildingController = new BuildingController();
+            Building building = buildingController.getCustomerBuilding((buildingId), user.getUserId());
+            
 
-                if (buildings.size() > 0) {
-                    for (Building b : buildings) {
-                        out.print("<tr onclick=\"document.location = 'viewbuilding.jsp?buildingId=" + b.getBuildingId() + "';\">");
-                        out.print("<td>" + b.getBuildingName() + "</td>");
-                        out.print("<td>" + b.getBuildingAddress() + "</td>");
-                        out.print("<td>" + b.getBuildingParcelNumber() + "</td>");
-                        out.print("<td>" + b.getBuildingSize() + "</td>");
-                        out.print("<td><a href=\"editbuilding.jsp?buildingId=" + b.getBuildingId() + "\"><img src=\"images/edit.png\" title=\"Edit building\"></a> "
-                                + "<form action=\"BuildingServlet\" method=\"POST\"><input type=\"hidden\" name=\"buildingId\" value=\"" + b.getBuildingId() + "\"><input type=\"hidden\" name=\"action\" value=\"delete\"><input type=\"image\" src=\"images/delete.png\" title=\"Delete building\"></form></td>");
-                        out.print("</tr>");
-                    }
-                } else {
-                    out.print("<tr><td colspan=\"6\">You haven't added any buildings yet. Click on the button below to add one.</td></tr>");
-                }
-            %>
-    </body>
-</html>
+        %>
+       <h1 class="center" style="margin-top: 20px;">View building "<%= building.getBuildingName() %>"</h1>
+        <div style="width: 600px; margin: 20px auto; padding: 10px; background: #fafafa; border: 1px solid #333;">
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 40%;"><h3 style="font-weight: bold; text-align: left;">Building name:</h3></td>
+                    <td><h3 style="text-align: left;"><%= building.getBuildingName() %></h3></td>
+                </tr>
+                <tr>
+                    <td><h3 style="font-weight: bold; text-align: left;">Address:</h3></td>
+                    <td><h3 style="text-align: left;"><%= building.getBuildingAddress() %></h3></td>
+                </tr>
+                <tr>
+                    <td><h3 style="font-weight: bold; text-align: left;">Parcel number:</h3></td>
+                    <td><h3 style="text-align: left;"><%= building.getBuildingParcelNumber() %></h3></td>
+                </tr>
+                <tr>
+                    <td><h3 style="font-weight: bold; text-align: left;">Size in m&sup2;:</h3></td>
+                    <td><h3 style="text-align: left;"><%= building.getBuildingSize() %></h3></td>
+                </tr>
+                <tr>
+                    <td><h3 style="font-weight: bold; text-align: left;">Condition level:</h3></td>
+                    <td><h3 style="text-align: left;"><%= buildingController.getBuildingConditionLevel(buildingId) %></h3></td>
+                </tr>
+            </table>
+        </div>
+        <div class="button">
+            <a href="editbuilding.jsp?buildingId=<%= buildingId %>">Edit building</a>
+        </div>
+       
+        <div class="button">
+            <a href="buildings.jsp"><- Back to overview</a>
+        </div>
+        <br><hr><br>
