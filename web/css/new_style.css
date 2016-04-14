@@ -261,16 +261,12 @@ textarea:focus {
     width:360px;
 }
 
-
-
-
 /* VIEW BUILDING */
 
 .box {
     background:#fff;
     box-sizing:border-box;
     width:calc(50% - 20px);
-    min-height:300px;
     float:left;
     margin-bottom:40px;
     padding:10px;
@@ -285,4 +281,45 @@ textarea:focus {
     font-size:12pt;
     font-weight:700;
     height:24px;
+}
+
+.box p {
+    color:#9fabbe;
+}
+
+.viewdocs {
+    width:100%;
+    margin:10px 0;
+}
+
+.viewdocs tr {
+    line-height:20pt;
+    border-bottom:1px solid #354052;
+}
+
+.viewdocs tr:last-child { border:none; }
+
+.viewdocs td:first-child {
+    width:100px;
+}
+
+.viewdocs td:nth-child(2) {
+    width:150px;
+}
+
+.viewinfo {
+    width:100%;
+    margin:10px 0;
+}
+
+.viewinfo tr {
+    line-height:20pt;
+    border-bottom:1px solid #354052;
+}
+
+.viewinfo tr:last-child { border:none; }
+
+.viewinfo td:first-child {
+    width:150px;
+    font-weight:700;
 }
