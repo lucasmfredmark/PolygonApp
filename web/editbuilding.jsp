@@ -32,7 +32,6 @@
         response.sendRedirect("index.jsp");
         return;
     }
-    
 %>
 <!DOCTYPE html>
 <html>
@@ -67,7 +66,7 @@
         <div id="content">
             <div class="wrapper">
                 <!-- BREADCRUMBS -->
-                <p class="breadcrumbs"><a href="buildings.jsp">Your buildings</a> &raquo; <a href="viewbuilding.jsp">Building</a> &raquo; <span>Edit building</span></p>
+                <p class="breadcrumbs"><a href="buildings.jsp">Your buildings</a> &raquo; <a href="viewbuilding.jsp?buildingId=<%= request.getParameter("buildingId") %>">Building</a> &raquo; <span>Edit building</span></p>
                 <%
                     if (request.getParameter("error") != null) {
                         out.print("<h3>" + request.getParameter("error") + "</h3><br>");
