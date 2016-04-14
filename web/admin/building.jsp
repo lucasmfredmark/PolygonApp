@@ -66,9 +66,9 @@
         <h3>Check-up reports</h3>
         <table class="overview">
             <tr>
-                <th style="width: 200px;">Check-up date</th>
+                <th style="width: 200px;">Uploade date</th>
                 <th>Report name</th>
-                <th style="width: 200px;">Order date</th>
+                <th style="width: 200px;">Path</th>
                 <th style="width: 150px;">Condition level</th>
                 <th style="width: 50px;">View</th>
             </tr>
@@ -94,6 +94,14 @@
         <div class="button">
             <a href='uploadreport.jsp?userId=<%=userId%>&buildingId=<%=buildingId%>'><-Upload a report to this building</a>
         </div>
+        
+        <br>
+        
+         <div class="button">
+            <a href='uploadimg.jsp?userId=<%=userId%>&buildingId=<%=buildingId%>'><-Upload an image to this building</a>
+        </div>
+        
+        <br>
        
         <div class="button">
             <a href="buildings.jsp"><- Back to overview</a>

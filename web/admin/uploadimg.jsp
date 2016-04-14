@@ -18,17 +18,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Polygon upload report</title>
+        <title>Polygon upload image</title>
     </head>
     <body>
 
-        <h3>Check Up Reports</h3>
-        <table class="overview">
-            <tr>
-                <th style="width: 200px;">Upload date</th>
-                <th>Check up note</th>
-                <th style="width: 50px;">View</th>
-            </tr>
             <%
                 User user = (User) session.getAttribute("user");
                 
@@ -48,16 +41,13 @@
                 int orderId = order.getOrderId();
             %>
 
-        </table>
         <form method="POST" enctype="multipart/form-data" action="/PolygonApp/UploadServlet">
-            <input type="hidden" name="directory" value="upload-report">
+            <input type="hidden" name="directory" value="upload-image">
             Choose file to upload:<br><br>
             <input type="file" name="file"><br><br>
-            <input type="hidden" name="action" value="upload-report">
+            <input type="hidden" name="action" value="upload-image">
             <input type="hidden" name="buildingId" value="<%= buildingId%>">
-            <input type="hidden" name="orderId" value="<%= orderId%>">
-            <input type="hidden" name="conditionLevel" value="<%= conditionLevel%>">
-            <input type="submit" value="Upload Report">
+            <input type="submit" value="Upload Image">
         </form>
     </body>
 </html>

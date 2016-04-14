@@ -166,6 +166,7 @@ public class BuildingMapper {
     
     // Adds a report to a building
     public boolean addCheckUpReport(String checkupPath, int conditionLevel, int buildingId, int orderId) throws SQLException {
+        System.out.println("Reached DB layer");
         Connection conn = DBConnector.getConnection();
         String sql = "INSERT INTO checkups (cpath, conditionlevel, fk_buildingid, fk_orderid) VALUES (?, ?, ?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -227,11 +228,11 @@ public class BuildingMapper {
         return dmgList;
     }
     
-    public boolean addOrder(String orderDesc, int buildingId) throws SQLException {
+    public boolean addOrder(int orderStatus, int buildingId) throws SQLException {
         Connection conn = DBConnector.getConnection();
-        String sql = "INSERT INTO orders (odesc, fk_buildingid) VALUES (?, ?)";
+        String sql = "INSERT INTO orders (ostatus, fk_buildingid) VALUES (?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, orderDesc);
+        pstmt.setInt(1, orderStatus);
         pstmt.setInt(2, buildingId);
         
         // Returns true if the number of rows affected in the database is 1, else returns false.

@@ -193,7 +193,7 @@ public class BuildingControllerTest {
     @Test
     public void addOrderTest() throws SQLException {
         BuildingController bc = new BuildingController();
-        String orderDescription = "this is a test order";
+        int orderStatus = 0;
         
         // User entity sent
         User user = uc.getUserByEmail("emailfortests@test.dk");
@@ -205,7 +205,7 @@ public class BuildingControllerTest {
         Building building = buildings.get(buildings.size() - 1);
         int buildingId = building.getBuildingId();
         // The test
-        assertTrue(bc.requestCheckup(orderDescription, buildingId, user));
+        assertTrue(bc.requestCheckup(orderStatus, buildingId, user));
     }
     
     @Test
@@ -218,8 +218,8 @@ public class BuildingControllerTest {
         ArrayList<Building> buildings = bc.getCustomerBuildings(user.getUserId());
         Building building = buildings.get(buildings.size() - 1);
         int buildingId = building.getBuildingId();
-        String orderDescription = "this is a get order test";
-        bc.requestCheckup(orderDescription, buildingId, user);
+        int orderStatus = 0;
+        bc.requestCheckup(orderStatus, buildingId, user);
         int expResult = 1;
         Order order = bc.getOrderByBuildingId(buildingId);
         assertEquals(expResult, order.getOrderId());
