@@ -12,8 +12,6 @@ CREATE TABLE users (
 );
 INSERT INTO users (usermail, userpass, fullname) VALUES ('test@user.dk','test','Test User');
 INSERT INTO users (usermail, userpass, usertype, fullname) VALUES ('admin@polygon.dk','admin','ADMIN','Admin User');
-INSERT INTO users (usermail, userpass, fullname) VALUES ('test','test','Test User');
-INSERT INTO users (usermail, userpass, usertype, fullname) VALUES ('admin','admin','ADMIN','Admin User');
 
 CREATE TABLE buildings (
     buildingid INT AUTO_INCREMENT PRIMARY KEY,
@@ -25,14 +23,14 @@ CREATE TABLE buildings (
     fk_userid INT,
     FOREIGN KEY (fk_userid) REFERENCES users(userid) ON DELETE CASCADE
 );
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 1', 'Roadway 1', '1a', 16, 3);
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 2', 'Roadway 2', '1b', 32, 3);
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 3', 'Roadway 3', '1c', 64, 3);
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 4', 'Roadway 4', '1d', 128, 3);
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 5', 'Roadway 5', '1e', 256, 3);
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 6', 'Roadway 6', '1f', 512, 3);
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 7', 'Roadway 7', '1g', 1024, 3);
-INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 8', 'Roadway 8', '1h', 2048, 3);
+INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 1', 'Roadway 1', '1a', 16, 1);
+INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 2', 'Roadway 2', '1b', 32, 1);
+INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 3', 'Roadway 3', '1c', 64, 1);
+INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 4', 'Roadway 4', '1d', 128, 1);
+INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 5', 'Roadway 5', '1e', 256, 1);
+INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 6', 'Roadway 6', '1f', 512, 1);
+INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 7', 'Roadway 7', '1g', 1024, 1);
+INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 8', 'Roadway 8', '1h', 2048, 1);
 
 CREATE TABLE documents (
 	documentid INT AUTO_INCREMENT PRIMARY KEY,
@@ -44,7 +42,6 @@ CREATE TABLE documents (
     FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid),
     FOREIGN KEY (fk_userid) REFERENCES users(userid)
 );
-INSERT INTO users(usermail, userpass,usertype,fullname) VALUES('admin@admin.dk','123','ADMIN','admin');
 
 CREATE TABLE orders (
 	orderid INT AUTO_INCREMENT PRIMARY KEY,
