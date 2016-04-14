@@ -58,8 +58,8 @@
                     <li class="inactive"><a href="buildings.jsp">Your buildings</a></li>
                     <li class="inactive"><a href="viewbuilding.jsp?buildingId=<%= request.getParameter("buildingId") %>">Building</a></li>
                     <li class="active"><a href="editbuilding.jsp?buildingId=<%= request.getParameter("buildingId") %>">Edit building</a></li>
-                    <li class="inactive"><a href="#">Report damage</a></li>
-                    <li class="inactive"><a href="#">Add document</a></li>
+                    <li class="inactive"><a href="adddamage.jsp?buildingId=<%= request.getParameter("buildingId") %>">Report damage</a></li>
+                    <li class="inactive"><a href="adddocument.jsp?buildingId=<%= request.getParameter("buildingId") %>">Add document</a></li>
                     <li class="inactive"><a href="#">Services</a></li>
                 </ul>
             </div>
