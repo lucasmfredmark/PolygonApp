@@ -68,7 +68,7 @@
                     <li class="inactive"><a href="viewbuilding.jsp?buildingId=<%= buildingId %>">Building</a></li>
                     <li class="inactive"><a href="editbuilding.jsp?buildingId=<%= buildingId %>">Edit building</a></li>
                     <li class="active"><a href="adddamage.jsp?buildingId=<%= buildingId %>">Report damage</a></li>
-                    <li class="inactive"><a href="adddocument.jsp?buildingId=<%= buildingId %>">Add document</a></li>
+                    <li class="inactive"><a href="uploadfiles.jsp?buildingId=<%= buildingId %>">Upload files</a></li>
                     <li class="inactive"><a href="#">Services</a></li>
                 </ul>
             </div>
