@@ -26,6 +26,12 @@ import serviceLayer.exceptions.UserException;
 @WebServlet(name = "UserServlet", urlPatterns = {"/UserServlet"})
 public class UserServlet extends HttpServlet {
 
+    private String error;
+
+    public void UserServlet() {
+        error = null;
+    }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,7 +42,7 @@ public class UserServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, UserException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String action = request.getParameter("action");
@@ -47,22 +53,25 @@ public class UserServlet extends HttpServlet {
                     if (request.getSession().getAttribute("user") == null) {
                         String email = request.getParameter("e-mail");
                         String password = request.getParameter("userpass");
-                        User user = userController.loginUser(email, password);
+                        User user;
+                        try {
+                            user = userController.loginUser(email, password);
+                            if (user != null) {
+                                request.getSession().setAttribute("user", user);
 
-                        if (user != null) {
-                            request.getSession().setAttribute("user", user);
-                            
-                            if (user.getUserType().equals(User.userType.ADMIN)) {
-                                response.sendRedirect("admin/index.jsp");
+                                if (user.getUserType().equals(User.userType.ADMIN)) {
+                                    response.sendRedirect("admin/index.jsp");
+                                    break;
+                                }
+
+                                response.sendRedirect("buildings.jsp");
                                 break;
                             }
-                            
-                            response.sendRedirect("buildings.jsp");
-                            break;
-                        } else {
-                            String message = "The user doesn\'t exist, or you typed the wrong password.";
-                            response.sendRedirect("index.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
+                        } catch (UserException ex) {
+                            error = ex.getMessage();
+                            response.sendRedirect("index.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
                         }
+
                     } else {
                         response.sendRedirect("buildings.jsp");
                     }
@@ -74,13 +83,16 @@ public class UserServlet extends HttpServlet {
                         String fullname = request.getParameter("fullname");
                         String password = request.getParameter("userpass");
 
-                        if (userController.registerUser(email, fullname, password)) {
+                        try {
+                            userController.registerUser(email, fullname, password);
                             String message = "Your account has successfully been created. You can now log in.";
                             response.sendRedirect("index.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
-                        } else {
-                            String message = "The user already exists, or another error happened.";
-                            response.sendRedirect("register.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
+                        } catch (UserException ex) {
+                            error = ex.getMessage();
+                            response.sendRedirect("index.jsp?success=" + URLEncoder.encode(error, "UTF-8"));
                         }
+
+                        //response.sendRedirect("register.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
                     } else {
                         response.sendRedirect("buildings.jsp");
                     }
@@ -102,11 +114,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (UserException ex) {
-            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -120,11 +128,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (UserException ex) {
-            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
