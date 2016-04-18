@@ -395,3 +395,42 @@ textarea:focus {
     font-size:9pt;
     color:#9fabbe;
 }
+
+/* USERS PAGE */
+
+.utable {
+    width:100%;
+    min-width:960px;
+    margin:0 auto;
+    background:#fff;
+    color:#354052;
+}
+
+.utable tr {
+    border:1px solid #ddd;
+    cursor:pointer;
+}
+
+.utable tr:first-child { /* Table header */
+    background:#354052;
+    font-weight:bold;
+    cursor:default;
+    color:#9fabbe;
+}
+
+.utable tr:nth-child(even) {
+    background:#fafafa;
+}
+
+.utable td {
+    height:36px;
+    vertical-align:middle;
+    text-align:left;
+    text-indent:10px;
+}
+
+.utable td:nth-child(1) { width:100px; } /* User ID */
+.utable td:nth-child(2) { width:150px; } /* Creation date */
+.utable td:nth-child(3) { width:200px; } /* E-mail */
+.utable td:nth-child(4) { } /* Full name */
+.utable td:nth-child(5) { width:200px; } /* # of buildings */
