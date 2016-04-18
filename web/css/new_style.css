@@ -263,17 +263,24 @@ textarea:focus {
 
 /* VIEW BUILDING */
 
-.box {
-    background:#fff;
-    box-sizing:border-box;
-    width:calc(50% - 20px);
+.left_column {
     float:left;
-    margin-bottom:40px;
-    padding:10px;
+    width:calc(50% - 10px);
 }
 
-.box:nth-child(even) {
-    margin-right:40px;
+.right_column {
+    float:right;
+    width:calc(50% - 10px);
+}
+
+
+.box {
+    background:#fff;
+    width:100%;
+    clear:both;
+    margin-bottom:20px;
+    box-sizing:border-box;
+    padding:10px;
 }
 
 .box h1 {
@@ -322,4 +329,50 @@ textarea:focus {
 .viewinfo td:first-child {
     width:150px;
     font-weight:700;
+}
+
+/* ADMIN DASHBOARD */
+
+.widebox {
+    background:#fff;
+    width:100%;
+    height:100px;
+    box-sizing:border-box;
+    padding:20px;
+}
+
+.widebox h1 {
+    
+}
+
+.widebox p {
+    
+}
+
+.linkbox {
+    background:#fff;
+    width:calc(33.33% - 13.33px);
+    float:left;
+    margin-top:20px;
+    box-sizing:border-box;
+    padding:20px;
+}
+
+.mr20 { margin-right:20px; }
+
+.linkbox img {
+    display:block;
+    margin:0 auto;
+    height:60px;
+    opacity:0.75;
+}
+
+.linkbox h3 {
+    font-size:16pt;
+    line-height:40px;
+}
+
+.linkbox p {
+    font-size:9pt;
+    color:#9fabbe;
 }
