@@ -3,7 +3,8 @@ package presentationLayer.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
-import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import serviceLayer.controllers.BuildingController;
 import serviceLayer.entities.User;
+import serviceLayer.exceptions.buildingException;
 
 /**
  *
@@ -29,7 +31,7 @@ public class BuildingServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, buildingException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String action = request.getParameter("action").toLowerCase();
@@ -42,12 +44,12 @@ public class BuildingServlet extends HttpServlet {
                         String address = request.getParameter("address");
                         String parcelNumber = request.getParameter("parcel");
                         int size = 0;
-                        
+
                         try {
                             size = Integer.parseInt(request.getParameter("size"));
                         } catch (NumberFormatException ex) {
                         }
-                        
+
                         User user = (User) request.getSession().getAttribute("user");
                         int userId = user.getUserId();
 
@@ -66,12 +68,12 @@ public class BuildingServlet extends HttpServlet {
                 case "delete": {
                     if (request.getSession().getAttribute("user") != null) {
                         int buildingId = 0;
-                        
+
                         try {
                             buildingId = Integer.parseInt(request.getParameter("buildingId"));
                         } catch (NumberFormatException ex) {
                         }
-                        
+
                         if (buildingController.deleteCustomerBuilding(buildingId)) {
                             String message = "The building has been deleted.";
                             response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
@@ -90,12 +92,12 @@ public class BuildingServlet extends HttpServlet {
                         String address = request.getParameter("address");
                         String parcelNumber = request.getParameter("parcel");
                         int size = 0;
-                        
+
                         try {
                             size = Integer.parseInt(request.getParameter("size"));
                         } catch (NumberFormatException ex) {
                         }
-                        
+
                         int buildingId = Integer.parseInt(request.getParameter("buildingId"));
 
                         if (buildingController.editCustomerBuilding(name, address, parcelNumber, size, buildingId)) {
@@ -115,12 +117,12 @@ public class BuildingServlet extends HttpServlet {
                         String dmgtitle = request.getParameter("dmgtitle");
                         String desc = request.getParameter("dmgdesc");
                         int buildingId = 0;
-                        
+
                         try {
                             buildingId = Integer.parseInt(request.getParameter("buildingId"));
                         } catch (NumberFormatException ex) {
                         }
-                        
+
                         if (buildingController.addDamage(dmgtitle, desc, buildingId)) {
                             String message = "Your changes has been saved to the building.";
                             response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
@@ -138,15 +140,15 @@ public class BuildingServlet extends HttpServlet {
                         int orderStatus = 0;
                         int serviceId = 1;
                         int buildingId = 0;
-                        
+
                         try {
                             buildingId = Integer.parseInt(request.getParameter("buildingId"));
                         } catch (NumberFormatException ex) {
                         }
-                        
+
                         User user = (User) request.getSession().getAttribute("user");
                         System.out.println("buildingId: " + buildingId + "User: " + user.getFullName());
-                        
+
                         if (buildingController.requestCheckup(orderStatus, buildingId, user)) {
                             String message = "A check-up has been requested for your building. An employee will look into your case as soon as possible.";
                             response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
@@ -160,8 +162,6 @@ public class BuildingServlet extends HttpServlet {
                     break;
                 }
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         }
     }
 
@@ -177,7 +177,11 @@ public class BuildingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (buildingException ex) {
+            Logger.getLogger(BuildingServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -191,7 +195,11 @@ public class BuildingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (buildingException ex) {
+            Logger.getLogger(BuildingServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
