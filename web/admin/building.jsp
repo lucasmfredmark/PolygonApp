@@ -129,6 +129,6 @@
         <br>
        
         <div class="button">
-            <a href="buildings.jsp"><- Back to overview</a>
+            <a href="userBuildings.jsp?userId=<%=userId%>&buildingId=<%=buildingId%>"><- Back to overview</a>
         </div>
         <br><hr><br>

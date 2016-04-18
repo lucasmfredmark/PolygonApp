@@ -9,6 +9,7 @@ import dataAccessLayer.mappers.UserMapper;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import serviceLayer.entities.User;
+import serviceLayer.exceptions.userException;
 
 /**
  *
@@ -21,7 +22,7 @@ public class UserController {
         this.userMapper = new UserMapper();
     }
     
-    public User loginUser(String email, String password) throws SQLException {
+    public User loginUser(String email, String password) throws userException {
         if (email != null && password != null &&
             !email.isEmpty() && !password.isEmpty() &&
             password.length() <= 20) {
@@ -37,7 +38,7 @@ public class UserController {
         return null;
     }
     
-    public boolean registerUser(String email, String fullname, String password) throws SQLException {
+    public boolean registerUser(String email, String fullname, String password) throws userException {
         if (email != null && fullname != null && password != null &&
             !email.isEmpty() && !fullname.isEmpty() && !password.isEmpty() &&
             fullname.length() <= 50 && password.length() <= 20) {
@@ -47,11 +48,11 @@ public class UserController {
         return false;
     }
     
-    public User getUserByEmail(String email) throws SQLException {
+    public User getUserByEmail(String email) throws userException {
         return userMapper.getUserByEmail(email);
     }
     
-    public ArrayList<User> getAllUsers(String userType) throws SQLException {
+    public ArrayList<User> getAllUsers(String userType) throws userException {
         return userMapper.getAllUsers(userType);
     }
 }
