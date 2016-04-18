@@ -97,7 +97,7 @@
                 %>
                 
                 <div class="left_column">
-                    <div class="box">
+                    <div class="box viewbuilding">
                         <h1>Building information</h1>
                         <table class="viewinfo">
                             <tr>
@@ -122,7 +122,7 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="box">
+                    <div class="box viewbuilding">
                         <h1>Reported damages</h1>
                         <% 
                             ArrayList<Damage> damage = buildingController.getDamages(Integer.parseInt(buildingId));
@@ -147,7 +147,7 @@
                 </div>
                         
                 <div class="right_column">
-                    <div class="box">
+                    <div class="box viewbuilding">
                         <h1>Checkup reports</h1>
                         <%
                             ArrayList<Checkup> checkups = buildingController.getBuildingCheckups(Integer.parseInt(buildingId));
@@ -169,7 +169,7 @@
                             }  
                         %>
                     </div>
-                    <div class="box">
+                    <div class="box viewbuilding">
                         <h1>Relevant documents</h1>
                         <%
                             ArrayList<Document> documents = buildingController.getBuildingDocuments(Integer.parseInt(buildingId));

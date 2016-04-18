@@ -1,22 +1,17 @@
-<%@page import="serviceLayer.controllers.AdminController"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="serviceLayer.entities.Building"%>
-<%@page import="serviceLayer.controllers.BuildingController"%>
 <%@page import="serviceLayer.entities.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    // SESSION CHECK
-    User user = (User) session.getAttribute("user");
-
+    /* KILL SESSION ON LOGOUT */
     if(request.getParameter("logout") != null) {
-
         if (request.getSession(false) != null) {
             session.invalidate();
-        } 
-
+        }
         response.sendRedirect("../index.jsp");
         return;
     }
+    
+    // SESSION CHECK
+    User user = (User) session.getAttribute("user");
     
     if (user == null) {
         response.sendRedirect("../index.jsp");
@@ -66,32 +61,34 @@
                     }
                 %>
                 
-                <div class="widebox">
+                <div class="box dashboard_welcome">
                     <h1>Welcome to the admin panel</h1>
                     <p>From here you can lorem ipsum dolor sit amet.</p>
                 </div>
                 
-                <a href="users.jsp">
-                    <div class="linkbox mr20">
-                        <img src="../images/users_icon.svg">
-                        <h3 class="center">Users</h3>
-                        <p class="center">Click here to see a list of all registered users and their buildings.</p>
-                    </div>
-                </a>
-                <a href="customerbuildings.jsp">
-                    <div class="linkbox mr20">
-                        <img src="../images/building_icon.svg">
-                        <h3 class="center">Buildings</h3>
-                        <p class="center">Click here to see a list of all the buildings registered in the system.</p>
-                    </div>
-                </a>
-                <a href="pending.jsp">
-                    <div class="linkbox">
-                        <img src="../images/checkup_icon.svg">
-                        <h3 class="center">Pending checkups</h3>
-                        <p class="center">Click here to see buildings with an active checkup request.</p>
-                    </div>
-                </a>
+                <div class="dashboard_boxes">
+                    <a href="users.jsp">
+                        <div class="mr20">
+                            <img src="../images/users_icon.svg">
+                            <h1 class="center">Users</h1>
+                            <p class="center">Click here to see a list of all registered users and their buildings.</p>
+                        </div>
+                    </a>
+                    <a href="customerbuildings.jsp">
+                        <div class="mr20">
+                            <img src="../images/building_icon.svg">
+                            <h1 class="center">Buildings</h1>
+                            <p class="center">Click here to see a list of all the buildings registered in the system.</p>
+                        </div>
+                    </a>
+                    <a href="pending.jsp">
+                        <div>
+                            <img src="../images/checkup_icon.svg">
+                            <h1 class="center">Pending checkups</h1>
+                            <p class="center">Click here to see buildings with an active checkup request.</p>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>     

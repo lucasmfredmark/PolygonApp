@@ -68,13 +68,31 @@ textarea:focus {
     color:#354052;
 }
 
-/* FORMATTING CLASSES */
+/* GLOBAL CLASSES */
 
-.wrapper { width:calc(100% - 80px); margin:0 auto; } /* RESIZING SITE */
+.wrapper { width:calc(100% - 80px); margin:0 auto; } /* RESIZES SITE */
 .center { text-align:center; }
-
-
+.mr20 { margin-right:20px; }
 .hidden { display:none; }
+
+.left_column {
+    float:left;
+    width:calc(50% - 10px);
+}
+
+.right_column {
+    float:right;
+    width:calc(50% - 10px);
+}
+
+.box {
+    background:#fff;
+    width:100%;
+    clear:both;
+    margin-bottom:20px;
+    box-sizing:border-box;
+    padding:20px;
+}
 
 /* STANDARD TABLE */
 
@@ -110,7 +128,13 @@ textarea:focus {
     background:none;
 }
 
-/* LOGIN PAGE */
+/******************************************************************************/
+/******************************************************************************/
+/*                               LOGIN/REGISTER                               */
+/******************************************************************************/
+/******************************************************************************/
+
+/* LOGIN */
 
 #login {
     width:400px;
@@ -164,7 +188,11 @@ textarea:focus {
     width:240px;
 }
 
-/* SITE STRUCTURE */
+/******************************************************************************/
+/******************************************************************************/
+/*                                  CUSTOMER                                  */
+/******************************************************************************/
+/******************************************************************************/
 
 #site {
     width:100%;
@@ -197,6 +225,7 @@ textarea:focus {
     width:100%;
     height:100px;
     background:#fff;
+    /* box-shadow:0px 0px 10px rgba(0, 0, 0, 0.05); */
 }
 
 #navigation ul {
@@ -267,34 +296,14 @@ textarea:focus {
 
 /* VIEW BUILDING */
 
-.left_column {
-    float:left;
-    width:calc(50% - 10px);
-}
-
-.right_column {
-    float:right;
-    width:calc(50% - 10px);
-}
-
-
-.box {
-    background:#fff;
-    width:100%;
-    clear:both;
-    margin-bottom:20px;
-    box-sizing:border-box;
-    padding:10px;
-}
-
-.box h1 {
+.viewbuilding h1 {
     border-bottom:1px solid #eee;
     font-size:12pt;
     font-weight:700;
     height:24px;
 }
 
-.box p {
+.viewbuilding p {
     color:#9fabbe;
 }
 
@@ -354,53 +363,57 @@ textarea:focus {
     
 }
 
-/* ADMIN DASHBOARD */
+/******************************************************************************/
+/******************************************************************************/
+/*                                   ADMIN                                    */
+/******************************************************************************/
+/******************************************************************************/
 
-.widebox {
-    background:#fff;
+/* DASHBOARD */
+
+.dashboard_welcome {
+    box-shadow:0px 0px 10px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard_welcome h1 {
+    font-size:12pt;
+    margin-bottom:10px;
+}
+
+.dashboard_boxes {
     width:100%;
-    height:100px;
-    box-sizing:border-box;
-    padding:20px;
+    height:160px;
 }
 
-.widebox h1 {
-    
-}
-
-.widebox p {
-    
-}
-
-.linkbox {
+.dashboard_boxes div {
     background:#fff;
     width:calc(33.33% - 13.33px);
+    height:100%;
     float:left;
-    margin-top:20px;
     box-sizing:border-box;
     padding:20px;
+    box-shadow:0px 0px 10px rgba(0, 0, 0, 0.05);
 }
 
-.mr20 { margin-right:20px; }
-
-.linkbox img {
+.dashboard_boxes img {
     display:block;
     margin:0 auto;
     height:60px;
     opacity:0.75;
 }
 
-.linkbox h3 {
+.dashboard_boxes h1 {
+    color:#009fe3;
     font-size:16pt;
     line-height:40px;
 }
 
-.linkbox p {
+.dashboard_boxes p {
     font-size:9pt;
     color:#9fabbe;
 }
 
-/* ADMIN USERS PAGE */
+/* USERS PAGE */
 
 .users_table td:nth-child(1) { width:100px; } /* User ID */
 .users_table td:nth-child(2) { width:300px; } /* E-mail */
@@ -408,7 +421,7 @@ textarea:focus {
 .users_table td:nth-child(4) { width:200px; } /* # of buildings */
 .users_table td:nth-child(5) { width:150px; } /* Creation date */
 
-/* ADMIN BUILDINGS PAGE */
+/* BUILDINGS PAGE */
 
 .customerbuildings_table td:nth-child(1) { width:100px; } /* Building ID */
 .customerbuildings_table td:nth-child(2) { } /* Address */
@@ -416,7 +429,7 @@ textarea:focus {
 .customerbuildings_table td:nth-child(4) { width:200px; } /* Size */
 .customerbuildings_table td:nth-child(5) { width:150px; } /* Creation date */
 
-/* ADMIN USER'S BUILDINGS PAGE */
+/* USER'S BUILDINGS PAGE */
 
 .userbuildings_table td:nth-child(1) { width:100px; } /* Building ID */
 .userbuildings_table td:nth-child(2) { } /* Address */
