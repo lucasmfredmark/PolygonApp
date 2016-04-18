@@ -330,3 +330,51 @@ textarea:focus {
     width:150px;
     font-weight:700;
 }
+
+/* ADMIN DASHBOARD */
+
+.widebox {
+    background:#fff;
+    width:100%;
+    height:100px;
+    box-sizing:border-box;
+    padding:10px;
+}
+
+.widebox h1 {
+    
+}
+
+.widebox p {
+    
+}
+
+.linkbox {
+    background:#fff;
+    width:calc(33.33% - 13.33px);
+    float:left;
+    height:180px;
+    margin-top:20px;
+    box-sizing:border-box;
+    padding:10px;
+}
+
+.l1 { margin-right:20px; }
+.l3 { margin-left:20px; }
+
+.linkbox h3 {
+    font-size:24pt;
+    line-height:40px;
+    border-bottom:1px solid #eee;
+}
+
+.linkbox p {
+    margin-top:10px;
+}
+
+.linkbox img {
+    width:100px;
+    height:60px;
+    margin:0 auto;
+    display:block;
+}
