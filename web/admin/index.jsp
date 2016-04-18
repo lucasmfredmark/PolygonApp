@@ -14,7 +14,7 @@
             session.invalidate();
         } 
 
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("../index.jsp");
         return;
     }
     
@@ -50,7 +50,7 @@
                     <li class="active"><a href="index.jsp">Dashboard</a></li>
                     <li class="inactive"><a href="users.jsp">Users</a></li>
                     <li class="inactive"><a href="customerbuildings.jsp">Buildings</a></li>
-                    <li class="inactive"><a href="#checkups">Checkups</a></li>
+                    <li class="inactive"><a href="pending.jsp">Checkups</a></li>
                 </ul>
             </div>
         </div>
@@ -85,7 +85,7 @@
                         <p class="center">Click here to see a list of all the buildings registered in the system.</p>
                     </div>
                 </a>
-                <a href="checkups.jsp">
+                <a href="pending.jsp">
                     <div class="linkbox">
                         <img src="../images/checkup_icon.svg">
                         <h3 class="center">Pending checkups</h3>

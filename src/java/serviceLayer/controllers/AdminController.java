@@ -10,8 +10,8 @@ import dataAccessLayer.mappers.UserMapper;
 import java.util.ArrayList;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.User;
-import serviceLayer.exceptions.buildingException;
-import serviceLayer.exceptions.userException;
+import serviceLayer.exceptions.BuildingException;
+import serviceLayer.exceptions.UserException;
 
 /**
  *
@@ -22,15 +22,15 @@ public class AdminController {
     private final UserMapper um = new UserMapper();
     private final BuildingMapper bm = new BuildingMapper();
 
-    public ArrayList<Building> getCustomerBuildings(int userId) throws buildingException {
+    public ArrayList<Building> getCustomerBuildings(int userId) throws BuildingException {
         return bm.getCustomerBuildings(userId);
     }
     
-    public ArrayList<Building> getAllBuildings() throws buildingException {
+    public ArrayList<Building> getAllBuildings() throws BuildingException {
         return bm.getAllBuildings();
     }
 
-    public ArrayList<User> getAllUsers(String userType) throws userException {
+    public ArrayList<User> getAllUsers(String userType) throws UserException {
         // The return has been commented out because the method is not implemented yet in Mapper
         return um.getAllUsers(userType);
     }

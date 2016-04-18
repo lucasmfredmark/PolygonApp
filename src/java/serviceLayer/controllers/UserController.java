@@ -9,7 +9,7 @@ import dataAccessLayer.mappers.UserMapper;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import serviceLayer.entities.User;
-import serviceLayer.exceptions.userException;
+import serviceLayer.exceptions.UserException;
 
 /**
  *
@@ -22,7 +22,7 @@ public class UserController {
         this.userMapper = new UserMapper();
     }
     
-    public User loginUser(String email, String password) throws userException {
+    public User loginUser(String email, String password) throws UserException {
         if (email != null && password != null &&
             !email.isEmpty() && !password.isEmpty() &&
             password.length() <= 20) {
@@ -34,25 +34,23 @@ public class UserController {
                 }
             }
         }
-        
         return null;
     }
     
-    public boolean registerUser(String email, String fullname, String password) throws userException {
+    public boolean registerUser(String email, String fullname, String password) throws UserException {
         if (email != null && fullname != null && password != null &&
             !email.isEmpty() && !fullname.isEmpty() && !password.isEmpty() &&
             fullname.length() <= 50 && password.length() <= 20) {
             return userMapper.insertUser(email, fullname, password);
         }
-        
         return false;
     }
     
-    public User getUserByEmail(String email) throws userException {
+    public User getUserByEmail(String email) throws UserException {
         return userMapper.getUserByEmail(email);
     }
     
-    public ArrayList<User> getAllUsers(String userType) throws userException {
+    public ArrayList<User> getAllUsers(String userType) throws UserException {
         return userMapper.getAllUsers(userType);
     }
 }

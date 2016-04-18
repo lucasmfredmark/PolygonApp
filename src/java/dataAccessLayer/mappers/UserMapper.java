@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import serviceLayer.entities.User;
 import serviceLayer.entities.User.userType;
-import serviceLayer.exceptions.userException;
+import serviceLayer.exceptions.UserException;
 
 /**
  *
@@ -23,7 +23,7 @@ import serviceLayer.exceptions.userException;
  */
 public class UserMapper {
 
-    public User getUserByEmail(String email) throws userException {
+    public User getUserByEmail(String email) throws UserException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "SELECT * FROM users WHERE usermail = ?";
@@ -43,12 +43,12 @@ public class UserMapper {
                 return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), userType, rs.getString(6));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UserMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new UserException("An error occured: no match on email");
         }
         return null;
     }
 
-    public boolean insertUser(String email, String fullname, String password) throws userException {
+    public boolean insertUser(String email, String fullname, String password) throws UserException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "SELECT * FROM users WHERE usermail = ?";
@@ -66,12 +66,12 @@ public class UserMapper {
                 return rowCount == 1;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UserMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new UserException("The user couldn't be created. Make sure you type your information in correctly");
         }
         return false;
     }
     
-    public ArrayList<User> getAllUsers(String usertype) throws userException {
+    public ArrayList<User> getAllUsers(String usertype) throws UserException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "SELECT * FROM users WHERE usertype = ?";
@@ -93,8 +93,7 @@ public class UserMapper {
             }
             return userList;
         } catch (SQLException ex) {
-            Logger.getLogger(UserMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new UserException("A list of all users couldn't be returned. Is the database empty?");
         }
-        return null;
     }
 }
