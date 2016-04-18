@@ -187,7 +187,7 @@
                                 out.print("<p>Click on a document to view its details.</p>");
                             } else {
                                 out.print("<br><p>There are no documents attached to this building yet.</p>"
-                                         + "<br><p>Click <a href='adddocument.jsp?buildingId=" + buildingId +"'>here</a> to add one.</p>");
+                                         + "<br><p>Click <a href='uploadfiles.jsp?buildingId=" + buildingId +"'>here</a> to add one.</p>");
                             }
                         %>
                     </div>
