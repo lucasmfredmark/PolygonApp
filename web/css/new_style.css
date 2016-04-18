@@ -338,7 +338,7 @@ textarea:focus {
     width:100%;
     height:100px;
     box-sizing:border-box;
-    padding:10px;
+    padding:20px;
 }
 
 .widebox h1 {
@@ -353,28 +353,26 @@ textarea:focus {
     background:#fff;
     width:calc(33.33% - 13.33px);
     float:left;
-    height:180px;
     margin-top:20px;
     box-sizing:border-box;
-    padding:10px;
+    padding:20px;
 }
 
-.l1 { margin-right:20px; }
-.l3 { margin-left:20px; }
+.mr20 { margin-right:20px; }
+
+.linkbox img {
+    display:block;
+    margin:0 auto;
+    height:60px;
+    opacity:0.75;
+}
 
 .linkbox h3 {
-    font-size:24pt;
+    font-size:16pt;
     line-height:40px;
-    border-bottom:1px solid #eee;
 }
 
 .linkbox p {
-    margin-top:10px;
-}
-
-.linkbox img {
-    width:100px;
-    height:60px;
-    margin:0 auto;
-    display:block;
+    font-size:9pt;
+    color:#9fabbe;
 }
