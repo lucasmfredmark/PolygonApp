@@ -263,17 +263,24 @@ textarea:focus {
 
 /* VIEW BUILDING */
 
-.box {
-    background:#fff;
-    box-sizing:border-box;
-    width:calc(50% - 20px);
+.left_column {
     float:left;
-    margin-bottom:40px;
-    padding:10px;
+    width:calc(50% - 10px);
 }
 
-.box:nth-child(even) {
-    margin-right:40px;
+.right_column {
+    float:right;
+    width:calc(50% - 10px);
+}
+
+
+.box {
+    background:#fff;
+    width:100%;
+    clear:both;
+    margin-bottom:20px;
+    box-sizing:border-box;
+    padding:10px;
 }
 
 .box h1 {
