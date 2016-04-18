@@ -181,7 +181,7 @@ public class UploadServlet extends HttpServlet {
                                 String message = "The checkup has been added to the checkup list.";
                                 response.sendRedirect("/PolygonApp/admin/building.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
                             } else {
-                                String message = "The document couldn't be added to the document list.";
+                                String message = "The checkup couldn't be added to the checkup list.";
                                 response.sendRedirect("/PolygonApp/admin/uploadreport.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
                             }
                             break;
@@ -220,8 +220,12 @@ public class UploadServlet extends HttpServlet {
                         case "upload-image": {
                             for (FileItem fileItem : stack) {
                                 String fieldName = fileItem.getFieldName();
-                                path = fileItem.getFieldName();
+                                
                                 switch (fieldName) {
+                                    case "note": {
+                                        note = fileItem.getString();
+                                        break;
+                                    }
                                     case "buildingId": {
                                         buildingId = 0;
                                         
@@ -233,11 +237,11 @@ public class UploadServlet extends HttpServlet {
                                     }
                                 }
                             }
-                            if (bc.addCheckUpReport(path, conditionLevel, buildingId, orderId)) {
-                                String message = "The checkup has been added to the checkup list.";
+                            if (bc.addCustomerDocument(note, fileName, buildingId, user.getUserId())) {
+                                String message = "The image has been added to the document list.";
                                 response.sendRedirect("/PolygonApp/admin/building.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
                             } else {
-                                String message = "The document couldn't be added to the document list.";
+                                String message = "The image couldn't be added to the document list.";
                                 response.sendRedirect("/PolygonApp/admin/uploadimg.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
                             }
                             break;

@@ -76,6 +76,40 @@ textarea:focus {
 
 .hidden { display:none; }
 
+/* STANDARD TABLE */
+
+.table { /* TABLE CONTAINER DIV */
+    background:#fff;
+    width:100%;
+    min-width:960px;
+    box-sizing:border-box;
+    padding:20px;
+}
+
+.table table {
+    width:100%;
+}
+
+.table tr {
+    line-height:24px;
+    cursor:pointer;
+}
+
+.table tr:hover {
+    background:#ebf0f7;
+}
+
+.table tr:first-child {
+    color:#9fabbe;
+    font-weight:bold;
+    border-bottom:1px solid #9fabbe;
+    cursor:default;
+}
+
+.table tr:first-child:hover {
+    background:none;
+}
+
 /* LOGIN PAGE */
 
 #login {
@@ -219,41 +253,11 @@ textarea:focus {
 
 /* BUILDING OVERVIEW PAGE */
 
-.btable {
-    width:100%;
-    min-width:960px;
-    margin:0 auto;
-    background:#fff;
-    color:#354052;
-}
-
-.btable tr {
-    border:1px solid #ddd;
-    cursor:pointer;
-}
-
-.btable tr:first-child { /* Table header */
-    background:#354052;
-    font-weight:bold;
-    cursor:default;
-    color:#9fabbe;
-}
-
-.btable tr:nth-child(even) {
-    background:#fafafa;
-}
-
-.btable td {
-    height:36px;
-    vertical-align:middle;
-    text-align:left;
-    text-indent:10px;
-}
-
-.btable td:nth-child(1) { width:250px; }
-.btable td:nth-child(3) { width:150px; }
-.btable td:nth-child(4) { width:100px; }
-.btable td:nth-child(5) { width:200px; }
+.buildings_table td:nth-child(1) { width:250px; } /* Building name */
+.buildings_table td:nth-child(2) { } /* Address */
+.buildings_table td:nth-child(3) { width:150px; } /* Parcel # */
+.buildings_table td:nth-child(4) { width:100px; } /* Size */
+.buildings_table td:nth-child(5) { width:200px; } /* Condition level */
 
 /* ADD NEW BUILDING */
 
@@ -396,41 +400,26 @@ textarea:focus {
     color:#9fabbe;
 }
 
-/* USERS PAGE */
+/* ADMIN USERS PAGE */
 
-.utable {
-    width:100%;
-    min-width:960px;
-    margin:0 auto;
-    background:#fff;
-    color:#354052;
-}
+.users_table td:nth-child(1) { width:100px; } /* User ID */
+.users_table td:nth-child(2) { width:300px; } /* E-mail */
+.users_table td:nth-child(3) { } /* Full name */
+.users_table td:nth-child(4) { width:200px; } /* # of buildings */
+.users_table td:nth-child(5) { width:150px; } /* Creation date */
 
-.utable tr {
-    border:1px solid #ddd;
-    cursor:pointer;
-}
+/* ADMIN BUILDINGS PAGE */
 
-.utable tr:first-child { /* Table header */
-    background:#354052;
-    font-weight:bold;
-    cursor:default;
-    color:#9fabbe;
-}
+.customerbuildings_table td:nth-child(1) { width:100px; } /* Building ID */
+.customerbuildings_table td:nth-child(2) { } /* Address */
+.customerbuildings_table td:nth-child(3) { width:200px; } /* Parcel # */
+.customerbuildings_table td:nth-child(4) { width:200px; } /* Size */
+.customerbuildings_table td:nth-child(5) { width:150px; } /* Creation date */
 
-.utable tr:nth-child(even) {
-    background:#fafafa;
-}
+/* ADMIN USER'S BUILDINGS PAGE */
 
-.utable td {
-    height:36px;
-    vertical-align:middle;
-    text-align:left;
-    text-indent:10px;
-}
-
-.utable td:nth-child(1) { width:100px; } /* User ID */
-.utable td:nth-child(2) { width:150px; } /* Creation date */
-.utable td:nth-child(3) { width:200px; } /* E-mail */
-.utable td:nth-child(4) { } /* Full name */
-.utable td:nth-child(5) { width:200px; } /* # of buildings */
+.userbuildings_table td:nth-child(1) { width:100px; } /* Building ID */
+.userbuildings_table td:nth-child(2) { } /* Address */
+.userbuildings_table td:nth-child(3) { width:200px; } /* Parcel # */
+.userbuildings_table td:nth-child(4) { width:200px; } /* Size */
+.userbuildings_table td:nth-child(5) { width:150px; } /* Creation date */
