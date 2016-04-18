@@ -17,6 +17,9 @@
     if (user == null) {
         response.sendRedirect("index.jsp");
         return;
+    } else if (user.getUserType().equals(User.userType.ADMIN)) {
+        response.sendRedirect("admin/index.jsp");
+        return;
     }
 %>
 <!DOCTYPE html>
