@@ -38,7 +38,6 @@ public class BuildingControllerTest {
     private static final String PWD = "root";
     public static Connection conn;
     private UserController uc;
-    private User user;
 
     public enum userType {
         CUSTOMER, ADMIN
@@ -126,8 +125,13 @@ public class BuildingControllerTest {
         } finally {
             conn.close();
         }
+        System.out.println("User contoller");
         uc = new UserController();
+        try {
         uc.registerUser("emailfortests@test.dk", "test johansen", "123");
+        } catch (UserException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @After

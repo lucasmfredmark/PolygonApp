@@ -49,6 +49,7 @@ public class UserMapper {
     }
 
     public void insertUser(String email, String fullname, String password) throws UserException {
+        System.out.println("Reached insertUser");
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "SELECT * FROM users WHERE usermail = ?";
@@ -62,6 +63,7 @@ public class UserMapper {
                 pstmt.setString(1, email);
                 pstmt.setString(2, fullname);
                 pstmt.setString(3, password);
+                System.out.println("Done");
             }
         } catch (SQLException ex) {
             throw new UserException("Error: the user couldn't be created. The user already exists");

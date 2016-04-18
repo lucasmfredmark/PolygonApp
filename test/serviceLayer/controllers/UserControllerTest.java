@@ -16,30 +16,31 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import serviceLayer.entities.User;
+import serviceLayer.exceptions.UserException;
 
 /**
  *
  * @author lucas
  */
 public class UserControllerTest {
-    
+
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     private static final String URL = "jdbc:mysql://localhost/polygon";
     private static final String USER = "root";
     private static final String PWD = "root";
     public static Connection conn;
-    
+
     public UserControllerTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() throws SQLException {
         try {
@@ -47,7 +48,7 @@ public class UserControllerTest {
             conn = DriverManager.getConnection(URL, USER, PWD);
             Statement st = conn.createStatement();
             conn.setAutoCommit(false);
-            
+
             // create
             st.addBatch("DROP TABLE users");
             st.addBatch("CREATE TABLE users ("
@@ -58,12 +59,12 @@ public class UserControllerTest {
                     + "usertype ENUM('CUSTOMER','ADMIN') DEFAULT 'CUSTOMER',"
                     + "fullname VARCHAR(50)"
                     + ")");
-            
+
             // insert
             st.addBatch("INSERT INTO users (usermail, userpass, fullname) VALUES ('test@polygon.dk','test','Power User')");
-            
+
             st.executeBatch();
-            
+
             // end transaction
             conn.commit();
         } catch (ClassNotFoundException | SQLException ex) {
@@ -72,7 +73,7 @@ public class UserControllerTest {
             conn.close();
         }
     }
-    
+
     @After
     public void tearDown() throws SQLException {
         conn.close();
@@ -86,19 +87,26 @@ public class UserControllerTest {
         UserController uc = new UserController();
         String email = "test";
         String password = "test";
-        User user = uc.loginUser(email, password);
-        assertNotNull(user);
+        try {
+            uc.loginUser(email, password);
+        } catch (UserException ex) {
+            fail(ex.getMessage());
+        }
     }
-    
+
     @Test
     public void testLoginUserFail1() throws Exception {
         UserController uc = new UserController();
         String email = "Hans";
         String password = "";
-        User user = uc.loginUser(email, password);
-        assertNull(user);
+        try {
+            uc.loginUser(email, password);
+        } catch (UserException ex) {
+            assertTrue(true);
+            fail(ex.getMessage());
+        }
     }
-    
+
     @Test
     public void testLoginUserFail2() throws Exception {
         UserController uc = new UserController();
@@ -107,16 +115,20 @@ public class UserControllerTest {
         User user = uc.loginUser(email, password);
         assertNull(user);
     }
-    
+
     @Test
     public void testLoginUserFail3() throws Exception {
         UserController uc = new UserController();
         String email = "";
         String password = "";
-        User user = uc.loginUser(email, password);
-        assertNull(user);
+        try {
+            uc.loginUser(email, password);
+        } catch (UserException ex) {
+            assertTrue(true);
+            fail(ex.getMessage());
+        }
     }
-    
+
     @Test
     public void testLoginUserFail4() throws Exception {
         UserController uc = new UserController();
@@ -125,7 +137,7 @@ public class UserControllerTest {
         User user = uc.loginUser(email, password);
         assertNull(user);
     }
-    
+
     /**
      * Test of registerUser method, of class UserController.
      */
@@ -142,7 +154,7 @@ public class UserControllerTest {
         }
         assertTrue(true);
     }
-    
+
     @Test
     public void testRegisterUserFail1() throws Exception {
         UserController uc = new UserController();
@@ -152,11 +164,10 @@ public class UserControllerTest {
         try {
             uc.registerUser(email, password, fullname);
         } catch (Exception e) {
-            fail(e.getMessage());
+            assertTrue(true);
         }
-        assertTrue(true);
     }
-    
+
     @Test
     public void testRegisterUserFail3() throws Exception {
         UserController uc = new UserController();
@@ -166,9 +177,8 @@ public class UserControllerTest {
         try {
             uc.registerUser(email, password, fullname);
         } catch (Exception e) {
-            fail(e.getMessage());
+            assertTrue(true);
         }
-        assertTrue(true);
     }
-    
+
 }
