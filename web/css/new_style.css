@@ -415,3 +415,11 @@ textarea:focus {
 .customerbuildings_table td:nth-child(3) { width:200px; } /* Parcel # */
 .customerbuildings_table td:nth-child(4) { width:200px; } /* Size */
 .customerbuildings_table td:nth-child(5) { width:150px; } /* Creation date */
+
+/* ADMIN USER'S BUILDINGS PAGE */
+
+.userbuildings_table td:nth-child(1) { width:100px; } /* Building ID */
+.userbuildings_table td:nth-child(2) { } /* Address */
+.userbuildings_table td:nth-child(3) { width:200px; } /* Parcel # */
+.userbuildings_table td:nth-child(4) { width:200px; } /* Size */
+.userbuildings_table td:nth-child(5) { width:150px; } /* Creation date */

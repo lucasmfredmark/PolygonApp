@@ -81,14 +81,16 @@
                         <%
                             AdminController ac = new AdminController();
                             ArrayList<Building> allBuildings = ac.getAllBuildings();
-                            for (Building b : allBuildings) {
-                                out.print("<tr onclick=\"document.location='building.jsp?buildingId=" + b.getBuildingId()+ "'\">");
-                                    out.print("<td>" + b.getBuildingId()+ "</td>");
-                                    out.print("<td>" + b.getBuildingAddress()+ "</td>");
-                                    out.print("<td>" + b.getBuildingParcelNumber()+ "</td>");
-                                    out.print("<td>" + b.getBuildingSize() + "</td>");
-                                    out.print("<td>" + b.getBuildingDate().substring(0,10) + "</td>");
-                                out.print("</tr>");
+                            if (allBuildings.size() > 0) {
+                                for (Building b : allBuildings) {
+                                    out.print("<tr onclick=\"document.location='building.jsp?buildingId=" + b.getBuildingId()+ "'\">");
+                                        out.print("<td>" + b.getBuildingId()+ "</td>");
+                                        out.print("<td>" + b.getBuildingAddress()+ "</td>");
+                                        out.print("<td>" + b.getBuildingParcelNumber()+ "</td>");
+                                        out.print("<td>" + b.getBuildingSize() + "</td>");
+                                        out.print("<td>" + b.getBuildingDate().substring(0,10) + "</td>");
+                                    out.print("</tr>");
+                                }
                             }
                         %>
                     </table>
