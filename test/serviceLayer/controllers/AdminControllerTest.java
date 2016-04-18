@@ -19,6 +19,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.User;
+import serviceLayer.exceptions.buildingException;
+import serviceLayer.exceptions.userException;
 
 /**
  *
@@ -99,7 +101,7 @@ public class AdminControllerTest {
      * Test of getCustomerBuildings method, of class AdminController.
      */
     @Test
-    public void testGetCustomerBuildings() throws Exception {
+    public void testGetCustomerBuildings() throws buildingException {
         ArrayList<Building> buildings = new ArrayList();
         buildings = ac.getCustomerBuildings(1);
         // We have created 2 buildings, now let's see if they are and can be retrieved
@@ -113,7 +115,7 @@ public class AdminControllerTest {
      * Test of getAllUsers method, of class AdminController.
      */
     @Test
-    public void testGetAllUsers() throws Exception {
+    public void testGetAllUsers() throws userException {
         ArrayList<User> users = new ArrayList();
         users = ac.getAllUsers("CUSTOMER");
         // We have created 2 users, now let's see if they are and can be retrieved
@@ -124,7 +126,7 @@ public class AdminControllerTest {
      }
     
     @Test
-    public void getAllBuildingsTest() throws SQLException {
+    public void getAllBuildingsTest() throws buildingException {
         AdminController ac = new AdminController();
         ArrayList<Building> buildings = ac.getAllBuildings();
         int result = buildings.size();
