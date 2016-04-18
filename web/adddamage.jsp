@@ -5,7 +5,17 @@
 <%
     User user = (User) session.getAttribute("user");
     String buildingId = request.getParameter("buildingId");
+    
+    if(request.getParameter("logout") != null) {
 
+        if (request.getSession(false) != null) {
+            session.invalidate();
+        } 
+
+        response.sendRedirect("index.jsp");
+        return;
+    }
+    
     if (user == null) {
         response.sendRedirect("index.jsp");
         return;
@@ -27,16 +37,6 @@
 
     if (building == null) {
         response.sendRedirect("buildings.jsp");
-        return;
-    }
-    
-    if(request.getParameter("logout") != null) {
-
-        if (request.getSession(false) != null) {
-            session.invalidate();
-        } 
-
-        response.sendRedirect("index.jsp");
         return;
     }
 %>

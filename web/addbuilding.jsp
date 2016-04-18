@@ -4,17 +4,17 @@
     // SESSION CHECK
     User user = (User) session.getAttribute("user");
     
-    if (user == null) {
-        response.sendRedirect("index.jsp");
-        return;
-    }
-    
     if(request.getParameter("logout") != null) {
 
         if (request.getSession(false) != null) {
             session.invalidate();
         } 
 
+        response.sendRedirect("index.jsp");
+        return;
+    }
+    
+    if (user == null) {
         response.sendRedirect("index.jsp");
         return;
     }
