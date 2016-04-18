@@ -48,7 +48,7 @@ public class UserMapper {
         return null;
     }
 
-    public boolean insertUser(String email, String fullname, String password) throws UserException {
+    public void insertUser(String email, String fullname, String password) throws UserException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "SELECT * FROM users WHERE usermail = ?";
@@ -62,13 +62,10 @@ public class UserMapper {
                 pstmt.setString(1, email);
                 pstmt.setString(2, fullname);
                 pstmt.setString(3, password);
-                int rowCount = pstmt.executeUpdate();
-                return rowCount == 1;
             }
         } catch (SQLException ex) {
-            throw new UserException("The user couldn't be created. Make sure you type your information in correctly");
+            throw new UserException("Error: the user couldn't be created. The user already exists");
         }
-        return false;
     }
     
     public ArrayList<User> getAllUsers(String usertype) throws UserException {

@@ -135,8 +135,12 @@ public class UserControllerTest {
         String email = "Patrick";
         String password = "Lotte";
         String fullname = "Hans Lotte";
-        boolean result = uc.registerUser(email, password, fullname);
-        assertTrue(result);
+        try {
+            uc.registerUser(email, password, fullname);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+        assertTrue(true);
     }
     
     @Test
@@ -145,18 +149,12 @@ public class UserControllerTest {
         String email = "";
         String password = "";
         String fullname = "";
-        boolean result = uc.registerUser(email, password, fullname);
-        assertFalse(result);
-    }
-    
-    @Test
-    public void testRegisterUserFail2() throws Exception {
-        UserController uc = new UserController();
-        String email = "Hej";
-        String password = "Hej";
-        String fullname = "Hej";
-        boolean result = uc.registerUser(email, password, fullname);
-        assertFalse(result);
+        try {
+            uc.registerUser(email, password, fullname);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+        assertTrue(true);
     }
     
     @Test
@@ -165,8 +163,12 @@ public class UserControllerTest {
         String email = null;
         String password = null;
         String fullname = null;
-        boolean result = uc.registerUser(email, password, fullname);
-        assertFalse(result);
+        try {
+            uc.registerUser(email, password, fullname);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+        assertTrue(true);
     }
     
 }

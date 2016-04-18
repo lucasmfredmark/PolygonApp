@@ -33,17 +33,19 @@ public class UserController {
                     return user;
                 }
             }
-        }
+        } 
         return null;
     }
     
-    public boolean registerUser(String email, String fullname, String password) throws UserException {
+    public void registerUser(String email, String fullname, String password) throws UserException {
         if (email != null && fullname != null && password != null &&
             !email.isEmpty() && !fullname.isEmpty() && !password.isEmpty() &&
             fullname.length() <= 50 && password.length() <= 20) {
-            return userMapper.insertUser(email, fullname, password);
+            userMapper.insertUser(email, fullname, password);
         }
-        return false;
+        else {
+            throw new UserException("One or more fields were empty");
+        }
     }
     
     public User getUserByEmail(String email) throws UserException {
