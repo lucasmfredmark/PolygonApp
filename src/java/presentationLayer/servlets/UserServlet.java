@@ -8,7 +8,6 @@ package presentationLayer.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -16,7 +15,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import serviceLayer.controllers.UserController;
 import serviceLayer.entities.User;
 import serviceLayer.exceptions.userException;
@@ -88,18 +86,9 @@ public class UserServlet extends HttpServlet {
                     }
                     break;
                 }
-                case "logout": {
-                    HttpSession session = request.getSession(false);
-
-                    if (session != null) {
-                        session.invalidate();
-                    } 
-
-                    response.sendRedirect("/PolygonApp/index.jsp");
-                    break;
-                }
             }
-        }    }
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
