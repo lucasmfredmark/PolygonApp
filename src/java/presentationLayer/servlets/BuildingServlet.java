@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import serviceLayer.controllers.BuildingController;
 import serviceLayer.entities.User;
-import serviceLayer.exceptions.buildingException;
+import serviceLayer.exceptions.BuildingException;
 
 /**
  *
@@ -31,7 +31,7 @@ public class BuildingServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, buildingException {
+            throws ServletException, IOException, BuildingException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String action = request.getParameter("action").toLowerCase();
@@ -179,7 +179,7 @@ public class BuildingServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (buildingException ex) {
+        } catch (BuildingException ex) {
             Logger.getLogger(BuildingServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -197,7 +197,7 @@ public class BuildingServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (buildingException ex) {
+        } catch (BuildingException ex) {
             Logger.getLogger(BuildingServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
