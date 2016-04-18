@@ -2,7 +2,7 @@
 * To change this license header, choose License Headers in Project Properties.
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
-*/
+ */
 package presentationLayer.servlets;
 
 import java.io.File;
@@ -24,12 +24,14 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import serviceLayer.controllers.BuildingController;
 import serviceLayer.entities.User;
+import serviceLayer.exceptions.BuildingException;
 
 /**
  *
  * @author Patrick
  */
 public class UploadServlet extends HttpServlet {
+
     private File file;
     private String filePath;
     private String path;
@@ -42,7 +44,8 @@ public class UploadServlet extends HttpServlet {
     private ArrayList<FileItem> stack;
     boolean isPathSet;
     boolean isWritten;
-    
+    private String error;
+
     @Override
     public void init() {
         // The file path is specified in folder Configuration Files -> web.xml.
@@ -57,7 +60,7 @@ public class UploadServlet extends HttpServlet {
         stack = new ArrayList();
         isPathSet = false;
     }
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -72,9 +75,9 @@ public class UploadServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         // Check that we have a file upload request
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-        
+
         try (PrintWriter out = response.getWriter()) {
-            
+
             if (!isMultipart) {
                 /* TODO output your page here. You may use following sample code. */
                 out.println("<!DOCTYPE html>");
@@ -100,7 +103,7 @@ public class UploadServlet extends HttpServlet {
                 List fileItems = uploadHandler.parseRequest(request);
                 // Process the uploaded file items
                 Iterator i = fileItems.iterator();
-                
+
                 while (i.hasNext()) {
                     FileItem fi = (FileItem) i.next();
                     if (!fi.isFormField()) {
@@ -126,7 +129,7 @@ public class UploadServlet extends HttpServlet {
                         }
                     }
                 }
-                
+
                 if (isWritten) {
                     String action = null;
                     for (FileItem fileItem : stack) {
@@ -135,15 +138,15 @@ public class UploadServlet extends HttpServlet {
                             break;
                         }
                     }
-                    
+
                     User user = (User) request.getSession().getAttribute("user");
-                    
+
                     switch (action) {
                         case "upload-report": {
                             for (FileItem fileItem : stack) {
                                 String fieldName = fileItem.getFieldName();
                                 path = fileItem.getFieldName();
-                                
+
                                 switch (fieldName) {
                                     case "conditionLevel": {
                                         conditionLevel = 0;
@@ -156,7 +159,7 @@ public class UploadServlet extends HttpServlet {
                                     }
                                     case "buildingId": {
                                         buildingId = 0;
-                                        
+
                                         try {
                                             buildingId = Integer.parseInt(fileItem.getString());
                                         } catch (NumberFormatException ex) {
@@ -166,7 +169,7 @@ public class UploadServlet extends HttpServlet {
                                     }
                                     case "orderId": {
                                         orderId = 0;
-                                        
+
                                         try {
                                             orderId = Integer.parseInt(fileItem.getString());
                                         } catch (NumberFormatException ex) {
@@ -174,22 +177,23 @@ public class UploadServlet extends HttpServlet {
                                         System.out.println(orderId);
                                         break;
                                     }
-                                    
+
                                 }
                             }
-                            if (bc.addCheckUpReport(path, conditionLevel, buildingId, orderId)) {
+                            try {
+                                bc.addCheckUpReport(path, conditionLevel, buildingId, orderId);
                                 String message = "The checkup has been added to the checkup list.";
                                 response.sendRedirect("/PolygonApp/admin/building.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
-                            } else {
-                                String message = "The checkup couldn't be added to the checkup list.";
-                                response.sendRedirect("/PolygonApp/admin/uploadreport.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                            } catch (BuildingException ex) {
+                                error = ex.getMessage();
+                                response.sendRedirect("/PolygonApp/admin/uploadreport.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
                             }
                             break;
                         }
                         case "upload-document": {
                             for (FileItem fileItem : stack) {
                                 String fieldName = fileItem.getFieldName();
-                                
+
                                 switch (fieldName) {
                                     case "note": {
                                         note = fileItem.getString();
@@ -197,7 +201,7 @@ public class UploadServlet extends HttpServlet {
                                     }
                                     case "buildingId": {
                                         buildingId = 0;
-                                        
+
                                         try {
                                             buildingId = Integer.parseInt(fileItem.getString());
                                         } catch (NumberFormatException ex) {
@@ -206,21 +210,21 @@ public class UploadServlet extends HttpServlet {
                                     }
                                 }
                             }
-                            
-                            if (bc.addCustomerDocument(note, fileName, buildingId, user.getUserId())) {
+                            try {
+                                bc.addCustomerDocument(note, fileName, buildingId, user.getUserId());
                                 String message = "The document has been added to the document list.";
                                 response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
-                            } else {
-                                String message = "The document couldn't be added to the document list.";
-                                response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                            } catch (BuildingException ex) {
+                                error = ex.getMessage();
+                                response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
                             }
                             break;
                         }
-                        
+
                         case "upload-image": {
                             for (FileItem fileItem : stack) {
                                 String fieldName = fileItem.getFieldName();
-                                
+
                                 switch (fieldName) {
                                     case "note": {
                                         note = fileItem.getString();
@@ -228,7 +232,7 @@ public class UploadServlet extends HttpServlet {
                                     }
                                     case "buildingId": {
                                         buildingId = 0;
-                                        
+
                                         try {
                                             buildingId = Integer.parseInt(fileItem.getString());
                                         } catch (NumberFormatException ex) {
@@ -237,16 +241,16 @@ public class UploadServlet extends HttpServlet {
                                     }
                                 }
                             }
-                            if (bc.addCustomerDocument(note, fileName, buildingId, user.getUserId())) {
+                            try {
+                                bc.addCustomerDocument(note, fileName, buildingId, user.getUserId());
                                 String message = "The image has been added to the document list.";
                                 response.sendRedirect("/PolygonApp/admin/building.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
-                            } else {
-                                String message = "The image couldn't be added to the document list.";
-                                response.sendRedirect("/PolygonApp/admin/uploadimg.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                            } catch (BuildingException ex) {
+                                error = ex.getMessage();
+                                response.sendRedirect("/PolygonApp/admin/uploadimg.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
                             }
-                            break;
                         }
-                        
+
                     }
                 }
             }
@@ -254,7 +258,7 @@ public class UploadServlet extends HttpServlet {
         } catch (Exception ex) {
         }
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -273,7 +277,7 @@ public class UploadServlet extends HttpServlet {
             Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -291,7 +295,7 @@ public class UploadServlet extends HttpServlet {
             Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
      * Returns a short description of the servlet.
      *
@@ -301,5 +305,5 @@ public class UploadServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
 }

@@ -14,6 +14,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -140,7 +141,12 @@ public class BuildingControllerTest {
         bc.addCustomerBuilding("dummy", "some address", "b623", 80, 1);
         Building b = bc.getCustomerBuilding(2, 1);
         assertEquals("some address", b.getBuildingAddress());
-        assertTrue(bc.deleteCustomerBuilding(2));
+        try {
+            bc.deleteCustomerBuilding(2);
+        } catch (BuildingException ex) {
+            fail(ex.getMessage());
+        }
+        assertTrue(true);
     }
 
     @Test
@@ -157,18 +163,24 @@ public class BuildingControllerTest {
     public void editBuildingTest() throws BuildingException {
         BuildingController bc = new BuildingController();
         bc.addCustomerBuilding("editTest", "edit address", "edit5", 160, 1);
-        System.out.println("Before editting: " + bc.getCustomerBuilding(2, 1).getBuildingParcelNumber());
         assertEquals("edit5", bc.getCustomerBuilding(2, 1).getBuildingParcelNumber());
-        assertTrue(bc.editCustomerBuilding("editTest", "edit address", "edit8", 160, 2));
-        System.out.println("After editing: " + bc.getCustomerBuilding(2, 1).getBuildingParcelNumber());
+        try {
+            bc.editCustomerBuilding("editTest", "edit address", "edit8", 160, 2);
+        } catch (BuildingException ex) {
+            fail(ex.getMessage());
+        }
+        assertTrue(true);
     }
 
     @Test
     public void addAndGetDocumentTest() throws BuildingException {
         BuildingController bc = new BuildingController();
-        System.out.println("Can we add a document?");
-        assertTrue(bc.addCustomerDocument("port mackerel", "dummyPath", 1, 1));
-        System.out.println("Can we get a document?");
+        try {
+            bc.addCustomerDocument("port mackerel", "dummyPath", 1, 1);
+        } catch (BuildingException ex) {
+            fail(ex.getMessage());
+        }
+        assertTrue(true);
         ArrayList<Document> stack = bc.getBuildingDocuments(1);
         int expResult = 1;
         assertEquals(expResult, stack.size());
@@ -177,10 +189,18 @@ public class BuildingControllerTest {
     @Test
     public void addAndDeleteDamageTest() throws BuildingException {
         BuildingController bc = new BuildingController();
-        System.out.println("Can we add a damage?");
-        assertTrue(bc.addDamage("vandskade", "my basement is flooded", 1));
-        System.out.println("Can we delete a damage?");
-        assertTrue(bc.deleteDamage(1));
+        try {
+            bc.addDamage("vandskade", "my basement is flooded", 1);
+        } catch (BuildingException ex) {
+            fail(ex.getMessage());
+        }
+        assertTrue(true);
+        try {
+            bc.deleteDamage(1);
+        } catch (BuildingException ex) {
+            fail(ex.getMessage());
+        }
+        assertTrue(true);
     }
 
     @Test
@@ -207,7 +227,11 @@ public class BuildingControllerTest {
         Building building = buildings.get(buildings.size() - 1);
         int buildingId = building.getBuildingId();
         // The test
-        assertTrue(bc.requestCheckup(orderStatus, buildingId, user));
+        try {
+            bc.requestCheckup(orderStatus, buildingId, user);
+        } catch (BuildingException ex) {
+            fail(ex.getMessage());
+        }
     }
     
     @Test

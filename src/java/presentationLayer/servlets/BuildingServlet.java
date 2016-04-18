@@ -21,6 +21,8 @@ import serviceLayer.exceptions.BuildingException;
 @WebServlet(name = "BuildingServlet", urlPatterns = {"/BuildingServlet"})
 public class BuildingServlet extends HttpServlet {
 
+    private String error;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -52,13 +54,13 @@ public class BuildingServlet extends HttpServlet {
 
                         User user = (User) request.getSession().getAttribute("user");
                         int userId = user.getUserId();
-
-                        if (buildingController.addCustomerBuilding(name, address, parcelNumber, size, userId)) {
+                        try {
+                            buildingController.addCustomerBuilding(name, address, parcelNumber, size, userId);
                             String message = "The building has been added to your overview.";
                             response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
-                        } else {
-                            String message = "The building couldn't be added. Remember to fill out all fields.";
-                            response.sendRedirect("addbuilding.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
+                        } catch (BuildingException ex) {
+                            error = ex.getMessage();
+                            response.sendRedirect("addbuilding.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
                         }
                     } else {
                         response.sendRedirect("index.jsp");
@@ -73,13 +75,13 @@ public class BuildingServlet extends HttpServlet {
                             buildingId = Integer.parseInt(request.getParameter("buildingId"));
                         } catch (NumberFormatException ex) {
                         }
-
-                        if (buildingController.deleteCustomerBuilding(buildingId)) {
+                        try {
+                            buildingController.deleteCustomerBuilding(buildingId);
                             String message = "The building has been deleted.";
                             response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
-                        } else {
-                            String message = "The building couldn't be deleted because of an error.";
-                            response.sendRedirect("buildings.jsp?error=" + URLEncoder.encode(message, "UTF-8"));
+                        } catch (BuildingException ex) {
+                            error = ex.getMessage();
+                            response.sendRedirect("buildings.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
                         }
                     } else {
                         response.sendRedirect("index.jsp");
@@ -99,13 +101,14 @@ public class BuildingServlet extends HttpServlet {
                         }
 
                         int buildingId = Integer.parseInt(request.getParameter("buildingId"));
+                        try {
 
-                        if (buildingController.editCustomerBuilding(name, address, parcelNumber, size, buildingId)) {
+                            buildingController.editCustomerBuilding(name, address, parcelNumber, size, buildingId);
                             String message = "Your changes has been saved to the building.";
                             response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
-                        } else {
-                            String message = "The building couldn't be updated. Remember to fill out all fields.";
-                            response.sendRedirect("editbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                        } catch (BuildingException ex) {
+                            error = ex.getMessage();
+                            response.sendRedirect("editbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
                         }
                     } else {
                         response.sendRedirect("index.jsp");
@@ -122,13 +125,13 @@ public class BuildingServlet extends HttpServlet {
                             buildingId = Integer.parseInt(request.getParameter("buildingId"));
                         } catch (NumberFormatException ex) {
                         }
-
-                        if (buildingController.addDamage(dmgtitle, desc, buildingId)) {
+                        try {
+                            buildingController.addDamage(dmgtitle, desc, buildingId);
                             String message = "Your changes has been saved to the building.";
                             response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
-                        } else {
-                            String message = "The damage couldn't be added to the building. Remember to fill out all fields.";
-                            response.sendRedirect("adddamage.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                        } catch (BuildingException ex) {
+                            error = ex.getMessage();
+                            response.sendRedirect("adddamage.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
                         }
                     } else {
                         response.sendRedirect("index.jsp");
@@ -148,13 +151,13 @@ public class BuildingServlet extends HttpServlet {
 
                         User user = (User) request.getSession().getAttribute("user");
                         System.out.println("buildingId: " + buildingId + "User: " + user.getFullName());
-
-                        if (buildingController.requestCheckup(orderStatus, buildingId, user)) {
+                        try {
+                            buildingController.requestCheckup(orderStatus, buildingId, user);
                             String message = "A check-up has been requested for your building. An employee will look into your case as soon as possible.";
                             response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
-                        } else {
-                            String message = "A check-up could not be requested for your building. Try again later.";
-                            response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                        } catch (BuildingException ex) {
+                            error = ex.getMessage();
+                            response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
                         }
                     } else {
                         response.sendRedirect("index.jsp");

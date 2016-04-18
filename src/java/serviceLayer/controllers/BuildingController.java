@@ -35,36 +35,37 @@ public class BuildingController{
         return buildingMapper.getCustomerBuildings(userId);
     }
 
-    public boolean addCustomerBuilding(String name, String address, String parcelNumber, int size, int userId) throws BuildingException {
+    public void addCustomerBuilding(String name, String address, String parcelNumber, int size, int userId) throws BuildingException {
         if (name != null && address != null && parcelNumber != null && size > 0 && userId > 0) {
             if (name.length() <= 40 && address.length() <= 50 && parcelNumber.length() <= 20) {
                 if (parcelNumber.matches("[0-9a-z]+") && String.valueOf(size).matches("\\d*")) {
-                    return buildingMapper.addCustomerBuilding(name, address, parcelNumber, size, userId);
+                    buildingMapper.addCustomerBuilding(name, address, parcelNumber, size, userId);
                 }
             }
+        } else {
+            throw new BuildingException("One or more fields are null or size/userid less than 1");
         }
-        
-        return false;
     }
 
-    public boolean deleteCustomerBuilding(int buildingId) throws BuildingException {
+    public void deleteCustomerBuilding(int buildingId) throws BuildingException {
         if (buildingId > 0) {
-            return buildingMapper.deleteCustomerBuilding(buildingId);
+            buildingMapper.deleteCustomerBuilding(buildingId);
+        } else {
+            throw new BuildingException("The building id does not exist");
         }
-        
-        return false;
     }
 
-    public boolean editCustomerBuilding(String name, String address, String parcelNumber, int size, int buildingId) throws BuildingException {
+    public void editCustomerBuilding(String name, String address, String parcelNumber, int size, int buildingId) throws BuildingException {
         if (name != null && address != null && parcelNumber != null && size > 0 && buildingId > 0) {
             if (name.length() <= 40 && address.length() <= 50 && parcelNumber.length() <= 20) {
                 if (parcelNumber.matches("[0-9a-z]+") && String.valueOf(size).matches("\\d*")) {
-                    return buildingMapper.editCustomerBuilding(name, address, parcelNumber, size, buildingId);
+                    buildingMapper.editCustomerBuilding(name, address, parcelNumber, size, buildingId);
                 }
             }
+        } else {
+            throw new BuildingException("One or more fields are null or less than 1");
         }
         
-        return false;
     }
 
     public ArrayList<Checkup> getBuildingCheckups(int buildingId) throws BuildingException {
@@ -79,42 +80,35 @@ public class BuildingController{
         return buildingMapper.getBuildingConditionLevel(buildingId);
     }
     
-    public boolean addCheckUpReport(String checkupPath, int conditionLevel, int buildingId, int orderId) throws BuildingException{
+    public void addCheckUpReport(String checkupPath, int conditionLevel, int buildingId, int orderId) throws BuildingException{
         if (checkupPath != null && buildingId > 0 && orderId > 0 && conditionLevel >= -1 && conditionLevel <= 3) {
-            return buildingMapper.addCheckUpReport(checkupPath, conditionLevel, buildingId, orderId);
+            buildingMapper.addCheckUpReport(checkupPath, conditionLevel, buildingId, orderId);
     }
-        return false;
     }
 
-    public boolean addCustomerDocument(String documentNote, String documentPath, int buildingId, int userId) throws BuildingException {
+    public void addCustomerDocument(String documentNote, String documentPath, int buildingId, int userId) throws BuildingException {
         if (documentNote != null && documentPath != null && buildingId > 0 && userId > 0) {
-            return buildingMapper.addCustomerDocument(documentNote, documentPath, buildingId, userId);
+            buildingMapper.addCustomerDocument(documentNote, documentPath, buildingId, userId);
         }
-        
-        return false;
     }
 
-    public boolean addDamage(String dmgTitle, String dmgDesc, int buildingId) throws BuildingException {
+    public void addDamage(String dmgTitle, String dmgDesc, int buildingId) throws BuildingException {
         if (dmgTitle != null && dmgDesc != null && buildingId > 0) {
-            return buildingMapper.addDamage(dmgTitle, dmgDesc, buildingId);
+            buildingMapper.addDamage(dmgTitle, dmgDesc, buildingId);
         }
-        
-        return false;
     }
 
-    public boolean deleteDamage(int damageId) throws BuildingException {
+    public void deleteDamage(int damageId) throws BuildingException {
         if (damageId > 0) {
-            return buildingMapper.deleteDamage(damageId);
+            buildingMapper.deleteDamage(damageId);
         }
-        
-        return false;
     }
     
     public ArrayList<Damage> getDamages(int buildingId) throws BuildingException {
         return buildingMapper.getBuildingDamages(buildingId);
     }
     
-    public boolean requestCheckup(int orderStatus, int buildingId, User user) throws BuildingException {
+    public void requestCheckup(int orderStatus, int buildingId, User user) throws BuildingException {
         // A mail server is required for the e-mail to be sent
         /*
         String to = "checkup@polygon.dk";
@@ -143,7 +137,7 @@ public class BuildingController{
                 
                 Transport.send(message);
                 */
-                return buildingMapper.addOrder(orderStatus, buildingId);
+                buildingMapper.addOrder(orderStatus, buildingId);
             /*
             }
         } catch (MessagingException ex) {

@@ -80,7 +80,7 @@ public class BuildingMapper {
     }
 
     // Adds a building to a userid in the database.
-    public boolean addCustomerBuilding(String name, String address, String parcelNumber, int size, int userId) throws BuildingException {
+    public void addCustomerBuilding(String name, String address, String parcelNumber, int size, int userId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES (?,?,?,?,?)";
@@ -92,15 +92,13 @@ public class BuildingMapper {
             pstmt.setInt(5, userId);
             
             int rowCount = pstmt.executeUpdate();
-            // Returns true if the number of rows affected in the database is 1, else returns false.
-            return rowCount == 1;
         } catch (SQLException ex) {
             throw new BuildingException("Error: building coul not be added. Check if you have filled out the form correctly");
         }
     }
     
     // Deletes a building in the database by buildingid.
-    public boolean deleteCustomerBuilding(int buildingId) throws BuildingException {
+    public void deleteCustomerBuilding(int buildingId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "DELETE FROM buildings WHERE buildingid = ?";
@@ -108,15 +106,13 @@ public class BuildingMapper {
             pstmt.setInt(1, buildingId);
             
             int rowCount = pstmt.executeUpdate();
-            // Returns true if the number of rows affected in the database is 1, else returns false.
-            return rowCount == 1;
         } catch (SQLException ex) {
             throw new BuildingException("Error: could not delete building - building not found");
         }
     }
 
     // Edits the information of a building in the database by buildingid.
-    public boolean editCustomerBuilding(String name, String address, String parcelNumber, int size, int buildingId) throws BuildingException {
+    public void editCustomerBuilding(String name, String address, String parcelNumber, int size, int buildingId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "UPDATE buildings SET bname = ?, address = ?, parcelnumber = ?, size = ? WHERE buildingid = ?";
@@ -128,8 +124,6 @@ public class BuildingMapper {
             pstmt.setInt(5, buildingId);
             
             int rowCount = pstmt.executeUpdate();
-            // Returns true if the number of rows affected in the database is 1, else returns false.
-            return rowCount == 1;
         } catch (SQLException ex) {
             throw new BuildingException("Error: could not edit the building. Check if fields are filled correctly");
         }
@@ -202,7 +196,7 @@ public class BuildingMapper {
     }
     
     // Adds a document to a building.
-    public boolean addCustomerDocument(String documentNote, String documentPath, int buildingId, int userId) throws BuildingException {
+    public void addCustomerDocument(String documentNote, String documentPath, int buildingId, int userId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "INSERT INTO documents (dnote, dpath, fk_buildingid, fk_userid) VALUES (?, ?, ?, ?)";
@@ -214,15 +208,13 @@ public class BuildingMapper {
             
             // Returns true if the number of rows affected in the database is 1, else returns false.
             int rowCount = pstmt.executeUpdate();
-            
-            return rowCount == 1;
         } catch (SQLException ex) {
             throw new BuildingException("Document could not be added. User or building id mismatch");
         }
     }
     
     // Adds a report to a building
-    public boolean addCheckUpReport(String checkupPath, int conditionLevel, int buildingId, int orderId) throws BuildingException {
+    public void addCheckUpReport(String checkupPath, int conditionLevel, int buildingId, int orderId) throws BuildingException {
         try {
             System.out.println("Reached DB layer");
             Connection conn = DBConnector.getConnection();
@@ -235,15 +227,13 @@ public class BuildingMapper {
             
             // Returns true if the number of rows affected in the database is 1, else returns false.
             int rowCount = pstmt.executeUpdate();
-            
-            return rowCount == 1;
         } catch (SQLException ex) {
             throw new BuildingException("Error: check up report was not added. Conditionlevel, building id or order id missing");
         }
     }
     
     // Adds a damage record to a building.
-    public boolean addDamage(String dmgTitle, String dmgDesc, int buildingId) throws BuildingException {
+    public void addDamage(String dmgTitle, String dmgDesc, int buildingId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "INSERT INTO damages (dmgtitle, dmgdesc, fk_buildingid) VALUES (?, ?, ?)";
@@ -252,27 +242,21 @@ public class BuildingMapper {
             pstmt.setString(2, dmgDesc);
             pstmt.setInt(3, buildingId);
             
-            // Returns true if the number of rows affected in the database is 1, else returns false.
             int rowCount = pstmt.executeUpdate();
-            
-            return rowCount == 1;
         } catch (SQLException ex) {
             throw new BuildingException("Error: damage was not added. Missing building id");
         }
     }
     
     // Deletes a damage record by damageid.
-    public boolean deleteDamage(int damageId) throws BuildingException {
+    public void deleteDamage(int damageId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "DELETE FROM damages WHERE damageid = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, damageId);
             
-            // Returns true if the number of rows affected in the database is 1, else returns false.
             int rowCount = pstmt.executeUpdate();
-            
-            return rowCount == 1;
         } catch (SQLException ex) {
             throw new BuildingException("Error: damage was not foud with id: " + damageId);
         }
@@ -301,7 +285,7 @@ public class BuildingMapper {
         }
     }
     
-    public boolean addOrder(int orderStatus, int buildingId) throws BuildingException {
+    public void addOrder(int orderStatus, int buildingId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "INSERT INTO orders (ostatus, fk_buildingid) VALUES (?, ?)";
@@ -309,10 +293,7 @@ public class BuildingMapper {
             pstmt.setInt(1, orderStatus);
             pstmt.setInt(2, buildingId);
             
-            // Returns true if the number of rows affected in the database is 1, else returns false.
             int rowCount = pstmt.executeUpdate();
-            
-            return rowCount == 1;
         } catch (SQLException ex) {
             throw new BuildingException("Error: no order could be added. Check orderStatus and buildingId");
         }

@@ -26,6 +26,8 @@ import serviceLayer.exceptions.BuildingException;
 @WebServlet(name = "AdminServlet", urlPatterns = {"/AdminServlet"})
 public class AdminServlet extends HttpServlet {
 
+    private String error;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -62,12 +64,13 @@ public class AdminServlet extends HttpServlet {
 
                         int buildingId = Integer.parseInt(request.getParameter("buildingId"));
 
-                        if (bc.editCustomerBuilding(name, address, parcelNumber, size, buildingId)) {
+                        try {
+                            bc.editCustomerBuilding(name, address, parcelNumber, size, buildingId);
                             String message = "Your changes has been saved to the building.";
                             response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
-                        } else {
-                            String message = "The building couldn't be updated. Remember to fill out all fields.";
-                            response.sendRedirect("editbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
+                        } catch (BuildingException ex) {
+                            error = ex.getMessage();
+                            response.sendRedirect("editbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
                         }
                     } else {
                         response.sendRedirect("admin/adminIndex.jsp");
