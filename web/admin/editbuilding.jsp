@@ -19,18 +19,18 @@
     <body>
         <%
             User user = (User) session.getAttribute("user");
-            String buildingId = request.getParameter("buildingId");
             
             if (user == null) {
                 response.sendRedirect("index.jsp");
                 return;
-            } else if (buildingId == null) {
+            } else if (request.getParameter("buildingId") == null || request.getParameter("userId") == null) {
                 response.sendRedirect("building.jsp");
                 return;
             }
-            
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            int buildingId = Integer.parseInt(request.getParameter("buildingId"));
             BuildingController buildingController = new BuildingController();
-            Building building = buildingController.getCustomerBuilding(Integer.parseInt(buildingId), user.getUserId());
+            Building building = buildingController.getCustomerBuilding(buildingId, userId);
             
             if (building == null) {
                 response.sendRedirect("building.jsp");
@@ -54,7 +54,7 @@
             <input type="hidden" name="action" value="edit">
             <input type="submit" value="Save changes">
             <div class="button">
-                <a href="building.jsp"><- Back to overview</a>
+                <a href="building.jsp?buildingId=<%=buildingId%>&userId=<%=userId%>"><- Back to overview</a>
             </div>
         </form>
     </body>

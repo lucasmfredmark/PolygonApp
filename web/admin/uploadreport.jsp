@@ -54,9 +54,9 @@
             Choose file to upload:<br><br>
             <input type="file" name="file"><br><br>
             <input type="hidden" name="action" value="upload-report">
-            <input type="hidden" name="buildingId" value="<%= buildingId%>">
-            <input type="hidden" name="orderId" value="<%= orderId%>">
-            <input type="hidden" name="conditionLevel" value="<%= conditionLevel%>">
+            <input type="hidden" name="buildingId" value="<%=buildingId%>">
+            <input type="hidden" name="orderId" value="<%=orderId%>">
+            <input type="hidden" name="conditionLevel" value="<%=conditionLevel%>">
             <input type="submit" value="Upload Report">
         </form>
     </body>

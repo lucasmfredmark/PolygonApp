@@ -31,7 +31,7 @@
             int buildingId = Integer.parseInt(request.getParameter("buildingId"));
             int userId = Integer.parseInt(request.getParameter("userId"));
             BuildingController bc = new BuildingController();
-            Building building = bc.getCustomerBuilding((buildingId), userId);
+            Building building = bc.getCustomerBuilding(buildingId, userId);
             
 
         %>
@@ -61,7 +61,7 @@
             </table>
         </div>
         <div class="button">
-            <a href="editbuilding.jsp?buildingId=<%= buildingId %>">Edit building</a>
+            <a href="editbuilding.jsp?buildingId=<%=buildingId%>&userId=<%=userId%>">Edit building</a>
         </div>
         
         <h3>Check-up reports</h3>
