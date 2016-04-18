@@ -331,6 +331,25 @@ textarea:focus {
     font-weight:700;
 }
 
+/* UPLOAD FILES */
+
+.uploadfiles {
+    background:#fff;
+    box-sizing:border-box;
+    padding:10px;
+}
+
+.uploadfiles h1 {
+    font-size:14pt;
+    line-height:40px;
+    border-bottom:1px solid #eee;
+    margin-bottom:10px;
+}
+
+.uploadfiles p {
+    
+}
+
 /* ADMIN DASHBOARD */
 
 .widebox {

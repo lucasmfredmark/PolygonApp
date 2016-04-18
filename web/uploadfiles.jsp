@@ -83,26 +83,36 @@
             <div class="wrapper">
                 <!-- BREADCRUMBS -->
                 <p class="breadcrumbs"><a href="buildings.jsp">Your buildings</a> &raquo; <a href="viewbuilding.jsp?buildingId=<%= buildingId %>">Building</a> &raquo; <span>Upload files</span></p>
-                <form method="POST" enctype="multipart/form-data" action="UploadServlet" class="building">
-                    <input type="hidden" name="directory" value="upload-document">
-                    <p>Choose document to upload:</p>
-                    <input type="file" name="file">
-                    <p>Notes about the file:</p>
-                    <input type="text" name="note" maxlength="100" required>
-                    <input type="hidden" name="action" value="upload-document">
-                    <input type="hidden" name="buildingId" value="<%= buildingId %>">
-                    <input type="submit" value="Upload document">
-                </form>
-                <form method="POST" enctype="multipart/form-data" action="UploadServlet" class="building">
-                    <input type="hidden" name="directory" value="upload-image">
-                    <p>Choose image to upload:</p>
-                    <input type="file" name="file">
-                    <p>Notes about the file:</p>
-                    <input type="text" name="note" maxlength="100" required>
-                    <input type="hidden" name="action" value="upload-image">
-                    <input type="hidden" name="buildingId" value="<%= buildingId %>">
-                    <input type="submit" value="Upload image">
-                </form>
+                
+                
+                <div class="left_column uploadfiles">
+                    <h1 class="">Upload a document</h1>
+                    <form method="POST" enctype="multipart/form-data" action="UploadServlet" class="building">
+                        <input type="hidden" name="directory" value="upload-document">
+                        <p>Choose document to upload:</p>
+                        <input type="file" name="file">
+                        <p>Document description:</p>
+                        <input type="text" name="note" maxlength="100" required>
+                        <input type="hidden" name="action" value="upload-document">
+                        <input type="hidden" name="buildingId" value="<%= buildingId %>">
+                        <input type="submit" value="Upload document">
+                    </form>
+                </div>
+                    
+                <div class="right_column uploadfiles">
+                    <h1 class="">Upload an image</h1>
+                    <form method="POST" enctype="multipart/form-data" action="UploadServlet" class="building">
+                        <input type="hidden" name="directory" value="upload-image">
+                        <p>Choose image to upload:</p>
+                        <input type="file" name="file">
+                        <p>Image description:</p>
+                        <input type="text" name="note" maxlength="100" required>
+                        <input type="hidden" name="action" value="upload-image">
+                        <input type="hidden" name="buildingId" value="<%= buildingId %>">
+                        <input type="submit" value="Upload image">
+                    </form>
+                </div>
+                    
             </div>
         </div>
     </div>
