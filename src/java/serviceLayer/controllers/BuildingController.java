@@ -31,7 +31,7 @@ public class BuildingController{
     }
 
     public ArrayList<Building> getCustomerBuildings(int userId) throws SQLException {
-        return buildingMapper.getAllBuildings(userId);
+        return buildingMapper.getCustomerBuildings(userId);
     }
 
     public boolean addCustomerBuilding(String name, String address, String parcelNumber, int size, int userId) throws SQLException {

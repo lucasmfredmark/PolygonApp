@@ -22,7 +22,11 @@ public class AdminController {
     private final BuildingMapper bm = new BuildingMapper();
 
     public ArrayList<Building> getCustomerBuildings(int userId) throws SQLException {
-        return bm.getAllBuildings(userId);
+        return bm.getCustomerBuildings(userId);
+    }
+    
+    public ArrayList<Building> getAllBuildings() throws SQLException {
+        return bm.getAllBuildings();
     }
 
     public ArrayList<User> getAllUsers(String userType) throws SQLException {
