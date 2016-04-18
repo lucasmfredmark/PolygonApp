@@ -100,7 +100,7 @@ public class BuildingServlet extends HttpServlet {
 
                         if (buildingController.editCustomerBuilding(name, address, parcelNumber, size, buildingId)) {
                             String message = "Your changes has been saved to the building.";
-                            response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                            response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
                         } else {
                             String message = "The building couldn't be updated. Remember to fill out all fields.";
                             response.sendRedirect("editbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
@@ -123,7 +123,7 @@ public class BuildingServlet extends HttpServlet {
                         
                         if (buildingController.addDamage(dmgtitle, desc, buildingId)) {
                             String message = "Your changes has been saved to the building.";
-                            response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                            response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
                         } else {
                             String message = "The damage couldn't be added to the building. Remember to fill out all fields.";
                             response.sendRedirect("adddamage.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
