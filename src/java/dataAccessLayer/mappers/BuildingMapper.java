@@ -32,7 +32,7 @@ public class BuildingMapper {
                 return new Building(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new BuildingException("There was no building found under buildingId" + buildingId + " and userId " + userId);
         }
         return null;
     }
@@ -41,7 +41,7 @@ public class BuildingMapper {
             ArrayList<Building> buildingList = new ArrayList();
         try {
             Connection conn = DBConnector.getConnection();
-            String sql = "SELECT buildings.buildingid, buildings.bdate, buildings.bname, buildings.address, buildings.parcelnumber, buildings.size, buildings.fk_userid, users.userid FROM buildings INNER JOIN users ON buildings.fk_userid = users.userid ORDER BY buildings.fk_userid";
+            String sql = "SELECT * FROM buildings ORDER BY buildings.bname";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
             
@@ -52,9 +52,8 @@ public class BuildingMapper {
             }
             return buildingList;
         } catch (SQLException ex) {
-            Logger.getLogger(BuildingMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BuildingException("Error: no buildings found. Check database?");
         }
-        return null;
     }
     
     // Fetches all the buildings a userid possesses from the database.
@@ -76,9 +75,8 @@ public class BuildingMapper {
             
             return buildingList;
         } catch (SQLException ex) {
-            Logger.getLogger(BuildingMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BuildingException("No buildings found for user with id: " + userId);
         }
-        return null;
     }
 
     // Adds a building to a userid in the database.
@@ -97,9 +95,8 @@ public class BuildingMapper {
             // Returns true if the number of rows affected in the database is 1, else returns false.
             return rowCount == 1;
         } catch (SQLException ex) {
-            Logger.getLogger(BuildingMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BuildingException("Error: building coul not be added. Check if you have filled out the form correctly");
         }
-        return false;
     }
     
     // Deletes a building in the database by buildingid.
@@ -114,9 +111,8 @@ public class BuildingMapper {
             // Returns true if the number of rows affected in the database is 1, else returns false.
             return rowCount == 1;
         } catch (SQLException ex) {
-            Logger.getLogger(BuildingMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BuildingException("Error: could not delete building - building not found");
         }
-        return false;
     }
 
     // Edits the information of a building in the database by buildingid.
@@ -135,9 +131,8 @@ public class BuildingMapper {
             // Returns true if the number of rows affected in the database is 1, else returns false.
             return rowCount == 1;
         } catch (SQLException ex) {
-            Logger.getLogger(BuildingMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BuildingException("Error: could not edit the building. Check if fields are filled correctly");
         }
-        return false;
     }
     
     // Fetches all the checkup reports that a given buildingid has in the database.
@@ -159,9 +154,8 @@ public class BuildingMapper {
             
             return checkupList;
         } catch (SQLException ex) {
-            Logger.getLogger(BuildingMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BuildingException("Error: no check up reports for this building: " + buildingId);
         }
-        return null;
     }
 
     // Fetches all the documents related to a buildingid.
@@ -183,9 +177,8 @@ public class BuildingMapper {
             
             return documentList;
         } catch (SQLException ex) {
-            Logger.getLogger(BuildingMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BuildingException("Error: no documents found for this building: " + buildingId);
         }
-        return null;
     }
     
     // Gets the buildings condition level based on the latest checkup report.
@@ -204,9 +197,8 @@ public class BuildingMapper {
             
             return -1;
         } catch (SQLException ex) {
-            Logger.getLogger(BuildingMapper.class.getName()).log(Level.SEVERE, null, ex);
+           throw new BuildingException("Error: Building was not found");
         }
-        return -1;
     }
     
     // Adds a document to a building.
@@ -225,9 +217,8 @@ public class BuildingMapper {
             
             return rowCount == 1;
         } catch (SQLException ex) {
-            Logger.getLogger(BuildingMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BuildingException("Document could not be added. User or building id mismatch");
         }
-        return false;
     }
     
     // Adds a report to a building
@@ -247,9 +238,8 @@ public class BuildingMapper {
             
             return rowCount == 1;
         } catch (SQLException ex) {
-            Logger.getLogger(BuildingMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BuildingException("Error: check up report was not added. Conditionlevel, building id or order id missing");
         }
-        return false;
     }
     
     // Adds a damage record to a building.
@@ -267,9 +257,8 @@ public class BuildingMapper {
             
             return rowCount == 1;
         } catch (SQLException ex) {
-            Logger.getLogger(BuildingMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BuildingException("Error: damage was not added. Missing building id");
         }
-        return false;
     }
     
     // Deletes a damage record by damageid.
@@ -285,9 +274,8 @@ public class BuildingMapper {
             
             return rowCount == 1;
         } catch (SQLException ex) {
-            Logger.getLogger(BuildingMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BuildingException("Error: damage was not foud with id: " + damageId);
         }
-        return false;
     }
     
     // Fetches all the damage records a building has.
@@ -309,9 +297,8 @@ public class BuildingMapper {
             
             return dmgList;
         } catch (SQLException ex) {
-            Logger.getLogger(BuildingMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BuildingException("Error: no damages found for building id: " + buildingId);
         }
-        return null;
     }
     
     public boolean addOrder(int orderStatus, int buildingId) throws BuildingException {
@@ -327,9 +314,8 @@ public class BuildingMapper {
             
             return rowCount == 1;
         } catch (SQLException ex) {
-            Logger.getLogger(BuildingMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BuildingException("Error: no order could be added. Check orderStatus and buildingId");
         }
-        return false;
     }
     
     public Order getOrderByBuildingId(int buildingId) throws BuildingException {
@@ -344,7 +330,7 @@ public class BuildingMapper {
                 return new Order(rs.getInt("orderid"),rs.getString("odate"), rs.getString("ostatus"),rs.getString("odone"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(BuildingMapper.class.getName()).log(Level.SEVERE, null, ex);
+            throw new BuildingException("Error: no order found for building id: " + buildingId);
         }
         return null;
     }
