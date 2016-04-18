@@ -179,7 +179,7 @@ public class UploadServlet extends HttpServlet {
                             }
                             if (bc.addCheckUpReport(path, conditionLevel, buildingId, orderId)) {
                                 String message = "The checkup has been added to the checkup list.";
-                                response.sendRedirect("/PolygonApp/admin/uploadreport.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                                response.sendRedirect("/PolygonApp/admin/building.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
                             } else {
                                 String message = "The document couldn't be added to the document list.";
                                 response.sendRedirect("/PolygonApp/admin/uploadreport.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));
@@ -235,7 +235,7 @@ public class UploadServlet extends HttpServlet {
                             }
                             if (bc.addCheckUpReport(path, conditionLevel, buildingId, orderId)) {
                                 String message = "The checkup has been added to the checkup list.";
-                                response.sendRedirect("/PolygonApp/admin/uploadimg.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                                response.sendRedirect("/PolygonApp/admin/building.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
                             } else {
                                 String message = "The document couldn't be added to the document list.";
                                 response.sendRedirect("/PolygonApp/admin/uploadimg.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(message, "UTF-8"));

@@ -92,7 +92,7 @@ public class UserServlet extends HttpServlet {
                         session.invalidate();
                     } 
 
-                    response.sendRedirect("index.jsp");
+                    response.sendRedirect("/PolygonApp/index.jsp");
                     break;
                 }
             }
