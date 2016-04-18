@@ -25,7 +25,7 @@
         %>
         <h3>Hello, <span><%= user.getFullName()%></span> (<%= user.getUserType()%>)</h3>
         <h3><%= user.getUserMail()%></h3>
-        <form action="UserServlet" method="POST" style="padding: 0;">
+        <form action="/PolygonApp/UserServlet" method="POST" style="padding: 0;">
             <input type="hidden" name="action" value="logout">
             <input type="submit" value="Log out">
         </form>
