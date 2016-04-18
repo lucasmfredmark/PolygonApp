@@ -47,7 +47,7 @@
         <div id="header">
             <div class="wrapper">
                 <img src="images/polygon-logo.svg" class="header_logo" alt="Polygon">
-                <p class="signout">Hello, John Doe (<a href="#Signout">Sign out</a>)</p>
+                <p>Hello, <%= user.getFullName() %> (<a href="?logout">Sign out</a>)</p>
             </div>
         </div>
         <div id="navigation">
