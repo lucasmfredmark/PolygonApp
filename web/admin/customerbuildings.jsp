@@ -56,7 +56,7 @@
                         for (Building b : allBuildings) {
                     %>
                     <!-- Pass userId parameter (done) but also userName parameter in one line below: (not done)   -->
-                    <tr onclick="document.location='userBuildings.jsp?userId=<%= u.getUserId() %>';">
+                    <tr onclick="document.location='userBuildings.jsp?userId=<%= b.getBuildingId() %>';">
                         <td><%= b.getBuildingId()%></td>
                         <td><%= b.getBuildingName() %></td>
                         <td><%= b.getBuildingAddress() %></td>
