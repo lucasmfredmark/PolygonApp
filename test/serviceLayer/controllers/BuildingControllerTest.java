@@ -22,6 +22,8 @@ import serviceLayer.entities.Damage;
 import serviceLayer.entities.Document;
 import serviceLayer.entities.Order;
 import serviceLayer.entities.User;
+import serviceLayer.exceptions.buildingException;
+import serviceLayer.exceptions.userException;
 
 /**
  *
@@ -53,7 +55,7 @@ public class BuildingControllerTest {
     }
 
     @Before
-    public void setUp() throws SQLException {
+    public void setUp() throws Exception {
         try {
             Class.forName(DRIVER);
             conn = DriverManager.getConnection(URL, USER, PWD);
@@ -133,7 +135,7 @@ public class BuildingControllerTest {
     }
 
     @Test
-    public void addRemoveBuildingTest() throws SQLException {
+    public void addRemoveBuildingTest() throws buildingException {
         BuildingController bc = new BuildingController();
         bc.addCustomerBuilding("dummy", "some address", "b623", 80, 1);
         Building b = bc.getCustomerBuilding(2, 1);
@@ -142,7 +144,7 @@ public class BuildingControllerTest {
     }
 
     @Test
-    public void getAllBuildingsTest() throws SQLException {
+    public void getAllBuildingsTest() throws buildingException {
         BuildingController bc = new BuildingController();
         bc.addCustomerBuilding("dummy10", "some address", "b105", 120, 1);
         bc.addCustomerBuilding("dummy188", "a address", "b766", 70, 1);
@@ -152,7 +154,7 @@ public class BuildingControllerTest {
     }
 
     @Test
-    public void editBuildingTest() throws SQLException {
+    public void editBuildingTest() throws buildingException {
         BuildingController bc = new BuildingController();
         bc.addCustomerBuilding("editTest", "edit address", "edit5", 160, 1);
         System.out.println("Before editting: " + bc.getCustomerBuilding(2, 1).getBuildingParcelNumber());
@@ -162,7 +164,7 @@ public class BuildingControllerTest {
     }
 
     @Test
-    public void addAndGetDocumentTest() throws SQLException {
+    public void addAndGetDocumentTest() throws buildingException {
         BuildingController bc = new BuildingController();
         System.out.println("Can we add a document?");
         assertTrue(bc.addCustomerDocument("port mackerel", "dummyPath", 1, 1));
@@ -173,7 +175,7 @@ public class BuildingControllerTest {
     }
 
     @Test
-    public void addAndDeleteDamageTest() throws SQLException {
+    public void addAndDeleteDamageTest() throws buildingException {
         BuildingController bc = new BuildingController();
         System.out.println("Can we add a damage?");
         assertTrue(bc.addDamage("vandskade", "my basement is flooded", 1));
@@ -182,7 +184,7 @@ public class BuildingControllerTest {
     }
 
     @Test
-    public void addAndGetDamagesTest() throws SQLException {
+    public void addAndGetDamagesTest() throws buildingException {
         BuildingController bc = new BuildingController();
         bc.addDamage("vandskade", "my basement is flooded", 1);
         bc.addDamage("svamp", "spongebob lives in my basement", 1);
@@ -191,7 +193,7 @@ public class BuildingControllerTest {
     }
 
     @Test
-    public void addOrderTest() throws SQLException {
+    public void addOrderTest() throws buildingException, userException {
         BuildingController bc = new BuildingController();
         int orderStatus = 0;
         
@@ -209,7 +211,7 @@ public class BuildingControllerTest {
     }
     
     @Test
-    public void getOrderTest() throws SQLException {
+    public void getOrderTest() throws buildingException, userException {
         BuildingController bc = new BuildingController();
         User user = uc.getUserByEmail("emailfortests@test.dk");
         int userId = user.getUserId();
