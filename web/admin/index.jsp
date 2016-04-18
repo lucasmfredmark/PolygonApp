@@ -13,7 +13,7 @@
         <title>Polygon - Admin index</title>
     </head>
     <body>
-        <a href="userBuildings.jsp"> buildings </a> <br>
+        <a href="customerbuildings.jsp"> buildings </a> <br>
         <a href="users.jsp"> users </a>
     </body>
 </html>
