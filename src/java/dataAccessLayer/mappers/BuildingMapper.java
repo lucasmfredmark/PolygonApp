@@ -13,12 +13,12 @@ import serviceLayer.entities.Checkup;
 import serviceLayer.entities.Damage;
 import serviceLayer.entities.Document;
 import serviceLayer.entities.Order;
-import serviceLayer.exceptions.buildingException;
+import serviceLayer.exceptions.BuildingException;
 
 public class BuildingMapper {
     
     // Fetches one building from a buildingid and a userid in the database.
-    public Building getCustomerBuilding(int buildingId, int userId) throws buildingException {
+    public Building getCustomerBuilding(int buildingId, int userId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "SELECT * FROM buildings WHERE buildingid = ? AND fk_userid = ?";
@@ -37,7 +37,7 @@ public class BuildingMapper {
         return null;
     }
     
-    public ArrayList<Building> getAllBuildings() throws buildingException {
+    public ArrayList<Building> getAllBuildings() throws BuildingException {
             ArrayList<Building> buildingList = new ArrayList();
         try {
             Connection conn = DBConnector.getConnection();
@@ -58,7 +58,7 @@ public class BuildingMapper {
     }
     
     // Fetches all the buildings a userid possesses from the database.
-    public ArrayList<Building> getCustomerBuildings(int userId) throws buildingException {
+    public ArrayList<Building> getCustomerBuildings(int userId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "SELECT * FROM buildings WHERE fk_userid = ?";
@@ -82,7 +82,7 @@ public class BuildingMapper {
     }
 
     // Adds a building to a userid in the database.
-    public boolean addCustomerBuilding(String name, String address, String parcelNumber, int size, int userId) throws buildingException {
+    public boolean addCustomerBuilding(String name, String address, String parcelNumber, int size, int userId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES (?,?,?,?,?)";
@@ -103,7 +103,7 @@ public class BuildingMapper {
     }
     
     // Deletes a building in the database by buildingid.
-    public boolean deleteCustomerBuilding(int buildingId) throws buildingException {
+    public boolean deleteCustomerBuilding(int buildingId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "DELETE FROM buildings WHERE buildingid = ?";
@@ -120,7 +120,7 @@ public class BuildingMapper {
     }
 
     // Edits the information of a building in the database by buildingid.
-    public boolean editCustomerBuilding(String name, String address, String parcelNumber, int size, int buildingId) throws buildingException {
+    public boolean editCustomerBuilding(String name, String address, String parcelNumber, int size, int buildingId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "UPDATE buildings SET bname = ?, address = ?, parcelnumber = ?, size = ? WHERE buildingid = ?";
@@ -141,7 +141,7 @@ public class BuildingMapper {
     }
     
     // Fetches all the checkup reports that a given buildingid has in the database.
-    public ArrayList<Checkup> getBuildingCheckups(int buildingId) throws buildingException {
+    public ArrayList<Checkup> getBuildingCheckups(int buildingId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "SELECT * FROM checkups WHERE fk_buildingid = ? ORDER BY cdate DESC";
@@ -165,7 +165,7 @@ public class BuildingMapper {
     }
 
     // Fetches all the documents related to a buildingid.
-    public ArrayList<Document> getBuildingDocuments(int buildingId) throws buildingException {
+    public ArrayList<Document> getBuildingDocuments(int buildingId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "SELECT * FROM documents WHERE fk_buildingid = ? ORDER by documents.ddate DESC";
@@ -189,7 +189,7 @@ public class BuildingMapper {
     }
     
     // Gets the buildings condition level based on the latest checkup report.
-    public int getBuildingConditionLevel(int buildingId) throws buildingException {
+    public int getBuildingConditionLevel(int buildingId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "SELECT * FROM checkups WHERE fk_buildingid = ? ORDER BY conditionlevel DESC LIMIT 1";
@@ -210,7 +210,7 @@ public class BuildingMapper {
     }
     
     // Adds a document to a building.
-    public boolean addCustomerDocument(String documentNote, String documentPath, int buildingId, int userId) throws buildingException {
+    public boolean addCustomerDocument(String documentNote, String documentPath, int buildingId, int userId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "INSERT INTO documents (dnote, dpath, fk_buildingid, fk_userid) VALUES (?, ?, ?, ?)";
@@ -231,7 +231,7 @@ public class BuildingMapper {
     }
     
     // Adds a report to a building
-    public boolean addCheckUpReport(String checkupPath, int conditionLevel, int buildingId, int orderId) throws buildingException {
+    public boolean addCheckUpReport(String checkupPath, int conditionLevel, int buildingId, int orderId) throws BuildingException {
         try {
             System.out.println("Reached DB layer");
             Connection conn = DBConnector.getConnection();
@@ -253,7 +253,7 @@ public class BuildingMapper {
     }
     
     // Adds a damage record to a building.
-    public boolean addDamage(String dmgTitle, String dmgDesc, int buildingId) throws buildingException {
+    public boolean addDamage(String dmgTitle, String dmgDesc, int buildingId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "INSERT INTO damages (dmgtitle, dmgdesc, fk_buildingid) VALUES (?, ?, ?)";
@@ -273,7 +273,7 @@ public class BuildingMapper {
     }
     
     // Deletes a damage record by damageid.
-    public boolean deleteDamage(int damageId) throws buildingException {
+    public boolean deleteDamage(int damageId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "DELETE FROM damages WHERE damageid = ?";
@@ -291,7 +291,7 @@ public class BuildingMapper {
     }
     
     // Fetches all the damage records a building has.
-    public ArrayList<Damage> getBuildingDamages(int buildingId) throws buildingException {
+    public ArrayList<Damage> getBuildingDamages(int buildingId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "SELECT * FROM damages WHERE fk_buildingid = ?";
@@ -314,7 +314,7 @@ public class BuildingMapper {
         return null;
     }
     
-    public boolean addOrder(int orderStatus, int buildingId) throws buildingException {
+    public boolean addOrder(int orderStatus, int buildingId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "INSERT INTO orders (ostatus, fk_buildingid) VALUES (?, ?)";
@@ -332,7 +332,7 @@ public class BuildingMapper {
         return false;
     }
     
-    public Order getOrderByBuildingId(int buildingId) throws buildingException {
+    public Order getOrderByBuildingId(int buildingId) throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "SELECT * FROM orders WHERE fk_buildingid = ?";
