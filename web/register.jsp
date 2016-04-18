@@ -5,7 +5,7 @@
     User user = (User) session.getAttribute("user");
 
     if (user != null) {
-        if (user.getUserType().equals(User.userType.ADMIN.toString())) {
+        if (user.getUserType().equals(User.userType.ADMIN)) {
             response.sendRedirect("admin/index.jsp");
             return;
         }
