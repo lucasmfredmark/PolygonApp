@@ -21,8 +21,8 @@ public class AdminController {
     private final UserMapper um = new UserMapper();
     private final BuildingMapper bm = new BuildingMapper();
 
-    public ArrayList<Building> getCustomerBuildings(int buildingid) throws SQLException {
-        return bm.getAllBuildings(buildingid);
+    public ArrayList<Building> getCustomerBuildings(int userId) throws SQLException {
+        return bm.getAllBuildings(userId);
     }
 
     public ArrayList<User> getAllUsers(String userType) throws SQLException {
