@@ -68,30 +68,31 @@
                     }
                 %>
                 
-                <table class="btable">
-                    <!-- TABLE HEADER -->
-                    <tr>
-                        <td>Building id</td>
-                        <td>Creation date</td>
-                        <td>Address</td>
-                        <td>Parcel number</td>
-                        <td>Size(m&sup2)</td>
-                    </tr>
-                    <%
-                        AdminController ac = new AdminController();
-                        ArrayList<Building> allBuildings = ac.getAllBuildings();
-                        for (Building b : allBuildings) {
-                            out.print("<tr onclick=\"document.location='building.jsp?buildingId=" + b.getBuildingId()+ "'\">");
-                                out.print("<td>" + b.getBuildingId()+ "</td>");
-                                out.print("<td>" + b.getBuildingDate().substring(0,10) + "</td>");
-                                out.print("<td>" + b.getBuildingAddress()+ "</td>");
-                                out.print("<td>" + b.getBuildingParcelNumber()+ "</td>");
-                                out.print("<td>" + b.getBuildingSize() + "</td>");
-                            out.print("</tr>");
-                        }
-                    %>
-                </table>
-                
+                <div class="table">
+                    <table class="customerbuildings_table">
+                        <!-- TABLE HEADER -->
+                        <tr>
+                            <td>Building id</td>
+                            <td>Address</td>
+                            <td>Parcel number</td>
+                            <td>Size(m&sup2)</td>
+                            <td>Creation date</td>
+                        </tr>
+                        <%
+                            AdminController ac = new AdminController();
+                            ArrayList<Building> allBuildings = ac.getAllBuildings();
+                            for (Building b : allBuildings) {
+                                out.print("<tr onclick=\"document.location='building.jsp?buildingId=" + b.getBuildingId()+ "'\">");
+                                    out.print("<td>" + b.getBuildingId()+ "</td>");
+                                    out.print("<td>" + b.getBuildingAddress()+ "</td>");
+                                    out.print("<td>" + b.getBuildingParcelNumber()+ "</td>");
+                                    out.print("<td>" + b.getBuildingSize() + "</td>");
+                                    out.print("<td>" + b.getBuildingDate().substring(0,10) + "</td>");
+                                out.print("</tr>");
+                            }
+                        %>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

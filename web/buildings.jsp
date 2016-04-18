@@ -66,30 +66,30 @@
                     ArrayList<Building> buildings = bc.getCustomerBuildings(user.getUserId());
                     if (buildings.size() > 0) {
                 %>
-                <table class="btable">
-                    <!-- TABLE HEADER -->
-                    <tr>
-                        <td>Building name</td>
-                        <td>Address</td>
-                        <td>Parcel number</td>
-                        <td>Size(m&sup2)</td>
-                        <td>Condition level</td>
-                    </tr>
-                    <%
-                        for (Building b : buildings) {
-                    %>
-                    <tr onclick="document.location='viewbuilding.jsp?buildingId=<%= b.getBuildingId()%>';">
-                        <td><%= b.getBuildingName() %></td>
-                        <td><%= b.getBuildingAddress()%></td>
-                        <td><%= b.getBuildingParcelNumber()%></td>
-                        <td><%= b.getBuildingSize() %></td>
-                        <!-- Skal fortolke værdien. -->
-                        <td><%= bc.getBuildingConditionLevel(b.getBuildingId()) %></td>
-                    </tr>
-                    <%
-                        }
-                    %>
-                </table>
+                
+                <div class="table">
+                    <table class="buildings_table">
+                        <!-- TABLE HEADER -->
+                        <tr>
+                            <td>Building name</td>
+                            <td>Address</td>
+                            <td>Parcel number</td>
+                            <td>Size(m&sup2)</td>
+                            <td>Condition level</td>
+                        </tr>
+                        <%
+                            for (Building b : buildings) {
+                                out.print("<tr onclick=\"document.location='viewbuilding.jsp?buildingId=" + b.getBuildingId() + "'\">");
+                                    out.print("<td>" + b.getBuildingName() + "</td>");
+                                    out.print("<td>" + b.getBuildingAddress()+ "</td>");
+                                    out.print("<td>" + b.getBuildingParcelNumber()+ "</td>");
+                                    out.print("<td>" + b.getBuildingSize()+ "</td>");
+                                    out.print("<td>" + bc.getBuildingConditionLevel(b.getBuildingId())+ "</td>");
+                                out.print("</tr>");
+                            }
+                        %>
+                    </table>
+                </div>
                 <% 
                     } else { // If there are currently no buildings linked to this user. MANGLER HTML 
                         out.print("<h3>You haven't added any buildings yet. Click on the button above to add one.</h3>");

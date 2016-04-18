@@ -68,29 +68,31 @@
                     }
                 %>
                 
-                <table class="utable">
-                    <!-- TABLE HEADER -->
-                    <tr>
-                        <td>User ID</td>
-                        <td>Creation date</td>
-                        <td>E-Mail</td>
-                        <td>Full name</td>
-                        <td>Number of buildings</td>
-                    </tr>
-                    <%
-                        UserController uc = new UserController();
-                        ArrayList<User> users = uc.getAllUsers("CUSTOMER");
-                        for (User u : users) {
-                            out.print("<tr onclick=\"document.location='userBuildings.jsp?userId=" + u.getUserId() + "'\">");
-                                out.print("<td>" + u.getUserId() + "</td>");
-                                out.print("<td>" + u.getUserDate().substring(0,10) + "</td>");
-                                out.print("<td>" + u.getUserMail() + "</td>");
-                                out.print("<td>" + u.getFullName() + "</td>");
-                                out.print("<td>14</td>");
-                            out.print("</tr>");
-                        }
-                    %>
-                </table>
+                <div class="table">
+                    <table class="users_table">
+                        <!-- TABLE HEADER -->
+                        <tr>
+                            <td>User ID</td>
+                            <td>E-mail</td>
+                            <td>Full name</td>
+                            <td>Number of buildings</td>
+                            <td>Creation date</td>
+                        </tr>
+                        <%
+                            UserController uc = new UserController();
+                            ArrayList<User> users = uc.getAllUsers("CUSTOMER");
+                            for (User u : users) {
+                                out.print("<tr onclick=\"document.location='userBuildings.jsp?userId=" + u.getUserId() + "'\">");
+                                    out.print("<td>" + u.getUserId() + "</td>");
+                                    out.print("<td>" + u.getUserMail() + "</td>");
+                                    out.print("<td>" + u.getFullName() + "</td>");
+                                    out.print("<td>14</td>");
+                                    out.print("<td>" + u.getUserDate().substring(0,10) + "</td>");
+                                out.print("</tr>");
+                            }
+                        %>
+                    </table>
+                </div>
                 
             </div>
         </div>
