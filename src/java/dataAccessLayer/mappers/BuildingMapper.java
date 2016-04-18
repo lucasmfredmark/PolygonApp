@@ -33,12 +33,7 @@ public class BuildingMapper {
     
     public ArrayList<Building> getAllBuildings() throws SQLException {
         Connection conn = DBConnector.getConnection();
-        String sql = "SELECT buildings.buildingid, buildings.bdate, "
-                + "buildings.bname, buildings.address, buildings.parcelnumber, "
-                + "buildings.fize, buildings.fk_userid, "
-                + "users.userid FROM buildings "
-                + "INNER JOIN users ON buildings.fk_userid = users.userid"
-                + "ORDER BY buildings.fk_userid";
+        String sql = "SELECT buildings.buildingid, buildings.bdate, buildings.bname, buildings.address, buildings.parcelnumber, buildings.size, buildings.fk_userid, users.userid FROM buildings INNER JOIN users ON buildings.fk_userid = users.userid ORDER BY buildings.fk_userid";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
         
