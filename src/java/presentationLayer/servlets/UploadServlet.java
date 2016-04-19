@@ -118,8 +118,11 @@ public class UploadServlet extends HttpServlet {
                             file = new File(filePath
                                     + tempFileName.substring(tempFileName.lastIndexOf("\\") + 1));
                         }
+                        System.out.println("Read this");
                         fi.write(file);
+                        System.out.println("And read this!");
                         isWritten = true;
+                        System.out.println("File written");
                     } else {
                         stack.add(fi);
                         System.out.println(isPathSet);
