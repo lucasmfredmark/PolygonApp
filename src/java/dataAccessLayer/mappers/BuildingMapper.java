@@ -6,8 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
 import serviceLayer.entities.Damage;
@@ -33,6 +31,25 @@ public class BuildingMapper {
             }
         } catch (SQLException ex) {
             throw new BuildingException("There was no building found under buildingId" + buildingId + " and userId " + userId);
+        }
+        return null;
+    }
+    
+    // Fetches one building from a buildingid and a userid in the database.
+    public Building getAdminBuilding(int buildingId) throws BuildingException {
+        try {
+            Connection conn = DBConnector.getConnection();
+            String sql = "SELECT * FROM buildings WHERE buildingid = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, buildingId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            // Creates a new building entity from the database query.
+            if (rs.next()) {
+                return new Building(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
+            }
+        } catch (SQLException ex) {
+            throw new BuildingException("There was no building found under buildingId" + buildingId);
         }
         return null;
     }
