@@ -45,6 +45,8 @@
             <input type="hidden" name="directory" value="upload-image">
             Choose file to upload:<br><br>
             <input type="file" name="file"><br><br>
+            <p>Document description:</p>
+            <input type="text" name="note" maxlength="100" required>
             <input type="hidden" name="action" value="upload-image">
             <input type="hidden" name="buildingId" value="<%= buildingId%>">
             <input type="submit" value="Upload Image">

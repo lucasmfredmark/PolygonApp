@@ -58,17 +58,20 @@ public class UserMapper {
             ResultSet rs = pstmt.executeQuery();
             
             if (!rs.next()) {
-                sql = "INSERT INTO users (usermail, fullname, userpass) VALUES (?, ?, ?)";
+                System.out.println("inside if rs next");
+                sql = "INSERT INTO users (usermail, userpass, fullname) VALUES (?, ?, ?)";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, email);
-                pstmt.setString(2, fullname);
-                pstmt.setString(3, password);
+                pstmt.setString(2, password);
+                pstmt.setString(3, fullname);
                 System.out.println("Done");
+                pstmt.executeUpdate();
             }
         } catch (SQLException ex) {
             throw new UserException("Error: the user couldn't be created. The user already exists");
         }
     }
+   
     
     public ArrayList<User> getAllUsers(String usertype) throws UserException {
         try {
