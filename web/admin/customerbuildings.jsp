@@ -75,7 +75,7 @@
                             <td>Building id</td>
                             <td>Address</td>
                             <td>Parcel number</td>
-                            <td>Size(m&sup2)</td>
+                            <td>Size(m&sup2;)</td>
                             <td>Creation date</td>
                         </tr>
                         <%
