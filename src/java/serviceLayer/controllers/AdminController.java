@@ -38,4 +38,8 @@ public class AdminController {
     public Building getAdminBuilding(int buildingId) throws BuildingException {
         return bm.getAdminBuilding(buildingId);
     }
+    
+    public ArrayList<Building> getPendingCheckups() throws BuildingException {
+        return bm.getPendingCheckups();
+    }
 }

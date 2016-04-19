@@ -332,4 +332,22 @@ public class BuildingMapper {
         }
         return null;
     }
+    
+    public ArrayList<Building> getPendingCheckups() throws BuildingException {
+        ArrayList<Building> buildingList = new ArrayList();
+        try {
+            Connection conn = DBConnector.getConnection();
+            String sql = "SELECT * FROM buildings INNER JOIN orders ON buildings.buildingid=orders.fk_buildingid WHERE ostatus = 0";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            // Creates an arraylist to contain all the building entities created from the database query.
+            while (rs.next()) {
+                Building building = new Building(rs.getInt("buildingid"), rs.getString("bdate"), rs.getString("bname"), rs.getString("address"), rs.getString("parcelnumber"), rs.getInt("size"));
+                buildingList.add(building);
+            }
+            return buildingList;
+        } catch (SQLException ex) {
+            throw new BuildingException("Error: no buildings found. Check database?");
+        }
+    }
 }
