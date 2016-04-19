@@ -31,6 +31,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="../js/jquery-1.12.3.min.js"></script>
+        <script src="../js/main.js"></script>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
         <link href="../css/resets.css" rel="stylesheet" type="text/css">
         <link href="../css/new_style.css" rel="stylesheet" type="text/css">
@@ -69,7 +71,8 @@
                 %>
                 
                 <div class="table">
-                    <table class="customerbuildings_table">
+                    <input type="text" class="searchfield" placeholder="Search keyword" id="searchBuilding">
+                    <table class="customerbuildings_table" id="buildingsTable">
                         <!-- TABLE HEADER -->
                         <tr>
                             <td>Building id</td>
@@ -77,6 +80,9 @@
                             <td>Parcel number</td>
                             <td>Size(m&sup2;)</td>
                             <td>Creation date</td>
+                        </tr>
+                        <tr class="hidden">
+                            <td colspan="5">No search results for "<span></span>".</td>
                         </tr>
                         <%
                             AdminController ac = new AdminController();

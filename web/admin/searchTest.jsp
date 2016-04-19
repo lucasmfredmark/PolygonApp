@@ -14,6 +14,13 @@
         <h1>Search test</h1>
         <hr>
         <h2>Search users</h2>
+        
+        
+        
+        
+        
+        
+        
         <input type="text" id="searchUser">
         <table id="usersTable">
             <tr>
@@ -40,6 +47,20 @@
                 }
             %>
         </table>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <br><hr><br>
         <h2>Search buildings</h2>
         <input type="text" id="searchBuilding">
@@ -69,6 +90,13 @@
                 }
             %>
         </table>
+        
+        
+        
+        
+        
+        
+        
         <br><hr><br>
         <h2>Search reports</h2>
         <input type="text" id="searchReports">
