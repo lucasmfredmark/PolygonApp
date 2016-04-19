@@ -1,10 +1,10 @@
 <%@page import="serviceLayer.entities.Damage"%>
 <%@page import="serviceLayer.entities.Document"%>
 <%@page import="serviceLayer.entities.Checkup"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="serviceLayer.entities.Building"%>
 <%@page import="serviceLayer.entities.User"%>
 <%@page import="serviceLayer.controllers.BuildingController"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     User user = (User) session.getAttribute("user");

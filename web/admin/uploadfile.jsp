@@ -1,11 +1,6 @@
-<%@page import="serviceLayer.entities.Building"%>
-<%@page import="serviceLayer.entities.Checkup"%>
-<%@page import="serviceLayer.entities.Damage"%>
-<%@page import="serviceLayer.entities.Document"%>
-<%@page import="serviceLayer.entities.User"%>
-<%@page import="serviceLayer.controllers.AdminController"%>
-<%@page import="serviceLayer.controllers.BuildingController"%>
-<%@page import="serviceLayer.controllers.UserController"%>
+<%@page import="serviceLayer.entities.*"%>
+<%@page import="serviceLayer.exceptions.*"%>
+<%@page import="serviceLayer.controllers.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
@@ -51,7 +46,7 @@
         <link href="../css/resets.css" rel="stylesheet" type="text/css">
         <link href="../css/new_style.css" rel="stylesheet" type="text/css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Polygon - Admin - Edit building</title>
+        <title>Polygon - Admin - Upload files</title>
     </head>
     <body>
     <div id="site">
@@ -63,13 +58,13 @@
         </div>
         <div id="navigation">
             <div class="wrapper">
-                <h2>Editing building with id: <%= buildingId %></h2>
+                <h2>Uploading files to building with id: <%= buildingId %></h2>
                 <ul>
                     <li class="inactive"><a href="index.jsp">Dashboard</a></li>
                     <li class="inactive"><a href="customerbuildings.jsp">Buildings</a></li>
                     <li class="inactive"><a href="building.jsp?buildingId=<%= buildingId %>">Building information</a></li>
-                    <li class="active"><a href="editbuilding.jsp?buildingId=<%= buildingId %>">Edit building</a></li>
-                    <li class="inactive"><a href="uploadfile.jsp?buildingId=<%= buildingId %>">Upload files</a></li>
+                    <li class="inactive"><a href="editbuilding.jsp?buildingId=<%= buildingId %>">Edit building</a></li>
+                    <li class="active"><a href="uploadfile.jsp?buildingId=<%= buildingId %>">Upload files</a></li>
                     <li class="inactive"><a href="uploadreport.jsp?buildingId=<%= buildingId %>">Upload report</a></li>
                 </ul>
             </div>
@@ -77,7 +72,7 @@
         <div id="content">
             <div class="wrapper">
                 <!-- BREADCRUMBS -->
-                <p class="breadcrumbs"><a href="index.jsp">Dashboard</a> &raquo; <a href="customerbuildings.jsp">Buildings</a>  &raquo; <span>Edit building</span></p>
+                <p class="breadcrumbs"><a href="index.jsp">Dashboard</a> &raquo; <a href="customerbuildings.jsp">Buildings</a>  &raquo; <span>Upload files</span></p>
                 
                 <%
                     if (request.getParameter("error") != null) {
@@ -87,16 +82,33 @@
                     }
                 %>
                 
-                
-                <form class="building" method="POST" action="/PolygonApp/AdminServlet">
-                    <input type="text" name="bname" placeholder="Name of building" maxlength="40" value="<%= b.getBuildingName() %>" required autofocus>
-                    <input type="text" name="address" placeholder="Address" maxlength="50" value="<%= b.getBuildingAddress() %>" required>
-                    <input type="text" name="parcel" placeholder="Parcel number" maxlength="20" pattern="[0-9a-z]+" value="<%= b.getBuildingParcelNumber() %>" required>
-                    <input type="text" name="size" placeholder="Size in m&sup2" pattern="\d*" value="<%= b.getBuildingSize() %>" required>
-                    <input type="hidden" name="buildingId" value="<%= buildingId %>">
-                    <input type="hidden" name="action" value="edit">
-                    <input type="submit" value="Apply changes to building">
-                </form>
+                <div class="left_column uploadfiles">
+                    <h1 class="">Upload a document</h1>
+                    <form method="POST" enctype="multipart/form-data" action="/PolygonApp/UploadServlet" class="building">
+                        <input type="hidden" name="directory" value="upload-document">
+                        <p>Choose document to upload:</p>
+                        <input type="file" name="file">
+                        <p>Document description:</p>
+                        <input type="text" name="note" maxlength="100" required>
+                        <input type="hidden" name="action" value="upload-document">
+                        <input type="hidden" name="buildingId" value="<%= buildingId %>">
+                        <input type="submit" value="Upload document">
+                    </form>
+                </div>
+                    
+                <div class="right_column uploadfiles">
+                    <h1 class="">Upload an image</h1>
+                    <form method="POST" enctype="multipart/form-data" action="/PolygonApp/UploadServlet" class="building">
+                        <input type="hidden" name="directory" value="upload-image">
+                        <p>Choose image to upload:</p>
+                        <input type="file" name="file">
+                        <p>Image description:</p>
+                        <input type="text" name="note" maxlength="100" required>
+                        <input type="hidden" name="action" value="upload-image">
+                        <input type="hidden" name="buildingId" value="<%= buildingId %>">
+                        <input type="submit" value="Upload image">
+                    </form>
+                </div>
                 
             </div>
         </div>
