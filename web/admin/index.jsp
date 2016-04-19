@@ -28,7 +28,7 @@
         <link href="../css/resets.css" rel="stylesheet" type="text/css">
         <link href="../css/new_style.css" rel="stylesheet" type="text/css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Polygon - Admin dashboard</title>
+        <title>Polygon - Admin - Dashboard</title>
     </head>
     <body>
     <div id="site">
