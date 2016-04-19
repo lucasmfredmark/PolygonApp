@@ -58,7 +58,7 @@ public class BuildingMapper {
             ArrayList<Building> buildingList = new ArrayList();
         try {
             Connection conn = DBConnector.getConnection();
-            String sql = "SELECT * FROM buildings ORDER BY buildings.bname DESC";
+            String sql = "SELECT * FROM buildings ORDER BY buildings.address DESC";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
             
