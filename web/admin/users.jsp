@@ -80,13 +80,14 @@
                         </tr>
                         <%
                             UserController uc = new UserController();
+                            BuildingController bc = new BuildingController();
                             ArrayList<User> users = uc.getAllUsers("CUSTOMER");
                             for (User u : users) {
                                 out.print("<tr onclick=\"document.location='userBuildings.jsp?userId=" + u.getUserId() + "'\">");
                                     out.print("<td>" + u.getUserId() + "</td>");
                                     out.print("<td>" + u.getUserMail() + "</td>");
                                     out.print("<td>" + u.getFullName() + "</td>");
-                                    out.print("<td>14</td>");
+                                    out.print("<td>" + bc.getCustomerBuildings(u.getUserId()).size() + "</td>");
                                     out.print("<td>" + u.getUserDate().substring(0,10) + "</td>");
                                 out.print("</tr>");
                             }
