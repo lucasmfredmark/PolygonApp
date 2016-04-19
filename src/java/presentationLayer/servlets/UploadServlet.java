@@ -45,6 +45,8 @@ public class UploadServlet extends HttpServlet {
     boolean isPathSet;
     boolean isWritten;
     private String error;
+    private StringBuffer urlChecker;
+    private String redirectURL;
 
     @Override
     public void init() {
@@ -128,6 +130,7 @@ public class UploadServlet extends HttpServlet {
                         System.out.println(isPathSet);
                         if (!isPathSet && fi.getFieldName().equals("directory")) {
                             filePath = getServletContext().getInitParameter(fi.getString());
+                            System.out.println(filePath);
                             isPathSet = true;
                         }
                     }
@@ -255,7 +258,7 @@ public class UploadServlet extends HttpServlet {
                         }
 
                     }
-                }
+                } 
             }
         } catch (FileUploadException ex) {
         } catch (Exception ex) {
