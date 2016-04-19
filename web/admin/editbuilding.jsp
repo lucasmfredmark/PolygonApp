@@ -88,7 +88,7 @@
                 %>
                 
                 
-                <form class="building" method="POST" action="BuildingServlet">
+                <form class="building" method="POST" action="/PolygonApp/AdminServlet">
                     <input type="text" name="bname" placeholder="Name of building" maxlength="40" value="<%= b.getBuildingName() %>" required autofocus>
                     <input type="text" name="address" placeholder="Address" maxlength="50" value="<%= b.getBuildingAddress() %>" required>
                     <input type="text" name="parcel" placeholder="Parcel number" maxlength="20" pattern="[0-9a-z]+" value="<%= b.getBuildingParcelNumber() %>" required>

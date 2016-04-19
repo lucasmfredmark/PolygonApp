@@ -84,7 +84,7 @@
                 
                 <div class="left_column uploadfiles">
                     <h1 class="">Upload a document</h1>
-                    <form method="POST" enctype="multipart/form-data" action="UploadServlet" class="building">
+                    <form method="POST" enctype="multipart/form-data" action="/PolygonApp/UploadServlet" class="building">
                         <input type="hidden" name="directory" value="upload-document">
                         <p>Choose document to upload:</p>
                         <input type="file" name="file">
@@ -98,7 +98,7 @@
                     
                 <div class="right_column uploadfiles">
                     <h1 class="">Upload an image</h1>
-                    <form method="POST" enctype="multipart/form-data" action="UploadServlet" class="building">
+                    <form method="POST" enctype="multipart/form-data" action="/PolygonApp/UploadServlet" class="building">
                         <input type="hidden" name="directory" value="upload-image">
                         <p>Choose image to upload:</p>
                         <input type="file" name="file">
