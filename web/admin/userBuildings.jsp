@@ -53,8 +53,6 @@
                 <ul>
                     <li class="inactive"><a href="index.jsp">Dashboard</a></li>
                     <li class="inactive"><a href="users.jsp">Users</a></li>
-                    <li class="inactive"><a href="customerbuildings.jsp">Buildings</a></li>
-                    <li class="inactive"><a href="pending.jsp">Checkups</a></li>
                     <li class="active"><a href="userBuilding.jsp?userId=<%= request.getParameter("userId") %>">User's buildings</a></li>
                 </ul>
             </div>
@@ -86,7 +84,7 @@
                             ArrayList<Building> buildings = ac.getCustomerBuildings(userId);
                             if (buildings.size() > 0) {
                                 for (Building b : buildings) {
-                                    out.print("<tr onclick=\"document.location='building.jsp?buildingId=" + b.getBuildingId()+ "&userId="+userId+"'\">");
+                                    out.print("<tr onclick=\"document.location='building.jsp?buildingId=" + b.getBuildingId()+ "'\">");
                                         out.print("<td>" + b.getBuildingId()+ "</td>");
                                         out.print("<td>" + b.getBuildingAddress()+ "</td>");
                                         out.print("<td>" + b.getBuildingParcelNumber()+ "</td>");

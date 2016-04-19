@@ -34,4 +34,8 @@ public class AdminController {
         // The return has been commented out because the method is not implemented yet in Mapper
         return um.getAllUsers(userType);
     }
+    
+    public Building getAdminBuilding(int buildingId) throws BuildingException {
+        return bm.getAdminBuilding(buildingId);
+    }
 }
