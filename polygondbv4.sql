@@ -10,6 +10,7 @@ CREATE TABLE users (
     usertype ENUM('CUSTOMER','ADMIN') DEFAULT 'CUSTOMER',
     fullname VARCHAR(50)
 );
+
 INSERT INTO users (usermail, userpass, fullname) VALUES ('test@user.dk','test','Test User');
 INSERT INTO users (usermail, userpass, usertype, fullname) VALUES ('admin@polygon.dk','admin','ADMIN','Admin User');
 
@@ -46,7 +47,7 @@ CREATE TABLE documents (
 CREATE TABLE orders (
 	orderid INT AUTO_INCREMENT PRIMARY KEY,
     odate DATETIME DEFAULT CURRENT_TIMESTAMP, /* Creation date */
-    ostatus INT, /* 0 = Incomplete : 1 = Complete */
+    ostatus INT DEFAULT 0, /* 0 = Incomplete : 1 = Complete */
     odone DATETIME, /* Completion date */
     fk_buildingid INT,
     FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid)
@@ -76,13 +77,13 @@ CREATE TABLE damages (
     FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid)
 );
 
-/* UNUSED
-CREATE TABLE images (
-	imageid INT AUTO_INCREMENT PRIMARY KEY,
-    imgdate DATETIME DEFAULT CURRENT_TIMESTAMP, Creation date
-    idesc VARCHAR(255),
-    ipath VARCHAR(255) UNIQUE, Unique path
-    fk_checkupid INT,
-    FOREIGN KEY (fk_checkupid) REFERENCES checkups(checkupid)
-);
-*/
+CREATE TABLE tickets (
+	ticketid INT AUTO_INCREMENT PRIMARY KEY,
+    ticketdate DATETIME DEFAULT CURRENT_TIMESTAMP, /* Creation date */
+    tickettitle varchar (50),
+    tickettext varchar (1000),
+    ticketstate INT DEFAULT 1,
+    ticketanswer varchar (1000) DEFAULT null,
+    fk_userid INT,
+    FOREIGN KEY (fk_userid) REFERENCES users(userid)
+)
