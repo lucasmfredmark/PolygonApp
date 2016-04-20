@@ -98,7 +98,6 @@
                         <input type="submit" value="Upload document">
                     </form>
                 </div>
-                    
                 <div class="right_column uploadfiles">
                     <h1>Upload an image</h1>
                     <form method="POST" enctype="multipart/form-data" action="UploadServlet" class="building">
@@ -115,6 +114,5 @@
                     
             </div>
         </div>
-    </div>
     </body>
 </html>
