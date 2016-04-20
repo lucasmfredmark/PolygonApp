@@ -1,55 +1,50 @@
-<%@page import="serviceLayer.entities.Damage"%>
-<%@page import="serviceLayer.entities.Document"%>
-<%@page import="serviceLayer.entities.Checkup"%>
-<%@page import="serviceLayer.entities.Building"%>
-<%@page import="serviceLayer.entities.User"%>
-<%@page import="serviceLayer.controllers.BuildingController"%>
+<%@page import="serviceLayer.entities.*"%>
+<%@page import="serviceLayer.exceptions.*"%>
+<%@page import="serviceLayer.controllers.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    User user = (User) session.getAttribute("user");
-    String buildingId = request.getParameter("buildingId");
-    
+    // SIGN OUT
     if(request.getParameter("logout") != null) {
-
         if (request.getSession(false) != null) {
             session.invalidate();
-        } 
+        }
+        response.sendRedirect("/PolygonApp/index.jsp");
+        return;
+    }
 
-        response.sendRedirect("index.jsp");
+    // SESSION CHECK
+    User user = (User) session.getAttribute("user");
+    
+    if (user == null) {
+        response.sendRedirect("/PolygonApp/index.jsp");
+        return;
+    } else if (user.getUserType().equals(User.userType.ADMIN)) {
+        response.sendRedirect("/PolygonApp/admin/index.jsp");
+        return;
+    }
+   
+    // PARAMETER CHECK
+    try {
+        int buildingId = Integer.parseInt(request.getParameter("buildingId"));
+        
+        if (buildingId <= 0) {
+            response.sendRedirect("/PolygonApp/buildings.jsp");
+            return;
+        }
+    } catch (NumberFormatException ex) {
+        response.sendRedirect("/PolygonApp/buildings.jsp");
         return;
     }
     
-    if (user == null) {
-        response.sendRedirect("index.jsp");
-        return;
-    } else if (user.getUserType().equals(User.userType.ADMIN)) {
-        response.sendRedirect("admin/index.jsp");
-        return;
-    } else if (buildingId == null) {
-        response.sendRedirect("buildings.jsp");
-        return;
-    }
-
-    try {
-        int tempId = Integer.parseInt(buildingId);
-
-        if (tempId <= 0) {
-            response.sendRedirect("buildings.jsp");
-            return;
-        }
-
-        buildingId = String.valueOf(tempId);
-    } catch (NumberFormatException ex) {
-        response.sendRedirect("buildings.jsp");
-        return;
-    }
-
-    BuildingController buildingController = new BuildingController();
-    Building building = buildingController.getCustomerBuilding(Integer.parseInt(buildingId), user.getUserId());
-
-    if (building == null) {
-        response.sendRedirect("buildings.jsp");
+    int buildingId = Integer.parseInt(request.getParameter("buildingId"));
+    
+    // OWNER CHECK
+    BuildingController bc = new BuildingController();
+    Building b = bc.getCustomerBuilding(buildingId, user.getUserId());
+   
+    if (b == null) {
+        response.sendRedirect("/PolygonApp/buildings.jsp");
         return;
     }
 %>
@@ -57,143 +52,165 @@
 <html>
     <head>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
-        <link href="css/resets.css" rel="stylesheet" type="text/css">
-        <link href="css/new_style.css" rel="stylesheet" type="text/css">
+        <link href="/PolygonApp/css/resets.css" rel="stylesheet" type="text/css">
+        <link href="/PolygonApp/css/new_style.css" rel="stylesheet" type="text/css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Polygon - View building</title>
+        <title>Polygon - Building</title>
     </head>
     <body>
-    <div id="site">
-        <div id="header">
-            <div class="wrapper">
-                <img src="images/polygon-logo.svg" class="header_logo" alt="Polygon">
-                <p>Hello, <%= user.getFullName() %> (<a href="?logout">Sign out</a>)</p>
+        <div id="top">
+            <div id="header">
+                <div class="wrapper">
+                    <img src="/PolygonApp/images/polygon-logo.svg" class="header_logo" alt="Polygon">
+                    <p>Hello, <%= user.getFullName() %> (<a href="?logout">Sign out</a>)</p>
+                </div>
+            </div>
+            <div id="navigation">
+                <div class="wrapper">
+                    <h2>Viewing building: <%= b.getBuildingName() %></h2>
+                    <ul>
+                        <li class="inactive"><a href="/PolygonApp/buildings.jsp">Your buildings</a></li>
+                        <li class="active"><a href="/PolygonApp/viewbuilding.jsp?buildingId=<%= buildingId %>">Building</a></li>
+                        <li class="inactive"><a href="/PolygonApp/editbuilding.jsp?buildingId=<%= buildingId %>">Edit building</a></li>
+                        <li class="inactive"><a href="/PolygonApp/adddamage.jsp?buildingId=<%= buildingId %>">Report damage</a></li>
+                        <li class="inactive"><a href="/PolygonApp/uploadfiles.jsp?buildingId=<%= buildingId %>">Upload files</a></li>
+                        <li class='inactive'><a href="/PolygonApp/support.jsp">Support</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div id="navigation">
-            <div class="wrapper">
-                <h2>Viewing building: <%= building.getBuildingName() %></h2>
-                <ul>
-                    <li class="inactive"><a href="buildings.jsp">Your buildings</a></li>
-                    <li class="active"><a href="viewbuilding.jsp?buildingId=<%= buildingId %>">Building</a></li>
-                    <li class="inactive"><a href="editbuilding.jsp?buildingId=<%= buildingId %>">Edit building</a></li>
-                    <li class="inactive"><a href="adddamage.jsp?buildingId=<%= buildingId %>">Report damage</a></li>
-                    <li class="inactive"><a href="uploadfiles.jsp?buildingId=<%= buildingId %>">Upload files</a></li>
-                    <li class="inactive"><a href="#">Services</a></li>
-                </ul>
-            </div>
-        </div>
+  
         <div id="content">
             <div class="wrapper">
                 <!-- BREADCRUMBS -->
-                <p class="breadcrumbs"><a href="buildings.jsp">Your buildings</a> &raquo; <span>Building</span></p>
-                
-                <%
-                    if (request.getParameter("error") != null) {
-                        out.print("<h3>" + request.getParameter("error") + "</h3><br>");
-                    } else if (request.getParameter("success") != null) {
-                        out.print("<h3>" + request.getParameter("success") + "</h3><br>");
-                    }
-                %>
+                <p class="breadcrumbs"><a href="/PolygonApp/buildings.jsp">Your buildings</a> &raquo; Building</p>
                 
                 <div class="left_column">
-                    <div class="box viewbuilding">
-                        <h1>Building information</h1>
-                        <table class="viewinfo">
+                    <div class="box">
+                        <%
+                            if (request.getParameter("error") != null) {
+                                out.print("<h3 class='errormsg'>" + request.getParameter("error") + "</h3><br>");
+                            } else if (request.getParameter("success") != null) {
+                                out.print("<h3 class='errormsg'>" + request.getParameter("success") + "</h3><br>");
+                            }
+                        %>
+                        <table class="viewtable viewinfo">
+                            <tr>
+                                <td colspan="2">Building information</td>
+                            </tr>
                             <tr>
                                 <td>Building name</td>
-                                <td><%= building.getBuildingName() %></td>
+                                <td><%= b.getBuildingName() %></td>
                             </tr>
                             <tr>
                                 <td>Address</td>
-                                <td><%= building.getBuildingAddress() %></td>
+                                <td><%= b.getBuildingAddress() %></td>
                             </tr>
                             <tr>
                                 <td>Parcel number</td>
-                                <td><%= building.getBuildingParcelNumber() %></td>
+                                <td><%= b.getBuildingParcelNumber() %></td>
                             </tr>
                             <tr>
                                 <td>Size in m&sup2;</td>
-                                <td><%= building.getBuildingSize() %></td>
+                                <td><%= b.getBuildingSize() %></td>
                             </tr>
-                            <tr> <!-- Mangler fortolkning af tal -->
+                            <%
+                                String conlvl;
+                                    switch(bc.getBuildingConditionLevel(b.getBuildingId())) {
+                                        case(0):
+                                            conlvl = "0 - Good condition";
+                                            break;
+                                        case(1):
+                                            conlvl = "1 - Decent condition";
+                                            break;
+                                        case(2):
+                                            conlvl = "2 - Bad condition";
+                                            break;
+                                        case(3):
+                                            conlvl = "3 - Critical condition";
+                                            break;
+                                        default:
+                                            conlvl = "Not available";
+                                            break;
+                                    }
+                            %>
+                            <tr>
                                 <td>Latest condition</td>
-                                <td><%= buildingController.getBuildingConditionLevel(Integer.parseInt(buildingId)) %></td>
+                                <td><%= conlvl %></td>
                             </tr>
                         </table>
                     </div>
-                    <div class="box viewbuilding">
-                        <h1>Reported damages</h1>
-                        <% 
-                            ArrayList<Damage> damage = buildingController.getDamages(Integer.parseInt(buildingId));
+                    <div class="box">
+                        <table class="viewtable viewdmgs">
+                            <tr>
+                                <td colspan="3">Reported damages</td>
+                            </tr>
+                            <% 
+                                ArrayList<Damage> damage = bc.getDamages(buildingId);
 
-                            if (damage.size() > 0) {
-                                out.print("<table class='viewdocs'>");
-                                for (Damage d : damage) {
-                                    out.print("<tr>");
-                                        out.print("<td>" + d.getDmgDate().substring(0, 10) + "</td>");
-                                        out.print("<td>" + d.getDmgTitle() + "</td>");
-                                        out.print("<td>" + d.getDmgDesc() + "</td>");
-                                    out.print("</tr>");
+                                if (damage.size() > 0) {
+                                    for (Damage d : damage) {
+                                        out.print("<tr>");
+                                            out.print("<td>" + d.getDmgDate().substring(0, 10) + "</td>");
+                                            out.print("<td>" + d.getDmgTitle() + "</td>");
+                                            out.print("<td>" + d.getDmgDesc() + "</td>");
+                                        out.print("</tr>");
+                                    }
+                                } else { 
+                                     out.print("<td colspan='3'>No recorded damages found, <a href='adddamage.jsp?buildingId=" + buildingId +"'>click here to add one.</a></td>");
                                 }
-                                out.print("</table>");
-                                out.print("<p>Click on a damage to view its details.</p>");
-                            } else { 
-                                 out.print("<br><p>There are no damages reported to this building.</p>"
-                                         + "<br><p>Click <a href='adddamage.jsp?buildingId=" + buildingId +"'>here</a> to add one.</p>");
-                            }
-                        %>
+                            %>
+                        </table>
                     </div>
                 </div>
                         
                 <div class="right_column">
-                    <div class="box viewbuilding">
-                        <h1>Checkup reports</h1>
-                        <%
-                            ArrayList<Checkup> checkups = buildingController.getBuildingCheckups(Integer.parseInt(buildingId));
+                    <div class="box">
+                        <table class="viewtable viewreports">
+                            <tr>
+                                <td colspan="3">Checkup reports</td>
+                            </tr>
+                            <% 
+                                ArrayList<Checkup> checkups = bc.getBuildingCheckups(buildingId);
 
-                            if (checkups.size() > 0) {
-                                out.print("<table class='viewdocs'>");
-                                for (Checkup c : checkups) {
-                                    out.print("<tr>");
-                                        out.print("<td>" + c.getCheckupDate().substring(0, 10) + "</td>");
-                                        out.print("<td>" + c.getConditionLevel()+ "</td>");
-                                        out.print("<td><a href='uploads/reports/'>" + c.getCheckupPath()+ "</a></td>");
-                                    out.print("</tr>");
+                                if (checkups.size() > 0) {
+                                    for (Checkup c : checkups) {
+                                        out.print("<tr>");
+                                            out.print("<td>" + c.getCheckupDate().substring(0, 10) + "</td>");
+                                            out.print("<td>" + c.getConditionLevel()+ "</td>");
+                                            out.print("<td><a href='uploads/reports/'>" + c.getCheckupPath()+ "</a></td>");
+                                        out.print("</tr>");
+                                    }
+                                } else {
+                                     out.print("<td colspan='3'>No checkup reports found, <a href='#'>click here to request a checkup.</a></td>");
                                 }
-                                out.print("</table>");
-                                out.print("<p>Click on a report to view its details.</p>");
-                            } else {
-                                out.print("<br><p>There are no check-up reports available for this building yet.</p>"
-                                        + "<br><p>Click <a href='#'>here</a> to request a checkup.</p>");
-                            }  
-                        %>
+                            %>
+                        </table>
                     </div>
-                    <div class="box viewbuilding">
-                        <h1>Relevant documents</h1>
-                        <%
-                            ArrayList<Document> documents = buildingController.getBuildingDocuments(Integer.parseInt(buildingId));
+                    <div class="box">
+                        <table class="viewtable viewdocs">
+                            <tr>
+                                <td colspan="3">Relevant documents</td>
+                            </tr>
+                            <% 
+                                ArrayList<Document> documents = bc.getBuildingDocuments(buildingId);
 
-                            if (documents.size() > 0) {
-                                out.print("<table class='viewdocs'>");
-                                for (Document d : documents) {
-                                    out.print("<tr>");
-                                        out.print("<td>" + d.getDocumentDate().substring(0, 10) + "</td>");
-                                        out.print("<td>" + d.getDocumentPath() + "</td>");
-                                        out.print("<td>" + d.getDocumentNote() + "</td>");
-                                    out.print("</tr>");
+                                if (documents.size() > 0) {
+                                    for (Document d : documents) {
+                                        out.print("<tr>");
+                                            out.print("<td>" + d.getDocumentDate().substring(0, 10) + "</td>");
+                                            out.print("<td>" + d.getDocumentPath() + "</td>");
+                                            out.print("<td>" + d.getDocumentNote() + "</td>");
+                                        out.print("</tr>");
+                                    }
+                                } else {
+                                     out.print("<td colspan='3'>No documents found, <a href='uploadfiles.jsp?buildingId=" + buildingId +"'>click to add a document.</a></td>");
                                 }
-                                out.print("</table>");
-                                out.print("<p>Click on a document to view its details.</p>");
-                            } else {
-                                out.print("<br><p>There are no documents attached to this building yet.</p>"
-                                         + "<br><p>Click <a href='uploadfiles.jsp?buildingId=" + buildingId +"'>here</a> to add one.</p>");
-                            }
-                        %>
+                            %>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-    </div>        
     </body>
 </html>

@@ -96,12 +96,12 @@ textarea:focus {
 
 .left_column {
     float:left;
-    width:calc(50% - 10px);
+    width:calc(50% - 20px);
 }
 
 .right_column {
     float:right;
-    width:calc(50% - 10px);
+    width:calc(50% - 20px);
 }
 
 .box {
@@ -111,6 +111,20 @@ textarea:focus {
     margin-bottom:20px;
     box-sizing:border-box;
     padding:20px;
+}
+
+.container {
+    background:#fff;
+    box-sizing:border-box;
+    padding:20px;
+    width:400px;
+}
+
+.container h1 {
+    color:#9fabbe;
+    line-height:30px;
+    font-size:10pt;
+    border-bottom:1px solid #f5f5f5;
 }
 
 /* STANDARD TABLE */
@@ -128,23 +142,28 @@ textarea:focus {
 }
 
 .table tr {
-    line-height:24px;
-    cursor:pointer;
-}
-
-.table tr:hover {
-    background:#ebf0f7;
+    line-height:30px;
 }
 
 .table tr:first-child {
     color:#9fabbe;
     font-weight:bold;
     border-bottom:1px solid #9fabbe;
-    cursor:default;
+}
+
+.table tr:hover {
+    background:#ebf0f7;
+    cursor:pointer;
 }
 
 .table tr:first-child:hover {
     background:none;
+    cursor:default;
+}
+
+.table .nohover:hover {
+    background:none;
+    cursor:default;
 }
 
 /******************************************************************************/
@@ -153,7 +172,7 @@ textarea:focus {
 /******************************************************************************/
 /******************************************************************************/
 
-/* LOGIN */
+/* LOGIN PAGE */
 
 #login {
     width:400px;
@@ -213,9 +232,13 @@ textarea:focus {
 /******************************************************************************/
 /******************************************************************************/
 
-#site {
+#top {
+    box-shadow:0px 0px 10px rgba(0, 0, 0, 0.05);
+}
+
+#content {
     width:100%;
-    height:100%;
+    padding-bottom:40px;
 }
 
 /* HEADER */
@@ -244,7 +267,6 @@ textarea:focus {
     width:100%;
     height:100px;
     background:#fff;
-    /* box-shadow:0px 0px 10px rgba(0, 0, 0, 0.05); */
 }
 
 #navigation ul {
@@ -266,20 +288,19 @@ textarea:focus {
     padding:0 5px;
 }
 
-.active a { color:#354052; }
-.inactive a { color:#9fabbe; }
-#navigation a:hover { color:#354052;text-decoration:none; }
-.active { border-bottom:3px solid #009fe3; }
-
-/* CONTENT */
-
-#content {
-    width:100%;
-    padding-bottom:40px;
+#navigation a:hover {
+    color:#354052;
+    text-decoration:none;
 }
 
+.active a { color:#354052; }
+.inactive a { color:#9fabbe; }
+.active { border-bottom:3px solid #009fe3; }
+
+/* BREADCRUMBS */
+
 .breadcrumbs {
-    color:#9fabbe;
+    color:#354052;
     font-size:8pt;
     font-weight:bold;
     text-transform:uppercase;
@@ -288,10 +309,6 @@ textarea:focus {
 
 .breadcrumbs a {
     color:#9fabbe;
-}
-
-.breadcrumbs span {
-    color:#354052;
 }
 
 .breadcrumbs a:hover {
@@ -305,62 +322,56 @@ textarea:focus {
 .buildings_table td:nth-child(2) { } /* Address */
 .buildings_table td:nth-child(3) { width:150px; } /* Parcel # */
 .buildings_table td:nth-child(4) { width:100px; } /* Size */
-.buildings_table td:nth-child(5) { width:200px; } /* Condition level */
-
-/* ADD NEW BUILDING */
-
-.building {
-    width:360px;
-}
+.buildings_table td:nth-child(5) { width:150px; } /* Condition level */
 
 /* VIEW BUILDING */
 
-.viewbuilding h1 {
-    border-bottom:1px solid #eee;
+.viewtable {
+    width:100%;
+}
+
+.viewtable tr {
+    border-bottom:1px solid #f5f5f5;
+    line-height:30px;
+}
+
+.viewtable tr:first-child {
+    color:#9fabbe;
     font-size:12pt;
     font-weight:700;
-    height:24px;
 }
 
-.viewbuilding p {
-    color:#9fabbe;
+.viewtable tr:last-child {
+    border:none;
 }
 
-.viewdocs {
-    width:100%;
-    margin:10px 0;
+.viewinfo td:nth-child(1) {
+    width:200px;
+    font-weight:700;
 }
 
-.viewdocs tr {
-    line-height:20pt;
-    border-bottom:1px solid #354052;
-}
-
-.viewdocs tr:last-child { border:none; }
-
-.viewdocs td:first-child {
+.viewdmgs td:nth-child(1) {
     width:100px;
 }
 
-.viewdocs td:nth-child(2) {
+.viewdmgs td:nth-child(2) {
     width:150px;
 }
 
-.viewinfo {
-    width:100%;
-    margin:10px 0;
+.viewreports td:nth-child(1) {
+    width:100px;
 }
 
-.viewinfo tr {
-    line-height:20pt;
-    border-bottom:1px solid #354052;
+.viewreports td:nth-child(3) {
+    width:200px;
 }
 
-.viewinfo tr:last-child { border:none; }
+.viewdocs td:nth-child(1) {
+    width:100px;
+}
 
-.viewinfo td:first-child {
-    width:150px;
-    font-weight:700;
+.viewdocs td:nth-child(3) {
+    width:200px;
 }
 
 /* UPLOAD FILES */
