@@ -111,6 +111,7 @@ textarea:focus {
     margin-bottom:20px;
     box-sizing:border-box;
     padding:20px;
+    box-shadow:0px 0px 10px rgba(0, 0, 0, 0.05);
 }
 
 .container {
@@ -118,6 +119,7 @@ textarea:focus {
     box-sizing:border-box;
     padding:20px;
     width:400px;
+    box-shadow:0px 0px 10px rgba(0, 0, 0, 0.05);
 }
 
 .container h1 {
@@ -135,6 +137,7 @@ textarea:focus {
     min-width:960px;
     box-sizing:border-box;
     padding:20px;
+    box-shadow:0px 0px 10px rgba(0, 0, 0, 0.05);
 }
 
 .table table {
@@ -379,18 +382,18 @@ textarea:focus {
 .uploadfiles {
     background:#fff;
     box-sizing:border-box;
-    padding:10px;
+    padding:20px;
 }
 
 .uploadfiles h1 {
-    font-size:14pt;
-    line-height:40px;
-    border-bottom:1px solid #eee;
-    margin-bottom:10px;
+    color:#9fabbe;
+    line-height:30px;
+    font-size:10pt;
+    border-bottom:1px solid #f5f5f5;
 }
 
-.uploadfiles p {
-    
+.uploadfiles form {
+    width:400px;
 }
 
 /******************************************************************************/
