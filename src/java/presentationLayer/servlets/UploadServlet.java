@@ -256,6 +256,9 @@ public class UploadServlet extends HttpServlet {
                                 response.sendRedirect("/PolygonApp/admin/uploadimg.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
                             }
                         }
+                        default: {
+                            break;
+                        }
 
                     }
                 } 

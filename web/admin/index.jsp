@@ -46,6 +46,7 @@
                     <li class="inactive"><a href="users.jsp">Users</a></li>
                     <li class="inactive"><a href="customerbuildings.jsp">Buildings</a></li>
                     <li class="inactive"><a href="pending.jsp">Checkups</a></li>
+                    <li class="inactive"><a href="support.jsp">Support tickets</a></li>
                 </ul>
             </div>
         </div>

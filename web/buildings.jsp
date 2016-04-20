@@ -48,6 +48,7 @@
                 <ul>
                     <li class="active"><a href="buildings.jsp">Your buildings</a></li>
                     <li class="inactive"><a href="addbuilding.jsp">Add building</a></li>
+                    <li class='inactive'><a href='support.jsp'>Support</a></li>
                 </ul>
             </div>
         </div>
