@@ -421,13 +421,15 @@ textarea:focus {
 
 /* DASHBOARD */
 
-.dashboard_welcome {
-    box-shadow:0px 0px 10px rgba(0, 0, 0, 0.05);
+.dashboard_welcome h1 {
+    color:#9fabbe;
+    font-size:12pt;
+    line-height:30px;
+    border-bottom:1px solid #f5f5f5;
 }
 
-.dashboard_welcome h1 {
-    font-size:12pt;
-    margin-bottom:10px;
+.dashboard_welcome p {
+    margin-top:5px;
 }
 
 .dashboard_boxes {

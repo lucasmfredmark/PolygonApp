@@ -49,14 +49,13 @@ $(function() {
         }
     });
     
-    /*
     $('#searchReport').keyup(function() {
         var searchText = $('#searchReport').val();
         var results = 0;
         
         $('#reportsTable tr').slice(2).each(function() {
-            //var address = $(this).find('td:nth-child(2)').text();
-            //var parcelNumber = $(this).find('td:nth-child(3)').text();
+            var address = $(this).find('td:nth-child(2)').text();
+            var parcelNumber = $(this).find('td:nth-child(3)').text();
             
             if (address.toLowerCase().indexOf(searchText.toLowerCase()) === -1 &&
                 parcelNumber.toLowerCase().indexOf(searchText.toLowerCase()) === -1) {
@@ -74,5 +73,4 @@ $(function() {
             $('#reportsTable tr:nth-child(2)').hide();
         }
     });
-    */
 });
