@@ -172,20 +172,39 @@
                             </tr>
                             <% 
                                 ArrayList<Checkup> checkups = bc.getBuildingCheckups(buildingId);
-
+                                
                                 if (checkups.size() > 0) {
                                     for (Checkup c : checkups) {
+                                        String repconlvl;
+                                        switch(c.getConditionLevel()) {
+                                            case(0):
+                                                repconlvl = "0 - Good condition";
+                                                break;
+                                            case(1):
+                                                repconlvl = "1 - Decent condition";
+                                                break;
+                                            case(2):
+                                                repconlvl = "2 - Bad condition";
+                                                break;
+                                            case(3):
+                                                repconlvl = "3 - Critical condition";
+                                                break;
+                                            default:
+                                                repconlvl = "Not available";
+                                                break;
+                                        }
                                         out.print("<tr>");
                                             out.print("<td>" + c.getCheckupDate().substring(0, 10) + "</td>");
-                                            out.print("<td>" + c.getConditionLevel()+ "</td>");
+                                            out.print("<td>" + repconlvl + "</td>");
                                             out.print("<td><a href='uploads/reports/'>" + c.getCheckupPath()+ "</a></td>");
                                         out.print("</tr>");
                                     }
                                 } else {
-                                     out.print("<td colspan='3'>No checkup reports found, <a href='#'>click here to request a checkup.</a></td>");
+                                    out.print("<td colspan='3'>No checkup reports found.</td>");
                                 }
                             %>
                         </table>
+                        <button class="checkuprequest">Request a checkup</button>
                     </div>
                     <div class="box">
                         <table class="viewtable viewdocs">
