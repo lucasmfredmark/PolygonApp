@@ -18,7 +18,7 @@
         <form method="POST" action="SupportServlet">
             <input type="text" name="title" placeholder="Title of ticket" maxlength="50" required autofocus> <br><br>
             <input type="hidden" name="action" value="create">
-            <textarea name="text" style="width:400px; height:300px" placeholder="Describe your problem as detailed as possible"></textarea>
+            <textarea name="text" style="width:400px; height:300px" placeholder="Describe your problem as detailed as possible" required></textarea>
             <br> <br> 
             <input type="submit" value="Create ticket">
         </form>

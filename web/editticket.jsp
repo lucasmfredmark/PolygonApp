@@ -37,11 +37,11 @@
             <input type="hidden" name="action" value="edit">
             <input type="hidden" name="ticketId" value='<%=ticketId%>'>
             Text: <br>
-            <textarea name="text" style="width:400px; height:200px" placeholder='<%=text%>'></textarea>
+            <textarea name="text" style="width:400px; height:200px" placeholder='<%=text%>' autofocus required></textarea>
             <br> <br> 
             <input type="submit" value="Commit changes"> <br> <br>
             Answer from an employee: <br>
-            <textarea name="answer" style="width:400px; height:200px" placeholder='<%=answer%>'></textarea>
+            <textarea name="answer" style="width:400px; height:200px" placeholder='<%=answer%>' readonly></textarea>
         </form>
         
     </body>

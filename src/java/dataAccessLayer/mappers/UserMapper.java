@@ -41,11 +41,13 @@ public class UserMapper {
                 }
                 
                 return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), userType, rs.getString(6));
+            } else {
+                throw new UserException("Wrong email or password. Try again");
             }
         } catch (SQLException ex) {
-            throw new UserException("An error occured: no match on email");
+            System.out.println("Do I reach this?");
+            throw new UserException("Verify error: Couldn't check database");
         }
-        return null;
     }
 
     public void insertUser(String email, String fullname, String password) throws UserException {
