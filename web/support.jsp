@@ -14,17 +14,32 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+        <link href="/PolygonApp/css/resets.css" rel="stylesheet" type="text/css">
+        <link href="/PolygonApp/css/new_style.css" rel="stylesheet" type="text/css">
         <title>Support tickets</title>
     </head>
     <body>
-
-        <a href="buildings.jsp">Back to overview</a> <br> <br>
-
+        
+        <% User user = (User) session.getAttribute("user"); %>
+        
+        <div id="site">
+        <div id="header">
+            <div class="wrapper">
+                <img src="/PolygonApp/images/polygon-logo.svg" class="header_logo" alt="Polygon">
+                <p>Hello, <%= user.getFullName() %> (<a href="?logout">Sign out</a>)</p>
+            </div>
+        </div>
+        <div id="navigation">
+            <h2>Support Ticket</h2>
+            <ul>
+                    <li class="inactive"><a href="index.jsp">Dashboard</a></li>
+                </ul>
+        </div>
+        <br>
         <%
 
             // SESSION CHECK
-            User user = (User) session.getAttribute("user");
-
             if (request.getParameter("logout") != null) {
 
                 if (request.getSession(false) != null) {
@@ -46,7 +61,6 @@
         %>
 
         <div class="box viewbuilding">
-            <h1>Support tickets</h1>
             <%                SupportController sc = new SupportController();
                 int userId = user.getUserId();
                 ArrayList<Ticket> tickets = sc.getAllTicketsForCustomer(userId);
@@ -55,10 +69,10 @@
                     out.print("<table class='viewdocs'>");
                     for (Ticket t : tickets) {
                         out.print("<tr>");
-                        out.print("<td> ID </td>");
-                        out.print("<td> Title </td>");
-                        out.print("<td> Message </td>");
-                        out.print("<td> Status </td>");
+                        out.print("<td> <span style='font-weight:bold'>ID</span> </td>");
+                        out.print("<td style='width:150px'> <span style='font-weight:bold'>Title</span> </td>");
+                        out.print("<td style='width:600px'> <span style='font-weight:bold'>Message</span> </td>");
+                        out.print("<td> <span style='font-weight:bold'>Status</span> </td>");
                         out.print("</tr>");
                         out.print("<tr onclick=\"document.location='editticket.jsp?ticketId=" + t.getTicketId() + "'\">");
                         out.print("<td>" + t.getTicketId() + "</td>");
@@ -67,7 +81,7 @@
                         out.print("<td>" + t.getState() + "</td>");
                         out.print("</tr>");
                     }
-                    out.print("</table>");
+                    out.print("</table> <br>"); 
                     out.print("<p>Click on a ticket to edit/view it.</p>");
                 } else {
                     out.print("<br><p>There are no tickets reported to this building.</p>");
@@ -79,7 +93,9 @@
 
 
         <p> 
-            <a href="createticket.jsp">Create a new ticket</a>
+        <form method="POST" action="createticket.jsp" style="width:220px">
+            <input type="submit" value="New ticket">
+        </form>
         </p>
     </body>
 </html>
