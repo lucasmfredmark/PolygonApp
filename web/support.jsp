@@ -18,23 +18,29 @@
         <link href="/PolygonApp/css/resets.css" rel="stylesheet" type="text/css">
         <link href="/PolygonApp/css/new_style.css" rel="stylesheet" type="text/css">
         <title>Support tickets</title>
+        <style>
+
+            table td {
+                padding:5px;
+            }
+
+        </style>
     </head>
     <body>
-        
-        <% User user = (User) session.getAttribute("user"); %>
-        
-        <div id="site">
+
+        <% User user = (User) session.getAttribute("user");%>
+
         <div id="header">
             <div class="wrapper">
                 <img src="/PolygonApp/images/polygon-logo.svg" class="header_logo" alt="Polygon">
-                <p>Hello, <%= user.getFullName() %> (<a href="?logout">Sign out</a>)</p>
+                <p>Hello, <%= user.getFullName()%> (<a href="?logout">Sign out</a>)</p>
             </div>
         </div>
         <div id="navigation">
             <h2>Support Ticket</h2>
             <ul>
-                    <li class="inactive"><a href="index.jsp">Dashboard</a></li>
-                </ul>
+                <li class="inactive"><a href="index.jsp">Dashboard</a></li>
+            </ul>
         </div>
         <br>
         <%
@@ -81,21 +87,26 @@
                         out.print("<td>" + t.getState() + "</td>");
                         out.print("</tr>");
                     }
-                    out.print("</table> <br>"); 
+                    out.print("</table> <br>");
                     out.print("<p>Click on a ticket to edit/view it.</p>");
                 } else {
-                    out.print("<br><p>There are no tickets reported to this building.</p>");
+                    out.print("<br><p>There are no tickets to view.</p>");
                 }
 
             %>
         </div>
 
-
+        <%            if (request.getParameter("error") != null) {
+                out.print("<h3 style='color:red' class='center'>" + request.getParameter("error") + "</h3>");
+            } else if (request.getParameter("message") != null) {
+                out.print("<h3 style='color:green' class='center'>" + request.getParameter("message") + "</h3>");
+            }
+        %>
 
         <p> 
         <form method="POST" action="createticket.jsp" style="width:220px">
             <input type="submit" value="New ticket">
         </form>
-        </p>
-    </body>
+    </p>
+</body>
 </html>

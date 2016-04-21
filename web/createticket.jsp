@@ -16,9 +16,9 @@
         <title>Create a support ticket</title>
     </head>
     <body>
-         <% User user = (User) session.getAttribute("user"); %>
-         
-         <%
+        <% User user = (User) session.getAttribute("user"); %>
+
+        <%
 
             // SESSION CHECK
             if (request.getParameter("logout") != null) {
@@ -40,29 +40,29 @@
             }
 
         %>
-        
+
         <div id="site">
-        <div id="header">
-            <div class="wrapper">
-                <img src="/PolygonApp/images/polygon-logo.svg" class="header_logo" alt="Polygon">
-                <p>Hello, <%= user.getFullName() %> (<a href="?logout">Sign out</a>)</p>
+            <div id="header">
+                <div class="wrapper">
+                    <img src="/PolygonApp/images/polygon-logo.svg" class="header_logo" alt="Polygon">
+                    <p>Hello, <%= user.getFullName()%> (<a href="?logout">Sign out</a>)</p>
+                </div>
             </div>
-        </div>
-        <div id="navigation">
-            <h2>Create Support Ticket</h2>
-            <ul>
+            <div id="navigation">
+                <h2>Create Support Ticket</h2>
+                <ul>
                     <li class="inactive"><a href="index.jsp">Dashboard</a></li>
                     <li class="inactive"><a href="support.jsp">Support</a></li>
                 </ul>
-        </div>
-        <br>
-        <form method="POST" action="SupportServlet" style="width:410px">
-            <input type="text" name="title" placeholder="Title of ticket" maxlength="50" required autofocus> <br><br>
-            <input type="hidden" name="action" value="create">
-            <textarea name="text" style="width:400px; height:300px" placeholder="Describe your problem as detailed as possible" required></textarea>
-            <br> <br> 
-            <input type="submit" value="Create ticket">
-        </form>
-        
+            </div>
+            <br>
+            <form method="POST" action="SupportServlet" style="width:400px">
+                <input type="text" name="title" placeholder="Title of ticket" maxlength="50" required autofocus> <br><br>
+                <input type="hidden" name="action" value="create">
+                <textarea name="text" style="width:400px; height:150px" placeholder="Describe your problem as detailed as possible" required></textarea>
+                <br> <br> 
+                <input type="submit" value="Create ticket">
+            </form>
+
     </body>
 </html>

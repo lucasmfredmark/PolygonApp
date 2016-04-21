@@ -56,10 +56,10 @@ public class SupportServlet extends HttpServlet {
                         sc.createTicket(title, text, userId);
                         System.out.println("Create ticket");
                         message = "Your ticket was succesfully created";
-                        response.sendRedirect("support.jsp?result=" + URLEncoder.encode(message, "UTF-8"));
+                        response.sendRedirect("support.jsp?message=" + URLEncoder.encode(message, "UTF-8"));
                     } catch (SupportException ex) {
                         error = ex.getMessage();
-                        response.sendRedirect("support.jsp?result=" + URLEncoder.encode(error, "UTF-8"));
+                        response.sendRedirect("support.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
                     }
                     break;
                 }
@@ -69,10 +69,10 @@ public class SupportServlet extends HttpServlet {
                         String text = request.getParameter("text");
                         sc.editTicket(text, ticketId);
                         message = "Your ticket was succesfully edited";
-                        response.sendRedirect("support.jsp?" + URLEncoder.encode(message, "UTF-8"));
+                        response.sendRedirect("support.jsp?message=" + URLEncoder.encode(message, "UTF-8"));
                     } catch (SupportException ex) {
                         error = ex.getMessage();
-                        response.sendRedirect("support.jsp?" + URLEncoder.encode(error, "UTF-8"));
+                        response.sendRedirect("support.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
                     }
                     break;
                 }
@@ -84,10 +84,10 @@ public class SupportServlet extends HttpServlet {
                         String text = request.getParameter("answer");
                         sc.answerTicket(ticketId, text);
                         message = "You have answered ticket: " + ticketId + " successfully";
-                        response.sendRedirect("support.jsp?" + URLEncoder.encode(message, "UTF-8"));
+                        response.sendRedirect("/PolygonApp/admin/support.jsp?message=" + URLEncoder.encode(message, "UTF-8"));
                     } catch (SupportException ex) {
                         error = ex.getMessage();
-                        response.sendRedirect("support.jsp?" + URLEncoder.encode(error, "UTF-8"));
+                        response.sendRedirect("/PolygonApp/admin/support.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
                     }
                     break;
                 }
@@ -96,17 +96,17 @@ public class SupportServlet extends HttpServlet {
                     try {
                        int ticketId = Integer.parseInt(request.getParameter("ticketId"));
                        sc.closeTicket(ticketId);
+                        System.out.println(ticketId);
                        message = "You have closed ticket with id: " + ticketId + " successfully";
-                       response.sendRedirect("support.jsp?" + URLEncoder.encode(message, "UTF-8"));
+                       response.sendRedirect("/PolygonApp/admin/support.jsp?message=" + URLEncoder.encode(message, "UTF-8"));
                     } catch (SupportException ex) {
                         error = ex.getMessage();
-                        response.sendRedirect("support.jsp?" + URLEncoder.encode(error, "UTF-8"));
+                        response.sendRedirect("/PolygonApp/admin/support.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
                     }
-                
+                    break;
                 }
-                
                 default: {
-                    response.sendRedirect("support.jsp?" + URLEncoder.encode(message, "UTF-8"));
+                    response.sendRedirect("support.jsp?message=" + URLEncoder.encode(message, "UTF-8"));
                     break;
                 }
             }
