@@ -1,7 +1,7 @@
 <%@page import="serviceLayer.entities.*"%>
 <%@page import="serviceLayer.exceptions.*"%>
 <%@page import="serviceLayer.controllers.*"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     // SIGN OUT
@@ -63,9 +63,9 @@
                         <!-- FEEDBACK MESSAGES -->
                         <%
                             if (request.getParameter("error") != null) {
-                                out.print("<h3 class='errormsg'>" + request.getParameter("error") + "</h3><br>");
+                                out.print("<h3 class='errormsg'>" + request.getParameter("error") + "</h3>");
                             } else if (request.getParameter("success") != null) {
-                                out.print("<h3 class='errormsg'>" + request.getParameter("success") + "</h3><br>");
+                                out.print("<h3 class='errormsg'>" + request.getParameter("success") + "</h3>");
                             }
                         %>
                         <!-- TABLE HEADER -->
@@ -111,10 +111,7 @@
                                 }
                             } else { // If there are currently no buildings linked to this user.
                                 out.print("<tr class='nohover'>");
-                                    out.print("<td colspan='5'>You have no buildings added to your account.</td>");
-                                out.print("</tr>");
-                                out.print("<tr class='nohover'>");
-                                    out.print("<td colspan='5'>Click <a href='/PolygonApp/addbuilding.jsp'>here</a> to add one.</td>");
+                                    out.print("<td colspan='5'>You have no buildings linked to your account, <a href='/PolygonApp/addbuilding.jsp'>click here to add one.</a></td>");
                                 out.print("</tr>");
                             }
                         %>

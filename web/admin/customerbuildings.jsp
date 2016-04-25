@@ -70,7 +70,7 @@
                             out.print("<h3>" + request.getParameter("success") + "</h3><br>");
                         }
                     %>
-                    <input type="text" class="searchfield" placeholder="Search keyword" id="searchBuilding">
+                    <input type="text" class="searchfield right" placeholder="Search keyword" id="searchBuilding">
                     <table class="customerbuildings_table" id="buildingsTable">
                         <!-- TABLE HEADER -->
                         <tr>
