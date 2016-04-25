@@ -1,7 +1,7 @@
 <%@page import="serviceLayer.entities.*"%>
 <%@page import="serviceLayer.exceptions.*"%>
 <%@page import="serviceLayer.controllers.*"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     // SESSION CHECK
