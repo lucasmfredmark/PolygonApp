@@ -105,6 +105,13 @@
                     <form method="POST" enctype="multipart/form-data" action="UploadServlet" class="building">
                         <input type="hidden" name="directory" value="upload-report">
                         <input type="file" name="file">
+                        Condition level:
+                        <select>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
                         <input type="hidden" name="action" value="upload-report">
                         <input type="hidden" name="buildingId" value="<%= buildingId %>">
                         <input type="submit" value="Upload report">
