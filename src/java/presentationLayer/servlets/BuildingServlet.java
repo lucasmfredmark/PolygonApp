@@ -100,16 +100,28 @@ public class BuildingServlet extends HttpServlet {
                             size = Integer.parseInt(request.getParameter("size"));
                         } catch (NumberFormatException ex) {
                         }
-
+                        
                         int buildingId = Integer.parseInt(request.getParameter("buildingId"));
+                        User user = (User) request.getSession().getAttribute("user");
+                        
                         try {
 
                             buildingController.editCustomerBuilding(name, address, parcelNumber, size, buildingId);
                             String message = "Your changes has been saved to the building.";
-                            response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                            
+                            if (user.getUserType().equals(User.userType.CUSTOMER)) {
+                                response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                            } else {
+                                response.sendRedirect("/PolygonApp/admin/viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                            }
                         } catch (BuildingException ex) {
                             error = ex.getMessage();
-                            response.sendRedirect("editbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
+                            
+                            if (user.getUserType().equals(User.userType.CUSTOMER)) {
+                                response.sendRedirect("editbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
+                            } else {
+                                response.sendRedirect("/PolygonApp/admin/editbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
+                            }
                         }
                     } else {
                         response.sendRedirect("index.jsp");
