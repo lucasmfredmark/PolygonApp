@@ -9,22 +9,22 @@ package serviceLayer.exceptions;
  *
  * @author xboxm
  */
-public class buildingException extends Exception {
+public class BuildingException extends Exception {
 
     /**
-     * Creates a new instance of <code>buildingException</code> without detail
+     * Creates a new instance of <code>BuildingException</code> without detail
      * message.
      */
-    public buildingException() {
+    public BuildingException() {
     }
 
     /**
-     * Constructs an instance of <code>buildingException</code> with the
+     * Constructs an instance of <code>BuildingException</code> with the
      * specified detail message.
      *
      * @param msg the detail message.
      */
-    public buildingException(String msg) {
+    public BuildingException(String msg) {
         super(msg);
     }
 }
