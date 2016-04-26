@@ -143,7 +143,7 @@
                                 <td><%= conlvl %></td>
                             </tr>
                         </table>
-                        <form method="POST" action="/PolygonApp/Admin/editbuilding.jsp?buildingId=<%= buildingId %>">
+                        <form method="POST" action="/PolygonApp/admin/editbuilding.jsp?buildingId=<%= buildingId %>">
                             <input type="submit" class="btn" value="Edit building">
                         </form>
                     </div>
