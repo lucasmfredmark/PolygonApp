@@ -23,10 +23,12 @@
         response.sendRedirect("/PolygonApp/admin/index.jsp");
         return;
     }
-   
+ 
     // PARAMETER CHECK
+    int buildingId;
+    
     try {
-        int buildingId = Integer.parseInt(request.getParameter("buildingId"));
+        buildingId = Integer.parseInt(request.getParameter("buildingId"));
         
         if (buildingId <= 0) {
             response.sendRedirect("/PolygonApp/buildings.jsp");
@@ -36,9 +38,7 @@
         response.sendRedirect("/PolygonApp/buildings.jsp");
         return;
     }
-    
-    int buildingId = Integer.parseInt(request.getParameter("buildingId"));
-    
+
     // OWNER CHECK
     BuildingController bc = new BuildingController();
     Building b = bc.getCustomerBuilding(buildingId, user.getUserId());
@@ -55,7 +55,7 @@
         <link href="/PolygonApp/css/resets.css" rel="stylesheet" type="text/css">
         <link href="/PolygonApp/css/new_style.css" rel="stylesheet" type="text/css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Polygon - Building</title>
+        <title>Polygon - Building information</title>
     </head>
     <body>
         <div id="top">
@@ -67,13 +67,10 @@
             </div>
             <div id="navigation">
                 <div class="wrapper">
-                    <h2>Viewing building: <%= b.getBuildingName() %></h2>
+                    <h2>Building information: <%= b.getBuildingName() %></h2>
                     <ul>
                         <li class="inactive"><a href="/PolygonApp/buildings.jsp">Your buildings</a></li>
-                        <li class="active"><a href="/PolygonApp/viewbuilding.jsp?buildingId=<%= buildingId %>">Building</a></li>
-                        <li class="inactive"><a href="/PolygonApp/editbuilding.jsp?buildingId=<%= buildingId %>">Edit building</a></li>
-                        <li class="inactive"><a href="/PolygonApp/adddamage.jsp?buildingId=<%= buildingId %>">Report damage</a></li>
-                        <li class="inactive"><a href="/PolygonApp/uploaddocuments.jsp?buildingId=<%= buildingId %>">Upload documents</a></li>
+                        <li class="inactive"><a href="/PolygonApp/addbuilding.jsp">Add building</a></li>
                         <li class='inactive'><a href="/PolygonApp/support.jsp">Support</a></li>
                     </ul>
                 </div>
@@ -83,10 +80,11 @@
         <div id="content">
             <div class="wrapper">
                 <!-- BREADCRUMBS -->
-                <p class="breadcrumbs"><a href="/PolygonApp/buildings.jsp">Your buildings</a> &raquo; Building</p>
+                <p class="breadcrumbs"><a href="/PolygonApp/buildings.jsp">Your buildings</a> &raquo; Building information</p>
                 
                 <div class="left_column">
                     <div class="box">
+                        <!-- FEEDBACK -->
                         <%
                             if (request.getParameter("error") != null) {
                                 out.print("<h3 class='errormsg'>" + request.getParameter("error") + "</h3><br>");
@@ -139,6 +137,9 @@
                                 <td><%= conlvl %></td>
                             </tr>
                         </table>
+                        <form method="POST" action="/PolygonApp/editbuilding.jsp?buildingId=<%= buildingId %>">
+                            <input type="submit" class="btn" value="Edit building">
+                        </form>
                     </div>
                     <div class="box">
                         <table class="viewtable viewdmgs">
@@ -157,10 +158,13 @@
                                         out.print("</tr>");
                                     }
                                 } else { 
-                                     out.print("<td colspan='3'>No recorded damages found, <a href='adddamage.jsp?buildingId=" + buildingId +"'>click here to add one.</a></td>");
+                                     out.print("<td colspan='3'>No records of damage found.</td>");
                                 }
                             %>
                         </table>
+                        <form method="POST" action="/PolygonApp/adddamage.jsp?buildingId=<%= buildingId %>">
+                            <input type="submit" class="btn" value="Report damage">
+                        </form>
                     </div>
                 </div>
                         
@@ -196,7 +200,7 @@
                                         out.print("<tr>");
                                             out.print("<td>" + c.getCheckupDate().substring(0, 10) + "</td>");
                                             out.print("<td>" + repconlvl + "</td>");
-                                            out.print("<td><a href='uploads/reports/" + c.getCheckupPath() + "'>" + c.getCheckupPath() + "</a></td>");
+                                            out.print("<td><a href='/PolygonApp/uploads/reports/" + c.getCheckupPath() + "' download>" + c.getCheckupPath() + "</a></td>");
                                         out.print("</tr>");
                                     }
                                 } else {
@@ -206,13 +210,13 @@
                         </table>
                         <%
                             if (!bc.getPendingCheckup(buildingId)) {
-                                out.print("<form action='BuildingServlet' method='POST'>");
+                                out.print("<form method='POST' action='BuildingServlet'>");
                                     out.print("<input type='hidden' name='action' value='requestcheckup'>");
                                     out.print("<input type='hidden' name='buildingId' value='" + buildingId + "'>");
-                                    out.print("<button type='submit' class='checkuprequest'>Request a checkup</button>");
+                                    out.print("<input type='submit' class='btn' value='Request a checkup'>");
                                 out.print("</form>");
                             } else {
-                                out.print("You have a pending check-up. Please wait for an employee to look into your case.");
+                                out.print("<br><h3>You have a pending check-up request.<br>Please wait for an employee to look into your case.</h3>");
                             }
                         %>
                     </div>
@@ -233,10 +237,13 @@
                                         out.print("</tr>");
                                     }
                                 } else {
-                                     out.print("<td colspan='3'>No documents found, <a href='uploaddocuments.jsp?buildingId=" + buildingId +"'>click to add a document.</a></td>");
+                                     out.print("<td colspan='3'>No documents found.</td>");
                                 }
                             %>
                         </table>
+                        <form method="POST" action="/PolygonApp/uploaddocuments.jsp?buildingId=<%= buildingId %>">
+                            <input type="submit" class="btn" value="Upload files">
+                        </form>
                     </div>
                 </div>
             </div>
