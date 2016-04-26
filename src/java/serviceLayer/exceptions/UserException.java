@@ -9,22 +9,22 @@ package serviceLayer.exceptions;
  *
  * @author xboxm
  */
-public class userException extends Exception {
+public class UserException extends Exception {
 
     /**
-     * Creates a new instance of <code>userException</code> without detail
+     * Creates a new instance of <code>UserException</code> without detail
      * message.
      */
-    public userException() {
+    public UserException() {
     }
 
     /**
-     * Constructs an instance of <code>userException</code> with the specified
+     * Constructs an instance of <code>UserException</code> with the specified
      * detail message.
      *
      * @param msg the detail message.
      */
-    public userException(String msg) {
+    public UserException(String msg) {
         super(msg);
     }
 }
