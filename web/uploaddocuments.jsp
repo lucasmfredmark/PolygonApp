@@ -83,6 +83,13 @@
                 <p class="breadcrumbs"><a href="/PolygonApp/buildings.jsp">Your buildings</a> &raquo; <a href="/PolygonApp/viewbuilding.jsp?buildingId=<%= buildingId %>">Building information</a> &raquo; Upload files</p>
                 
                 <div class="container">
+                    <%
+                    if (request.getParameter("error") != null) {
+                        out.print("<h3>" + request.getParameter("error") + "</h3><br>");
+                    } else if (request.getParameter("success") != null) {
+                        out.print("<h3>" + request.getParameter("success") + "</h3><br>");
+                    }
+                    %>
                     <h1>Upload a document or an image</h1>
                     <form method="POST" enctype="multipart/form-data" action="UploadServlet" class="building">
                         <input type="hidden" name="directory" value="upload-document">
