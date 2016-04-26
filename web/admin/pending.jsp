@@ -33,7 +33,7 @@
         <link href="/PolygonApp/css/resets.css" rel="stylesheet" type="text/css">
         <link href="/PolygonApp/css/new_style.css" rel="stylesheet" type="text/css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Polygon - Admin - Checkups</title>
+        <title>Polygon - Pending checkups</title>
     </head>
     <body>
         <div id="top">
@@ -45,22 +45,22 @@
             </div>
             <div id="navigation">
                 <div class="wrapper">
-                    <h2>Viewing all buildings with a pending checkup</h2>
+                    <h2>Pending checkups overview</h2>
                     <ul>
                         <li class="inactive"><a href="/PolygonApp/admin/index.jsp">Dashboard</a></li>
                         <li class="inactive"><a href="/PolygonApp/admin/users.jsp">Users</a></li>
-                        <li class="inactive"><a href="/PolygonApp/admin/customerbuildings.jsp">Buildings</a></li>
+                        <li class="inactive"><a href="/PolygonApp/admin/buildings.jsp">Buildings</a></li>
                         <li class="active"><a href="/PolygonApp/admin/pending.jsp">Checkups</a></li>
                         <li class="inactive"><a href="/PolygonApp/admin/support.jsp">Support tickets</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-
+            
         <div id="content">
             <div class="wrapper">
                 <!-- BREADCRUMBS -->
-                <p class="breadcrumbs"><a href="/PolygonApp/admin/index.jsp">Dashboard</a> &raquo; Checkups</p>
+                <p class="breadcrumbs"><a href="/PolygonApp/admin/index.jsp">Admin panel</a> &raquo; Pending checkups</p>
                 
                 <div class="table">
                     <%
@@ -70,7 +70,7 @@
                             out.print("<h3>" + request.getParameter("success") + "</h3><br>");
                         }
                     %>
-                    <input type="text" class="searchfield" placeholder="Search keyword" id="searchReport">
+                    <input type="text" class="searchfield right" placeholder="Search keyword" id="searchReport">
                     <table class="customerbuildings_table" id="reportsTable">
                         <!-- TABLE HEADER -->
                         <tr>

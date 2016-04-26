@@ -1,4 +1,7 @@
 <%@page import="serviceLayer.entities.*"%>
+<%@page import="serviceLayer.exceptions.*"%>
+<%@page import="serviceLayer.controllers.*"%>
+<%@page import="java.util.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     // SIGN OUT
@@ -28,7 +31,7 @@
         <link href="/PolygonApp/css/resets.css" rel="stylesheet" type="text/css">
         <link href="/PolygonApp/css/new_style.css" rel="stylesheet" type="text/css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Polygon - Admin - Dashboard</title>
+        <title>Polygon - Admin panel</title>
     </head>
     <body>
         <div id="top">
@@ -40,22 +43,22 @@
             </div>
             <div id="navigation">
                 <div class="wrapper">
-                    <h2>Admin dashboard</h2>
+                    <h2>Admin panel</h2>
                     <ul>
                         <li class="active"><a href="/PolygonApp/admin/index.jsp">Dashboard</a></li>
                         <li class="inactive"><a href="/PolygonApp/admin/users.jsp">Users</a></li>
-                        <li class="inactive"><a href="/PolygonApp/admin/customerbuildings.jsp">Buildings</a></li>
+                        <li class="inactive"><a href="/PolygonApp/admin/buildings.jsp">Buildings</a></li>
                         <li class="inactive"><a href="/PolygonApp/admin/pending.jsp">Checkups</a></li>
                         <li class="inactive"><a href="/PolygonApp/admin/support.jsp">Support tickets</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-    
+                
         <div id="content">
             <div class="wrapper">
                 <!-- BREADCRUMBS -->
-                <p class="breadcrumbs">Dashboard</p>
+                <p class="breadcrumbs">Admin panel</p>
                 
                 <div class="box dashboard_welcome">
                     <%
@@ -77,7 +80,7 @@
                             <p class="center">Click here to see a list of all registered users and their buildings.</p>
                         </div>
                     </a>
-                    <a href="/PolygonApp/admin/customerbuildings.jsp">
+                    <a href="/PolygonApp/admin/buildings.jsp">
                         <div class="mr20">
                             <img src="/PolygonApp/images/building_icon.svg">
                             <h1 class="center">Buildings</h1>
