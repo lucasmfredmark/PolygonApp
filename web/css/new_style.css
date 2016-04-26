@@ -67,7 +67,7 @@ textarea:focus {
 .hidden { display:none; }
 .searchfield { width:240px; }
 .right { float:right }
-.btn { width:240px; }
+.btn { width:240px; margin-top:10px; }
 
 
 .left_column {
@@ -82,19 +82,19 @@ textarea:focus {
 
 .box {
     background:#fff;
+    box-sizing:border-box;
     width:100%;
     clear:both;
     margin-bottom:20px;
-    box-sizing:border-box;
-    padding:20px;
+    padding:10px 20px;
     box-shadow:0px 0px 10px rgba(0, 0, 0, 0.05);
 }
 
 .container {
     background:#fff;
     box-sizing:border-box;
-    padding:10px 20px;
     width:400px;
+    padding:10px 20px;
     box-shadow:0px 0px 10px rgba(0, 0, 0, 0.05);
 }
 
