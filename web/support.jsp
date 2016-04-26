@@ -88,10 +88,7 @@
                                 }
                             } else {
                                 out.print("<tr class='nohover'>");
-                                    out.print("<td colspan='5'>You have no buildings added to your account.</td>");
-                                out.print("</tr>");
-                                out.print("<tr class='nohover'>");
-                                    out.print("<td colspan='5'>Click <a href='/PolygonApp/addbuilding.jsp'>here</a> to add one.</td>");
+                                    out.print("<td colspan='5'>You have no support tickets yet.</td>");
                                 out.print("</tr>");
                             }
                         %>
