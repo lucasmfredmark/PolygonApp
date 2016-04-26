@@ -6,7 +6,6 @@
 package serviceLayer.controllers;
 
 import dataAccessLayer.mappers.UserMapper;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import serviceLayer.entities.User;
 import serviceLayer.exceptions.UserException;
@@ -31,6 +30,8 @@ public class UserController {
             if (user != null) {
                 if (user.getUserPass().equals(password)) {
                     return user;
+                } else {
+                    throw new UserException("The password doesn't match the e-mail.");
                 }
             }
         } 
@@ -42,8 +43,7 @@ public class UserController {
             !email.isEmpty() && !fullname.isEmpty() && !password.isEmpty() &&
             fullname.length() <= 50 && password.length() <= 20) {
             userMapper.insertUser(email, fullname, password);
-        }
-        else {
+        } else {
             throw new UserException("One or more fields were empty");
         }
     }

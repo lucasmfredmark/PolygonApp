@@ -31,6 +31,7 @@ public class BuildingServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws serviceLayer.exceptions.BuildingException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, BuildingException {
@@ -138,7 +139,7 @@ public class BuildingServlet extends HttpServlet {
                     }
                     break;
                 }
-                case "request-checkup": {
+                case "requestcheckup": {
                     if (request.getSession().getAttribute("user") != null) {
                         int orderStatus = 0;
                         int serviceId = 1;

@@ -11,8 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import serviceLayer.entities.User;
 import serviceLayer.entities.User.userType;
 import serviceLayer.exceptions.UserException;
@@ -42,7 +40,7 @@ public class UserMapper {
                 
                 return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), userType, rs.getString(6));
             } else {
-                throw new UserException("Wrong email or password. Try again");
+                throw new UserException("That user doesn't exist.");
             }
         } catch (SQLException ex) {
             System.out.println("Do I reach this?");

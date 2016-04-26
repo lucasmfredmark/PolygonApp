@@ -73,7 +73,7 @@
                         <li class="active"><a href="/PolygonApp/viewbuilding.jsp?buildingId=<%= buildingId %>">Building</a></li>
                         <li class="inactive"><a href="/PolygonApp/editbuilding.jsp?buildingId=<%= buildingId %>">Edit building</a></li>
                         <li class="inactive"><a href="/PolygonApp/adddamage.jsp?buildingId=<%= buildingId %>">Report damage</a></li>
-                        <li class="inactive"><a href="/PolygonApp/uploadfiles.jsp?buildingId=<%= buildingId %>">Upload files</a></li>
+                        <li class="inactive"><a href="/PolygonApp/uploaddocuments.jsp?buildingId=<%= buildingId %>">Upload documents</a></li>
                         <li class='inactive'><a href="/PolygonApp/support.jsp">Support</a></li>
                     </ul>
                 </div>
@@ -170,9 +170,9 @@
                             <tr>
                                 <td colspan="3">Checkup reports</td>
                             </tr>
-                            <% 
+                            <%
                                 ArrayList<Checkup> checkups = bc.getBuildingCheckups(buildingId);
-                                
+
                                 if (checkups.size() > 0) {
                                     for (Checkup c : checkups) {
                                         String repconlvl;
@@ -196,7 +196,7 @@
                                         out.print("<tr>");
                                             out.print("<td>" + c.getCheckupDate().substring(0, 10) + "</td>");
                                             out.print("<td>" + repconlvl + "</td>");
-                                            out.print("<td><a href='uploads/reports/'>" + c.getCheckupPath()+ "</a></td>");
+                                            out.print("<td><a href='uploads/reports/" + c.getCheckupPath() + "'>" + c.getCheckupPath() + "</a></td>");
                                         out.print("</tr>");
                                     }
                                 } else {
@@ -204,7 +204,17 @@
                                 }
                             %>
                         </table>
-                        <button class="checkuprequest">Request a checkup</button>
+                        <%
+                            if (!bc.getPendingCheckup(buildingId)) {
+                                out.print("<form action='BuildingServlet' method='POST'>");
+                                    out.print("<input type='hidden' name='action' value='requestcheckup'>");
+                                    out.print("<input type='hidden' name='buildingId' value='" + buildingId + "'>");
+                                    out.print("<button type='submit' class='checkuprequest'>Request a checkup</button>");
+                                out.print("</form>");
+                            } else {
+                                out.print("You have a pending check-up. Please wait for an employee to look into your case.");
+                            }
+                        %>
                     </div>
                     <div class="box">
                         <table class="viewtable viewdocs">
@@ -218,12 +228,12 @@
                                     for (Document d : documents) {
                                         out.print("<tr>");
                                             out.print("<td>" + d.getDocumentDate().substring(0, 10) + "</td>");
-                                            out.print("<td>" + d.getDocumentPath() + "</td>");
+                                            out.print("<td><a href='uploads/documents/" + d.getDocumentPath() + "'>" + d.getDocumentPath() + "</a></td>");
                                             out.print("<td>" + d.getDocumentNote() + "</td>");
                                         out.print("</tr>");
                                     }
                                 } else {
-                                     out.print("<td colspan='3'>No documents found, <a href='uploadfiles.jsp?buildingId=" + buildingId +"'>click to add a document.</a></td>");
+                                     out.print("<td colspan='3'>No documents found, <a href='uploaddocuments.jsp?buildingId=" + buildingId +"'>click to add a document.</a></td>");
                                 }
                             %>
                         </table>

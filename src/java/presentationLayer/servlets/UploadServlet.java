@@ -71,6 +71,7 @@ public class UploadServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws org.apache.commons.fileupload.FileUploadException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, FileUploadException, Exception {
@@ -219,47 +220,26 @@ public class UploadServlet extends HttpServlet {
                             try {
                                 bc.addCustomerDocument(note, fileName, buildingId, user.getUserId());
                                 String message = "The document has been added to the document list.";
-                                response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                                
+                                if (user.getUserType().equals(User.userType.CUSTOMER)) {
+                                    response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                                } else {
+                                    response.sendRedirect("/PolygonApp/admin/building.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                                }
                             } catch (BuildingException ex) {
                                 error = ex.getMessage();
-                                response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
-                            }
-                            break;
-                        }
-
-                        case "upload-image": {
-                            for (FileItem fileItem : stack) {
-                                String fieldName = fileItem.getFieldName();
-
-                                switch (fieldName) {
-                                    case "note": {
-                                        note = fileItem.getString();
-                                        break;
-                                    }
-                                    case "buildingId": {
-                                        buildingId = 0;
-
-                                        try {
-                                            buildingId = Integer.parseInt(fileItem.getString());
-                                        } catch (NumberFormatException ex) {
-                                        }
-                                        break;
-                                    }
+                                
+                                if (user.getUserType().equals(User.userType.CUSTOMER)) {
+                                    response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
+                                } else {
+                                    response.sendRedirect("/PolygonApp/admin/uploadimg.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
                                 }
                             }
-                            try {
-                                bc.addCustomerDocument(note, fileName, buildingId, user.getUserId());
-                                String message = "The image has been added to the document list.";
-                                response.sendRedirect("/PolygonApp/admin/building.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
-                            } catch (BuildingException ex) {
-                                error = ex.getMessage();
-                                response.sendRedirect("/PolygonApp/admin/uploadimg.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
-                            }
+                            break;
                         }
                         default: {
                             break;
                         }
-
                     }
                 } 
             }

@@ -73,7 +73,7 @@
                         <li class="inactive"><a href="/PolygonApp/viewbuilding.jsp?buildingId=<%= buildingId %>">Building</a></li>
                         <li class="inactive"><a href="/PolygonApp/editbuilding.jsp?buildingId=<%= buildingId %>">Edit building</a></li>
                         <li class="active"><a href="/PolygonApp/adddamage.jsp?buildingId=<%= buildingId %>">Report damage</a></li>
-                        <li class="inactive"><a href="/PolygonApp/uploadfiles.jsp?buildingId=<%= buildingId %>">Upload files</a></li>
+                        <li class="inactive"><a href="/PolygonApp/uploaddocuments.jsp?buildingId=<%= buildingId %>">Upload documents</a></li>
                         <li class='inactive'><a href="/PolygonApp/support.jsp">Support</a></li>
                     </ul>
                 </div>

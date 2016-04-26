@@ -333,6 +333,20 @@ public class BuildingMapper {
         return null;
     }
     
+    public boolean getPendingCheckup(int buildingId) throws BuildingException {
+        try {
+            Connection conn = DBConnector.getConnection();
+            String sql = "SELECT * FROM orders WHERE fk_buildingid = ? AND ostatus = 0 ORDER BY orderid DESC";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, buildingId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            return rs.next();
+        } catch (SQLException ex) {
+            throw new BuildingException("Error: no orders found. Check database?");
+        }
+    }
+    
     public ArrayList<Building> getPendingCheckups() throws BuildingException {
         ArrayList<Building> buildingList = new ArrayList();
         try {

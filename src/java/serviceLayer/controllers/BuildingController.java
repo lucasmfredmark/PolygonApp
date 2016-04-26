@@ -6,7 +6,6 @@
 package serviceLayer.controllers;
 
 import dataAccessLayer.mappers.BuildingMapper;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
@@ -150,6 +149,10 @@ public class BuildingController{
     
     public Order getOrderByBuildingId(int buildingId) throws BuildingException {
         return buildingMapper.getOrderByBuildingId(buildingId);
+    }
+    
+    public boolean getPendingCheckup(int buildingId) throws BuildingException {
+        return buildingMapper.getPendingCheckup(buildingId);
     }
     
 }
