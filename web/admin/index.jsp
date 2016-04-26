@@ -69,7 +69,7 @@
                         }
                     %>
                     <h1>Welcome to the admin panel</h1>
-                    <p>From here you can lorem ipsum dolor sit amet.</p>
+                    <p>From here you can view a list of all users, buildings and pending check-ups. You can also view customer support tickets, and reply to them.</p>
                 </div>
                 
                 <div class="dashboard_boxes">
