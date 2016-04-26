@@ -67,7 +67,7 @@ public class AdminServlet extends HttpServlet {
                         try {
                             bc.editCustomerBuilding(name, address, parcelNumber, size, buildingId);
                             String message = "Your changes has been saved to the building.";
-                            response.sendRedirect("admin/building.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                            response.sendRedirect("admin/viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
                         } catch (BuildingException ex) {
                             error = ex.getMessage();
                             response.sendRedirect("admin/editbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
