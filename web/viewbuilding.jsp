@@ -1,7 +1,7 @@
 <%@page import="serviceLayer.entities.*"%>
 <%@page import="serviceLayer.exceptions.*"%>
 <%@page import="serviceLayer.controllers.*"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     // SIGN OUT
@@ -216,7 +216,7 @@
                                     out.print("<input type='submit' class='btn' value='Request a checkup'>");
                                 out.print("</form>");
                             } else {
-                                out.print("<br><h3>You have a pending check-up request.<br>Please wait for an employee to look into your case.</h3>");
+                                out.print("<h3>You have a pending check-up request.<br>Please wait for an employee to look into your case.</h3>");
                             }
                         %>
                     </div>

@@ -1,7 +1,7 @@
 <%@page import="serviceLayer.entities.*"%>
 <%@page import="serviceLayer.exceptions.*"%>
 <%@page import="serviceLayer.controllers.*"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     // SIGN OUT
@@ -23,10 +23,12 @@
         response.sendRedirect("/PolygonApp/admin/index.jsp");
         return;
     }
-   
+ 
     // PARAMETER CHECK
+    int buildingId;
+    
     try {
-        int buildingId = Integer.parseInt(request.getParameter("buildingId"));
+        buildingId = Integer.parseInt(request.getParameter("buildingId"));
         
         if (buildingId <= 0) {
             response.sendRedirect("/PolygonApp/buildings.jsp");
@@ -36,9 +38,7 @@
         response.sendRedirect("/PolygonApp/buildings.jsp");
         return;
     }
-    
-    int buildingId = Integer.parseInt(request.getParameter("buildingId"));
-    
+
     // OWNER CHECK
     BuildingController bc = new BuildingController();
     Building b = bc.getCustomerBuilding(buildingId, user.getUserId());
@@ -55,7 +55,7 @@
         <link href="/PolygonApp/css/resets.css" rel="stylesheet" type="text/css">
         <link href="/PolygonApp/css/new_style.css" rel="stylesheet" type="text/css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Polygon - Upload documents</title>
+        <title>Polygon - Upload files</title>
     </head>
     <body>
         <div id="top">
@@ -70,32 +70,27 @@
                     <h2>Uploading files to building: <%= b.getBuildingName() %></h2>
                     <ul>
                         <li class="inactive"><a href="/PolygonApp/buildings.jsp">Your buildings</a></li>
-                        <li class="inactive"><a href="/PolygonApp/viewbuilding.jsp?buildingId=<%= buildingId %>">Building</a></li>
-                        <li class="inactive"><a href="/PolygonApp/editbuilding.jsp?buildingId=<%= buildingId %>">Edit building</a></li>
-                        <li class="inactive"><a href="/PolygonApp/adddamage.jsp?buildingId=<%= buildingId %>">Report damage</a></li>
-                        <li class="active"><a href="/PolygonApp/uploaddocuments.jsp?buildingId=<%= buildingId %>">Upload documents</a></li>
+                        <li class="inactive"><a href="/PolygonApp/addbuilding.jsp">Add building</a></li>
                         <li class='inactive'><a href="/PolygonApp/support.jsp">Support</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-    
+  
         <div id="content">
             <div class="wrapper">
                 <!-- BREADCRUMBS -->
-                <p class="breadcrumbs"><a href="/PolygonApp/buildings.jsp">Your buildings</a> &raquo; <a href="/PolygonApp/viewbuilding.jsp?buildingId=<%= buildingId %>">Building</a> &raquo; Upload documents</p>
+                <p class="breadcrumbs"><a href="/PolygonApp/buildings.jsp">Your buildings</a> &raquo; <a href="/PolygonApp/viewbuilding.jsp?buildingId=<%= buildingId %>">Building information</a> &raquo; Upload files</p>
                 
-                <div class="left_column uploadfiles">
-                    <h1>Upload a document</h1>
+                <div class="container">
+                    <h1>Upload a document or an image</h1>
                     <form method="POST" enctype="multipart/form-data" action="UploadServlet" class="building">
                         <input type="hidden" name="directory" value="upload-document">
-                        <p>Choose document to upload:</p>
                         <input type="file" name="file">
-                        <p>Document description:</p>
-                        <input type="text" name="note" maxlength="100" required>
+                        <input type="text" name="note" maxlength="100" placeholder="File description" required>
                         <input type="hidden" name="action" value="upload-document">
                         <input type="hidden" name="buildingId" value="<%= buildingId %>">
-                        <input type="submit" value="Upload document">
+                        <input type="submit" value="Upload file">
                     </form>
                 </div>
                     
