@@ -103,7 +103,7 @@
                             ArrayList<Building> buildings = ac.getCustomerBuildings(userId);
                             if (buildings.size() > 0) {
                                 for (Building b : buildings) {
-                                    out.print("<tr onclick=\"document.location='building.jsp?buildingId=" + b.getBuildingId()+ "'\">");
+                                    out.print("<tr onclick=\"document.location='viewbuilding.jsp?buildingId=" + b.getBuildingId()+ "'\">");
                                         out.print("<td>" + b.getBuildingId()+ "</td>");
                                         out.print("<td>" + b.getBuildingAddress()+ "</td>");
                                         out.print("<td>" + b.getBuildingParcelNumber()+ "</td>");

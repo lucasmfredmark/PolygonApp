@@ -12,18 +12,18 @@
         response.sendRedirect("/PolygonApp/index.jsp");
         return;
     }
-
+    
     // SESSION CHECK
     User user = (User) session.getAttribute("user");
     
     if (user == null) {
         response.sendRedirect("/PolygonApp/index.jsp");
         return;
-    } else if (user.getUserType().equals(User.userType.ADMIN)) {
-        response.sendRedirect("/PolygonApp/admin/index.jsp");
+    } else if (user.getUserType().equals(User.userType.CUSTOMER)) {
+        response.sendRedirect("/PolygonApp/buildings.jsp");
         return;
     }
- 
+    
     // PARAMETER CHECK
     int buildingId;
     
@@ -31,26 +31,27 @@
         buildingId = Integer.parseInt(request.getParameter("buildingId"));
         
         if (buildingId <= 0) {
-            response.sendRedirect("/PolygonApp/buildings.jsp");
+            response.sendRedirect("/PolygonApp/admin/buildings.jsp");
             return;
         }
     } catch (NumberFormatException ex) {
-        response.sendRedirect("/PolygonApp/buildings.jsp");
+        response.sendRedirect("/PolygonApp/admin/buildings.jsp");
         return;
-    }
+    }    
 
-    // OWNER CHECK
-    BuildingController bc = new BuildingController();
-    Building b = bc.getCustomerBuilding(buildingId, user.getUserId());
+    AdminController ac = new AdminController();
+    Building b = ac.getAdminBuilding(buildingId);
    
     if (b == null) {
-        response.sendRedirect("/PolygonApp/buildings.jsp");
+        response.sendRedirect("/PolygonApp/admin/buildings.jsp");
         return;
     }
 %>
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="../js/jquery-1.12.3.min.js"></script>
+        <script src="../js/main.js"></script>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
         <link href="/PolygonApp/css/resets.css" rel="stylesheet" type="text/css">
         <link href="/PolygonApp/css/new_style.css" rel="stylesheet" type="text/css">
@@ -67,21 +68,26 @@
             </div>
             <div id="navigation">
                 <div class="wrapper">
-                    <h2>Building information: <%= b.getBuildingName() %></h2>
+                    <h2>Viewing building with id: <%= buildingId %></h2>
                     <ul>
-                        <li class="inactive"><a href="/PolygonApp/buildings.jsp">Your buildings</a></li>
-                        <li class="inactive"><a href="/PolygonApp/addbuilding.jsp">Add building</a></li>
-                        <li class='inactive'><a href="/PolygonApp/support.jsp">Support</a></li>
+                        <li class="inactive"><a href="/PolygonApp/admin/index.jsp">Dashboard</a></li>
+                        <li class="inactive"><a href="/PolygonApp/admin/users.jsp">Users</a></li>
+                        <li class="inactive"><a href="/PolygonApp/admin/buildings.jsp">Buildings</a></li>
+                        <li class="inactive"><a href="/PolygonApp/admin/pending.jsp">Checkups</a></li>
+                        <li class="inactive"><a href="/PolygonApp/admin/support.jsp">Support tickets</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-  
+                    
         <div id="content">
             <div class="wrapper">
                 <!-- BREADCRUMBS -->
-                <p class="breadcrumbs"><a href="/PolygonApp/buildings.jsp">Your buildings</a> &raquo; Building information</p>
+                <p class="breadcrumbs"><a href="/PolygonApp/admin/index.jsp">Admin panel</a> &raquo; <a href="/PolygonApp/admin/buildings.jsp">Buildings</a> &raquo; Building information</p>
                 
+                <%
+                    BuildingController bc = new BuildingController();
+                %>
                 <div class="left_column">
                     <div class="box">
                         <!-- FEEDBACK -->
@@ -137,7 +143,7 @@
                                 <td><%= conlvl %></td>
                             </tr>
                         </table>
-                        <form method="POST" action="/PolygonApp/editbuilding.jsp?buildingId=<%= buildingId %>">
+                        <form method="POST" action="/PolygonApp/Admin/editbuilding.jsp?buildingId=<%= buildingId %>">
                             <input type="submit" class="btn" value="Edit building">
                         </form>
                     </div>
@@ -162,9 +168,6 @@
                                 }
                             %>
                         </table>
-                        <form method="POST" action="/PolygonApp/adddamage.jsp?buildingId=<%= buildingId %>">
-                            <input type="submit" class="btn" value="Report damage">
-                        </form>
                     </div>
                 </div>
                         
@@ -208,17 +211,9 @@
                                 }
                             %>
                         </table>
-                        <%
-                            if (!bc.getPendingCheckup(buildingId)) {
-                                out.print("<form method='POST' action='BuildingServlet'>");
-                                    out.print("<input type='hidden' name='action' value='requestcheckup'>");
-                                    out.print("<input type='hidden' name='buildingId' value='" + buildingId + "'>");
-                                    out.print("<input type='submit' class='btn' value='Request a checkup'>");
-                                out.print("</form>");
-                            } else {
-                                out.print("<h3>You have a pending check-up request.<br>Please wait for an employee to look into your case.</h3>");
-                            }
-                        %>
+                        <form method="POST" action="/PolygonApp/admin/uploadreport.jsp?buildingId=<%= buildingId %>">
+                            <input type="submit" class="btn" value="Upload report">
+                        </form>
                     </div>
                     <div class="box">
                         <table class="viewtable viewdocs">
@@ -241,12 +236,12 @@
                                 }
                             %>
                         </table>
-                        <form method="POST" action="/PolygonApp/uploaddocuments.jsp?buildingId=<%= buildingId %>">
+                        <form method="POST" action="/PolygonApp/admin/uploadfile.jsp?buildingId=<%= buildingId %>">
                             <input type="submit" class="btn" value="Upload files">
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
     </body>
 </html>
