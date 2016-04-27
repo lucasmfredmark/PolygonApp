@@ -22,7 +22,7 @@ CREATE TABLE buildings (
     parcelnumber VARCHAR(20),
     size INT,
     fk_userid INT,
-    FOREIGN KEY (fk_userid) REFERENCES users(userid) ON DELETE CASCADE
+    FOREIGN KEY (fk_userid) REFERENCES users(userid)
 );
 INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 1', 'Roadway 1', '1a', 16, 1);
 INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 2', 'Roadway 2', '1b', 32, 1);
@@ -39,7 +39,7 @@ CREATE TABLE documents (
     dnote VARCHAR(100), /* Description of document */
     dpath VARCHAR(255) UNIQUE, /* Unique path */
     fk_buildingid INT,
-    fk_userid INT,
+    fk_userid INT, /* To identify admin uploads */
     FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid),
     FOREIGN KEY (fk_userid) REFERENCES users(userid)
 );
