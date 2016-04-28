@@ -45,8 +45,6 @@ public class UploadServlet extends HttpServlet {
     boolean isPathSet;
     boolean isWritten;
     private String error;
-    private StringBuffer urlChecker;
-    private String redirectURL;
 
     @Override
     public void init() {
@@ -110,17 +108,12 @@ public class UploadServlet extends HttpServlet {
                             file = new File(filePath
                                     + tempFileName.substring(tempFileName.lastIndexOf("\\") + 1));
                         }
-                        System.out.println("Read this");
                         fi.write(file);
-                        System.out.println("And read this!");
                         isWritten = true;
-                        System.out.println("File written");
                     } else {
                         stack.add(fi);
-                        System.out.println(isPathSet);
                         if (!isPathSet && fi.getFieldName().equals("directory")) {
                             filePath = getServletContext().getInitParameter(fi.getString());
-                            System.out.println(filePath);
                             isPathSet = true;
                         }
                     }
@@ -150,7 +143,6 @@ public class UploadServlet extends HttpServlet {
                                             conditionLevel = Integer.parseInt(fileItem.getString());
                                         } catch (NumberFormatException ex) {
                                         }
-                                        System.out.println("Con:" + conditionLevel);
                                         break;
                                     }
                                     case "buildingId": {
@@ -160,7 +152,6 @@ public class UploadServlet extends HttpServlet {
                                             buildingId = Integer.parseInt(fileItem.getString());
                                         } catch (NumberFormatException ex) {
                                         }
-                                        System.out.println("BID:" + buildingId);
                                         break;
                                     }
                                     case "orderId": {
@@ -170,7 +161,6 @@ public class UploadServlet extends HttpServlet {
                                             orderId = Integer.parseInt(fileItem.getString());
                                         } catch (NumberFormatException ex) {
                                         }
-                                        System.out.println("OID:" + orderId);
                                         break;
                                     }
 
