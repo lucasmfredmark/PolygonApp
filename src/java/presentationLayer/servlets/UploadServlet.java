@@ -45,8 +45,6 @@ public class UploadServlet extends HttpServlet {
     boolean isPathSet;
     boolean isWritten;
     private String error;
-    private StringBuffer urlChecker;
-    private String redirectURL;
 
     @Override
     public void init() {
@@ -81,18 +79,7 @@ public class UploadServlet extends HttpServlet {
 
         try (PrintWriter out = response.getWriter()) {
 
-            if (!isMultipart) {
-                /* TODO output your page here. You may use following sample code. */
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet UploadServlet</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<p> No file is uploaded <p>");
-                out.println("</body>");
-                out.println("</html>");
-            } else {
+            if (isMultipart) {
                 int maxMemSize = 50 * 1024;
                 // Create a factory for disk-based file items
                 DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -121,17 +108,12 @@ public class UploadServlet extends HttpServlet {
                             file = new File(filePath
                                     + tempFileName.substring(tempFileName.lastIndexOf("\\") + 1));
                         }
-                        System.out.println("Read this");
                         fi.write(file);
-                        System.out.println("And read this!");
                         isWritten = true;
-                        System.out.println("File written");
                     } else {
                         stack.add(fi);
-                        System.out.println(isPathSet);
                         if (!isPathSet && fi.getFieldName().equals("directory")) {
                             filePath = getServletContext().getInitParameter(fi.getString());
-                            System.out.println(filePath);
                             isPathSet = true;
                         }
                     }
@@ -155,13 +137,12 @@ public class UploadServlet extends HttpServlet {
                                 path = fileItem.getFieldName();
 
                                 switch (fieldName) {
-                                    case "conditionLevel": {
+                                    case "conditionlevel": {
                                         conditionLevel = 0;
                                         try {
                                             conditionLevel = Integer.parseInt(fileItem.getString());
                                         } catch (NumberFormatException ex) {
                                         }
-                                        System.out.println(conditionLevel);
                                         break;
                                     }
                                     case "buildingId": {
@@ -171,7 +152,6 @@ public class UploadServlet extends HttpServlet {
                                             buildingId = Integer.parseInt(fileItem.getString());
                                         } catch (NumberFormatException ex) {
                                         }
-                                        System.out.println(buildingId);
                                         break;
                                     }
                                     case "orderId": {
@@ -181,7 +161,6 @@ public class UploadServlet extends HttpServlet {
                                             orderId = Integer.parseInt(fileItem.getString());
                                         } catch (NumberFormatException ex) {
                                         }
-                                        System.out.println(orderId);
                                         break;
                                     }
 
@@ -190,7 +169,7 @@ public class UploadServlet extends HttpServlet {
                             try {
                                 bc.addCheckUpReport(path, conditionLevel, buildingId, orderId);
                                 String message = "The checkup has been added to the checkup list.";
-                                response.sendRedirect("/PolygonApp/admin/building.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                                response.sendRedirect("/PolygonApp/admin/viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
                             } catch (BuildingException ex) {
                                 error = ex.getMessage();
                                 response.sendRedirect("/PolygonApp/admin/uploadreport.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
