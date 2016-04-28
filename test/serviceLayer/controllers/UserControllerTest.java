@@ -62,7 +62,7 @@ public class UserControllerTest {
 
             // insert
             st.addBatch("INSERT INTO users (usermail, userpass, fullname) VALUES ('test@polygon.dk','test','Power User')");
-
+            
             st.executeBatch();
 
             // end transaction
@@ -85,7 +85,7 @@ public class UserControllerTest {
     @Test
     public void testLoginUserPass1() throws Exception {
         UserController uc = new UserController();
-        String email = "test";
+        String email = "test@polygon.dk";
         String password = "test";
         try {
             uc.loginUser(email, password);
