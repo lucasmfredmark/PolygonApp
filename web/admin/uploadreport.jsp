@@ -84,15 +84,6 @@
             <div class="wrapper">
                 <!-- BREADCRUMBS -->
                 <p class="breadcrumbs"><a href="/PolygonApp/admin/index.jsp">Admin panel</a> &raquo; <a href="/PolygonApp/admin/buildings.jsp">Buildings</a> &raquo; <a href="/PolygonApp/admin/viewbuilding.jsp?buildingId=<%= buildingId %>">Building information</a> &raquo; Upload report</p>
-                
-                <%
-                    if (request.getParameter("error") != null) {
-                        out.print("<h3>" + request.getParameter("error") + "</h3><br>");
-                    } else if (request.getParameter("success") != null) {
-                        out.print("<h3>" + request.getParameter("success") + "</h3><br>");
-                    }
-                %>
-
                 <div class="container">
                     <%
                     if (request.getParameter("error") != null) {
@@ -102,11 +93,11 @@
                     }
                     %>
                     <h1>Upload report</h1>
-                    <form method="POST" enctype="multipart/form-data" action="UploadServlet" class="building">
+                    <form method="POST" enctype="multipart/form-data" action="/PolygonApp/UploadServlet" class="building">
                         <input type="hidden" name="directory" value="upload-report">
                         <input type="file" name="file">
                         Condition level:
-                        <select>
+                        <select name="conditionlevel">
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>

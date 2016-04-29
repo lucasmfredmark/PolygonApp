@@ -94,7 +94,7 @@
                     }
                     %>
                     <h1>Upload a document or an image</h1>
-                    <form method="POST" enctype="multipart/form-data" action="UploadServlet" class="building">
+                    <form method="POST" enctype="multipart/form-data" action="/PolygonApp/UploadServlet" class="building">
                         <input type="hidden" name="directory" value="upload-document">
                         <input type="file" name="file">
                         <input type="text" name="note" maxlength="100" placeholder="File description" required>

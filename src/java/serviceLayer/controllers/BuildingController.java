@@ -79,15 +79,15 @@ public class BuildingController{
         return buildingMapper.getBuildingConditionLevel(buildingId);
     }
     
-    public void addCheckUpReport(String checkupPath, int conditionLevel, int buildingId, int orderId) throws BuildingException{
-        if (checkupPath != null && buildingId > 0 && orderId > 0 && conditionLevel >= -1 && conditionLevel <= 3) {
-            buildingMapper.addCheckUpReport(checkupPath, conditionLevel, buildingId, orderId);
-    }
+    public void addCheckUpReport(String checkupPath, int conditionLevel, int buildingId) throws BuildingException{
+        if (checkupPath != null && buildingId > 0 && conditionLevel >= 0 && conditionLevel <= 3) {
+            buildingMapper.addCheckUpReport(checkupPath, conditionLevel, buildingId);
+        }
     }
 
-    public void addCustomerDocument(String documentNote, String documentPath, int buildingId, int userId) throws BuildingException {
-        if (documentNote != null && documentPath != null && buildingId > 0 && userId > 0) {
-            buildingMapper.addCustomerDocument(documentNote, documentPath, buildingId, userId);
+    public void addCustomerDocument(String documentNote, String documentPath, int buildingId) throws BuildingException {
+        if (documentNote != null && documentPath != null && buildingId > 0) {
+            buildingMapper.addCustomerDocument(documentNote, documentPath, buildingId);
         }
     }
 

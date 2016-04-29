@@ -39,9 +39,7 @@ CREATE TABLE documents (
     dnote VARCHAR(100), /* Description of document */
     dpath VARCHAR(255) UNIQUE, /* Unique path */
     fk_buildingid INT,
-    fk_userid INT, /* To identify admin uploads */
-    FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid),
-    FOREIGN KEY (fk_userid) REFERENCES users(userid)
+    FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid)
 );
 
 CREATE TABLE orders (

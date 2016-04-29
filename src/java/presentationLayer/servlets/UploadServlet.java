@@ -74,33 +74,26 @@ public class UploadServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, FileUploadException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-        // Check that we have a file upload request
+        
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 
         try (PrintWriter out = response.getWriter()) {
-
+            
             if (isMultipart) {
                 int maxMemSize = 50 * 1024;
-                // Create a factory for disk-based file items
                 DiskFileItemFactory factory = new DiskFileItemFactory();
-                // Set maximum allowed file size before files are written to the disk
                 factory.setSizeThreshold(maxMemSize);
-                // Set the directory for files saved to the disk
                 factory.setRepository(new File("C:\\PolygonFiles"));
-                // Create our upload handler that will parse the upload request and create a list for the multi-part request
                 ServletFileUpload uploadHandler = new ServletFileUpload(factory);
-                // Store all the parts of the request in a list
                 List fileItems = uploadHandler.parseRequest(request);
-                // Process the uploaded file items
                 Iterator i = fileItems.iterator();
 
                 while (i.hasNext()) {
                     FileItem fi = (FileItem) i.next();
                     if (!fi.isFormField()) {
-                        //Get the uploaded file name
                         String tempFileName = fi.getName();
                         fileName = tempFileName;
-                        //Write the file
+                        
                         if (tempFileName.lastIndexOf("\\") >= 0) {
                             file = new File(filePath
                                     + tempFileName.substring(tempFileName.lastIndexOf("\\")));
@@ -120,6 +113,44 @@ public class UploadServlet extends HttpServlet {
                 }
 
                 if (isWritten) {
+                    for (FileItem fileItem : stack) {
+                        String fieldName = fileItem.getFieldName();
+                        
+                        switch (fieldName) {
+                            case "conditionlevel": {
+                                conditionLevel = 0;
+                                
+                                try {
+                                    conditionLevel = Integer.parseInt(fileItem.getString());
+                                } catch (NumberFormatException ex) {
+                                }
+                                break;
+                            }
+                            case "buildingId": {
+                                buildingId = 0;
+                                
+                                try {
+                                    buildingId = Integer.parseInt(fileItem.getString());
+                                } catch (NumberFormatException ex) {
+                                }
+                                break;
+                            }
+                            case "orderId": {
+                                orderId = 0;
+                                
+                                try {
+                                    orderId = Integer.parseInt(fileItem.getString());
+                                } catch (NumberFormatException ex) {
+                                }
+                                break;
+                            }
+                            case "note": {
+                                note = fileItem.getString();
+                                break;
+                            }
+                        }
+                    }
+                    
                     String action = null;
                     for (FileItem fileItem : stack) {
                         if (fileItem.getFieldName().equals("action")) {
@@ -127,97 +158,43 @@ public class UploadServlet extends HttpServlet {
                             break;
                         }
                     }
-
-                    User user = (User) request.getSession().getAttribute("user");
-
-                    switch (action) {
-                        case "upload-report": {
-                            for (FileItem fileItem : stack) {
-                                String fieldName = fileItem.getFieldName();
-                                path = fileItem.getFieldName();
-
-                                switch (fieldName) {
-                                    case "conditionlevel": {
-                                        conditionLevel = 0;
-                                        try {
-                                            conditionLevel = Integer.parseInt(fileItem.getString());
-                                        } catch (NumberFormatException ex) {
-                                        }
-                                        break;
-                                    }
-                                    case "buildingId": {
-                                        buildingId = 0;
-
-                                        try {
-                                            buildingId = Integer.parseInt(fileItem.getString());
-                                        } catch (NumberFormatException ex) {
-                                        }
-                                        break;
-                                    }
-                                    case "orderId": {
-                                        orderId = 0;
-
-                                        try {
-                                            orderId = Integer.parseInt(fileItem.getString());
-                                        } catch (NumberFormatException ex) {
-                                        }
-                                        break;
-                                    }
-
+                    
+                    if (action != null) {
+                        switch (action) {
+                            case "upload-report": {
+                                try {
+                                    bc.addCheckUpReport(fileName, conditionLevel, buildingId);
+                                    String message = "The checkup has been added to the checkup list.";
+                                    response.sendRedirect("/PolygonApp/admin/viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                                } catch (BuildingException ex) {
+                                    error = ex.getMessage();
+                                    response.sendRedirect("/PolygonApp/admin/uploadreport.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
                                 }
+                                break;
                             }
-                            try {
-                                bc.addCheckUpReport(path, conditionLevel, buildingId, orderId);
-                                String message = "The checkup has been added to the checkup list.";
-                                response.sendRedirect("/PolygonApp/admin/viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
-                            } catch (BuildingException ex) {
-                                error = ex.getMessage();
-                                response.sendRedirect("/PolygonApp/admin/uploadreport.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
-                            }
-                            break;
-                        }
-                        case "upload-document": {
-                            for (FileItem fileItem : stack) {
-                                String fieldName = fileItem.getFieldName();
-
-                                switch (fieldName) {
-                                    case "note": {
-                                        note = fileItem.getString();
-                                        break;
-                                    }
-                                    case "buildingId": {
-                                        buildingId = 0;
-
-                                        try {
-                                            buildingId = Integer.parseInt(fileItem.getString());
-                                        } catch (NumberFormatException ex) {
-                                        }
-                                        break;
-                                    }
-                                }
-                            }
-                            try {
-                                bc.addCustomerDocument(note, fileName, buildingId, user.getUserId());
-                                String message = "The document has been added to the document list.";
+                            case "upload-document": {
+                                User user = (User) request.getSession().getAttribute("user");
                                 
-                                if (user.getUserType().equals(User.userType.CUSTOMER)) {
-                                    response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
-                                } else {
-                                    response.sendRedirect("/PolygonApp/admin/building.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                                try {
+                                    bc.addCustomerDocument(note, fileName, buildingId);
+                                    String message = "The document has been added to the document list.";
+                                    
+                                    if (user.getUserType().equals(User.userType.CUSTOMER)) {
+                                        response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                                    } else {
+                                        response.sendRedirect("/PolygonApp/admin/viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));
+                                    }
+                                } catch (BuildingException ex) {
+                                    error = ex.getMessage();
+
+                                    if (user.getUserType().equals(User.userType.CUSTOMER)) {
+                                        response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
+                                    } else {
+                                        response.sendRedirect("/PolygonApp/admin/uploadfile.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
+                                    }
                                 }
-                            } catch (BuildingException ex) {
-                                error = ex.getMessage();
-                                
-                                if (user.getUserType().equals(User.userType.CUSTOMER)) {
-                                    response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
-                                } else {
-                                    response.sendRedirect("/PolygonApp/admin/uploadimg.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
-                                }
+                                break;
                             }
-                            break;
-                        }
-                        default: {
-                            break;
                         }
                     }
                 } 

@@ -213,40 +213,38 @@ public class BuildingMapper {
     }
     
     // Adds a document to a building.
-    public void addCustomerDocument(String documentNote, String documentPath, int buildingId, int userId)
+    public void addCustomerDocument(String documentNote, String documentPath, int buildingId)
             throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
-            String sql = "INSERT INTO documents (dnote, dpath, fk_buildingid, fk_userid) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO documents (dnote, dpath, fk_buildingid) VALUES (?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, documentNote);
             pstmt.setString(2, documentPath);
             pstmt.setInt(3, buildingId);
-            pstmt.setInt(4, userId);
             
             // Returns true if the number of rows affected in the database is 1, else returns false.
             int rowCount = pstmt.executeUpdate();
         } catch (SQLException ex) {
-            throw new BuildingException("Document could not be added. User or building id mismatch");
+            throw new BuildingException("Document could not be added.");
         }
     }
     
     // Adds a report to a building
-    public void addCheckUpReport(String checkupPath, int conditionLevel, int buildingId, int orderId) throws BuildingException {
+    public void addCheckUpReport(String checkupPath, int conditionLevel, int buildingId) throws BuildingException {
         try {
             System.out.println("Reached DB layer");
             Connection conn = DBConnector.getConnection();
-            String sql = "INSERT INTO checkups (cpath, conditionlevel, fk_buildingid, fk_orderid) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO checkups (cpath, conditionlevel, fk_buildingid) VALUES (?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, checkupPath);
             pstmt.setInt(2, conditionLevel);
             pstmt.setInt(3, buildingId);
-            pstmt.setInt(4, orderId);
             
             // Returns true if the number of rows affected in the database is 1, else returns false.
             int rowCount = pstmt.executeUpdate();
         } catch (SQLException ex) {
-            throw new BuildingException("Error: check up report was not added. Conditionlevel, building id or order id missing");
+            throw new BuildingException("Error: check up report was not added. Conditionlevel or building id missing");
         }
     }
     
