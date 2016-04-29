@@ -226,7 +226,7 @@ public class BuildingMapper {
             // Returns true if the number of rows affected in the database is 1, else returns false.
             int rowCount = pstmt.executeUpdate();
         } catch (SQLException ex) {
-            throw new BuildingException("Document could not be added.");
+            throw new BuildingException("Error: Document could not be added. Maybe it already exists?");
         }
     }
     
@@ -244,7 +244,7 @@ public class BuildingMapper {
             // Returns true if the number of rows affected in the database is 1, else returns false.
             int rowCount = pstmt.executeUpdate();
         } catch (SQLException ex) {
-            throw new BuildingException("Error: check up report was not added. Conditionlevel or building id missing");
+            throw new BuildingException("Error: Check-up report could not be added. Maybe it already exists?");
         }
     }
     

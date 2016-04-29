@@ -34,13 +34,11 @@ public class UploadServlet extends HttpServlet {
 
     private File file;
     private String filePath;
-    private String path;
     private String fileName;
     private int conditionLevel;
     private BuildingController bc;
     private String note;
     private int buildingId;
-    private int orderId;
     private ArrayList<FileItem> stack;
     boolean isPathSet;
     boolean isWritten;
@@ -52,10 +50,8 @@ public class UploadServlet extends HttpServlet {
         // The file path is set to work for a user, so it won't run on your computer. Fow now.
         bc = new BuildingController();
         fileName = null;
-        path = null;
         note = null;
         conditionLevel = Integer.MIN_VALUE;
-        orderId = 0;
         buildingId = 0;
         stack = new ArrayList();
         isPathSet = false;
@@ -135,15 +131,6 @@ public class UploadServlet extends HttpServlet {
                                 }
                                 break;
                             }
-                            case "orderId": {
-                                orderId = 0;
-                                
-                                try {
-                                    orderId = Integer.parseInt(fileItem.getString());
-                                } catch (NumberFormatException ex) {
-                                }
-                                break;
-                            }
                             case "note": {
                                 note = fileItem.getString();
                                 break;
@@ -188,7 +175,7 @@ public class UploadServlet extends HttpServlet {
                                     error = ex.getMessage();
 
                                     if (user.getUserType().equals(User.userType.CUSTOMER)) {
-                                        response.sendRedirect("viewbuilding.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
+                                        response.sendRedirect("uploaddocuments.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
                                     } else {
                                         response.sendRedirect("/PolygonApp/admin/uploadfile.jsp?buildingId=" + buildingId + "&error=" + URLEncoder.encode(error, "UTF-8"));
                                     }

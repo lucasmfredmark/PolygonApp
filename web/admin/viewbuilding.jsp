@@ -227,7 +227,7 @@
                                     for (Document d : documents) {
                                         out.print("<tr>");
                                             out.print("<td>" + d.getDocumentDate().substring(0, 10) + "</td>");
-                                            out.print("<td><a href='uploads/documents/" + d.getDocumentPath() + "' download>" + d.getDocumentPath() + "</a></td>");
+                                            out.print("<td><a href='/PolygonApp/uploads/documents/" + d.getDocumentPath() + "' download>" + d.getDocumentPath() + "</a></td>");
                                             out.print("<td>" + d.getDocumentNote() + "</td>");
                                         out.print("</tr>");
                                     }
