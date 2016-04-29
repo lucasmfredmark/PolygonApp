@@ -109,10 +109,10 @@
                                         out.print("<td>" + b.getBuildingSize()+ "</td>");
                                         out.print("<td>" + conlvl + "</td>");
                                         out.print("<td>");
-                                        out.print("<form method='post' action='BuildingServlet'>");
+                                        out.print("<form method='POST' action='BuildingServlet'>");
                                         out.print("<input type='hidden' name='action' value='delete'>");
                                         out.print("<input type='hidden' name='buildingId' value='" + b.getBuildingId() + "'>");
-                                        out.print("<button>SLET</button>");
+                                        out.print("<button>Delete</button>");
                                         out.print("</form>");
                                         out.print("</td>");
                                     out.print("</tr>");

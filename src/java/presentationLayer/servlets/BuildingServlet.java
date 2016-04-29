@@ -71,18 +71,28 @@ public class BuildingServlet extends HttpServlet {
                 case "delete": {
                     if (request.getSession().getAttribute("user") != null) {
                         int buildingId = 0;
+                        User user = (User) request.getSession().getAttribute("user");
 
                         try {
                             buildingId = Integer.parseInt(request.getParameter("buildingId"));
                         } catch (NumberFormatException ex) {
                         }
+                        
                         try {
                             buildingController.deleteCustomerBuilding(buildingId);
                             String message = "The building has been deleted.";
-                            response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                            if (user.getUserType().equals(User.userType.CUSTOMER)) {
+                                response.sendRedirect("buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                            } else {
+                                response.sendRedirect("/PolygonApp/admin/buildings.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
+                            }
                         } catch (BuildingException ex) {
                             error = ex.getMessage();
-                            response.sendRedirect("buildings.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
+                            if (user.getUserType().equals(User.userType.CUSTOMER)) {
+                                response.sendRedirect("buildings.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
+                            } else {
+                                response.sendRedirect("/PolygonApp/admin/buildings.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
+                            }
                         }
                     } else {
                         response.sendRedirect("index.jsp");
