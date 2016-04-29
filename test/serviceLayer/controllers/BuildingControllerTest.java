@@ -90,9 +90,7 @@ public class BuildingControllerTest {
                     + "dnote VARCHAR(100),"
                     + "dpath VARCHAR(255),"
                     + "fk_buildingid INT,"
-                    + "fk_userid INT,"
-                    + "FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid),"
-                    + "FOREIGN KEY (fk_userid) REFERENCES users(userid)"
+                    + "FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid)"
                     + ")");
             st.addBatch("CREATE TABLE orders ("
                     + "orderid INT AUTO_INCREMENT PRIMARY KEY,"
@@ -180,7 +178,7 @@ public class BuildingControllerTest {
     public void addAndGetDocumentTest() throws BuildingException {
         BuildingController bc = new BuildingController();
         try {
-            bc.addCustomerDocument("port mackerel", "dummyPath", 1, 1);
+            bc.addCustomerDocument("port mackerel", "dummyPath", 1);
         } catch (BuildingException ex) {
             fail(ex.getMessage());
         }
