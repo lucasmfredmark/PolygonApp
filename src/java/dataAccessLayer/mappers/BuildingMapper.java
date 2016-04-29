@@ -213,7 +213,8 @@ public class BuildingMapper {
     }
     
     // Adds a document to a building.
-    public void addCustomerDocument(String documentNote, String documentPath, int buildingId, int userId) throws BuildingException {
+    public void addCustomerDocument(String documentNote, String documentPath, int buildingId, int userId)
+            throws BuildingException {
         try {
             Connection conn = DBConnector.getConnection();
             String sql = "INSERT INTO documents (dnote, dpath, fk_buildingid, fk_userid) VALUES (?, ?, ?, ?)";

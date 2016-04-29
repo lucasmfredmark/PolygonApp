@@ -75,6 +75,7 @@
                             <td>Parcel number</td>
                             <td>Size(m&sup2)</td>
                             <td>Condition level</td>
+                            <td>Action</td>
                         </tr>
                         <%
                             BuildingController bc = new BuildingController();
@@ -107,6 +108,13 @@
                                         out.print("<td>" + b.getBuildingParcelNumber()+ "</td>");
                                         out.print("<td>" + b.getBuildingSize()+ "</td>");
                                         out.print("<td>" + conlvl + "</td>");
+                                        out.print("<td>");
+                                        out.print("<form method='post' action='BuildingServlet'>");
+                                        out.print("<input type='hidden' name='action' value='delete'>");
+                                        out.print("<input type='hidden' name='buildingId' value='" + b.getBuildingId() + "'>");
+                                        out.print("<button>SLET</button>");
+                                        out.print("</form>");
+                                        out.print("</td>");
                                     out.print("</tr>");
                                 }
                             } else { // If there are currently no buildings linked to this user.
