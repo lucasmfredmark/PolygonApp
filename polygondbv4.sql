@@ -1,11 +1,12 @@
 DROP DATABASE IF EXISTS polygon;
+
 CREATE DATABASE polygon;
 USE polygon;
 
 CREATE TABLE users (
     userid INT AUTO_INCREMENT PRIMARY KEY,
-    udate DATETIME DEFAULT CURRENT_TIMESTAMP, /* Creation date */
-    usermail VARCHAR(255) UNIQUE, /* Login */
+    udate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    usermail VARCHAR(255) UNIQUE,
     userpass VARCHAR(20),
     usertype ENUM('CUSTOMER','ADMIN') DEFAULT 'CUSTOMER',
     fullname VARCHAR(50)
@@ -16,14 +17,15 @@ INSERT INTO users (usermail, userpass, usertype, fullname) VALUES ('admin@polygo
 
 CREATE TABLE buildings (
     buildingid INT AUTO_INCREMENT PRIMARY KEY,
-    bdate DATETIME DEFAULT CURRENT_TIMESTAMP, /* Creation date */ 
-    bname VARCHAR(40), /* Building identification */
+    bdate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    bname VARCHAR(40),
     address VARCHAR(50),
     parcelnumber VARCHAR(20),
     size INT,
     fk_userid INT,
     FOREIGN KEY (fk_userid) REFERENCES users(userid)
 );
+
 INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 1', 'Roadway 1', '1a', 16, 1);
 INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 2', 'Roadway 2', '1b', 32, 1);
 INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('Building 3', 'Roadway 3', '1c', 64, 1);
@@ -35,55 +37,51 @@ INSERT INTO buildings (bname, address, parcelnumber, size, fk_userid) VALUES ('B
 
 CREATE TABLE documents (
 	documentid INT AUTO_INCREMENT PRIMARY KEY,
-    ddate DATETIME DEFAULT CURRENT_TIMESTAMP, /* Creation date */
-    dnote VARCHAR(100), /* Description of document */
-    dpath VARCHAR(255) UNIQUE, /* Unique path */
+    ddate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    dnote VARCHAR(100),
+    dpath VARCHAR(255) UNIQUE,
     fk_buildingid INT,
-    fk_userid INT, /* To identify admin uploads */
-    FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid),
+    fk_userid INT,
+    FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid) ON DELETE CASCADE,
     FOREIGN KEY (fk_userid) REFERENCES users(userid)
 );
 
 CREATE TABLE orders (
 	orderid INT AUTO_INCREMENT PRIMARY KEY,
-    odate DATETIME DEFAULT CURRENT_TIMESTAMP, /* Creation date */
-    ostatus INT DEFAULT 0, /* 0 = Incomplete : 1 = Complete */
-    odone DATETIME, /* Completion date */
+    odate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ostatus INT DEFAULT 0,
+    odone DATETIME,
     fk_buildingid INT,
-    FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid)
+    FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid) ON DELETE CASCADE
 );
-INSERT INTO orders (fk_buildingid) VALUES (1);
-INSERT INTO orders (fk_buildingid) VALUES (3);
-INSERT INTO orders (fk_buildingid) VALUES (5);
-INSERT INTO orders (fk_buildingid) VALUES (7);
 
 CREATE TABLE checkups (
 	checkupid INT AUTO_INCREMENT PRIMARY KEY,
-    cdate DATETIME DEFAULT CURRENT_TIMESTAMP, /* Creation date */
-    cpath VARCHAR(255) UNIQUE, /* Unique path */
+    cdate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    cpath VARCHAR(255) UNIQUE,
     conditionlevel INT,
     fk_buildingid INT,
     fk_orderid INT,
-    FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid),
+    FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid) ON DELETE CASCADE,
     FOREIGN KEY (fk_orderid) REFERENCES orders(orderid)
 );
 
 CREATE TABLE damages (
 	damageid INT AUTO_INCREMENT PRIMARY KEY,
-    dmgdate DATETIME DEFAULT CURRENT_TIMESTAMP, /* Creation date */
+    dmgdate DATETIME DEFAULT CURRENT_TIMESTAMP,
     dmgtitle VARCHAR(50),
     dmgdesc TEXT,
     fk_buildingid INT,
-    FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid)
+    FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid) ON DELETE CASCADE
 );
 
 CREATE TABLE tickets (
 	ticketid INT AUTO_INCREMENT PRIMARY KEY,
-    ticketdate DATETIME DEFAULT CURRENT_TIMESTAMP, /* Creation date */
+    ticketdate DATETIME DEFAULT CURRENT_TIMESTAMP,
     tickettitle varchar (50),
     tickettext varchar (1000),
     ticketstate INT DEFAULT 1,
     ticketanswer varchar (1000) DEFAULT null,
     fk_userid INT,
     FOREIGN KEY (fk_userid) REFERENCES users(userid)
-)
+);
