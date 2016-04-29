@@ -41,7 +41,7 @@ CREATE TABLE documents (
     dnote VARCHAR(100),
     dpath VARCHAR(255) UNIQUE,
     fk_buildingid INT,
-    FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid)
+    FOREIGN KEY (fk_buildingid) REFERENCES buildings(buildingid) ON DELETE CASCADE
 );
 
 CREATE TABLE orders (
