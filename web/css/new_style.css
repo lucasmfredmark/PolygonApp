@@ -58,6 +58,22 @@ textarea:focus {
     background:#fff;
 }
 
+button {
+    background:#009fe3;
+    color:#fff;
+    height:24px;
+    font-weight:700;
+    cursor:pointer;
+    font-size:10pt;
+    font-family:'Open Sans', sans-serif;
+    display:block;
+    box-sizing:border-box;
+    width:100%;
+    outline:0;
+    border:0;
+    border-radius:3px;
+}
+
 /* GLOBAL CLASSES */
 
 .index { background:#fff; }
@@ -460,6 +476,7 @@ textarea:focus {
 .customerbuildings_table td:nth-child(3) { width:200px; } /* Parcel # */
 .customerbuildings_table td:nth-child(4) { width:200px; } /* Size */
 .customerbuildings_table td:nth-child(5) { width:150px; } /* Creation date */
+.customerbuildings_table td:nth-child(6) { width:100px; } /* Action */
 
 /* USER'S BUILDINGS PAGE */
 
@@ -468,3 +485,4 @@ textarea:focus {
 .userbuildings_table td:nth-child(3) { width:200px; } /* Parcel # */
 .userbuildings_table td:nth-child(4) { width:200px; } /* Size */
 .userbuildings_table td:nth-child(5) { width:150px; } /* Creation date */
+.userbuildings_table td:nth-child(6) { width:100px; } /* Action */

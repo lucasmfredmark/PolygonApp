@@ -79,6 +79,7 @@
                             <td>Parcel number</td>
                             <td>Size(m&sup2;)</td>
                             <td>Creation date</td>
+                            <td>Action</td>
                         </tr>
                         <tr class="hidden">
                             <td colspan="5">No search results for "<span></span>".</td>
@@ -94,6 +95,13 @@
                                         out.print("<td>" + b.getBuildingParcelNumber()+ "</td>");
                                         out.print("<td>" + b.getBuildingSize() + "</td>");
                                         out.print("<td>" + b.getBuildingDate().substring(0,10) + "</td>");
+                                        out.print("<td>");
+                                        out.print("<form method='POST' action='/PolygonApp/BuildingServlet'>");
+                                        out.print("<input type='hidden' name='action' value='delete'>");
+                                        out.print("<input type='hidden' name='buildingId' value='" + b.getBuildingId() + "'>");
+                                        out.print("<button>Delete</button>");
+                                        out.print("</form>");
+                                        out.print("</td>");
                                     out.print("</tr>");
                                 }
                             }
