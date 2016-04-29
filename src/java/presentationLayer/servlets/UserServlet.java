@@ -8,8 +8,6 @@ package presentationLayer.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -89,7 +87,7 @@ public class UserServlet extends HttpServlet {
                             response.sendRedirect("index.jsp?success=" + URLEncoder.encode(message, "UTF-8"));
                         } catch (UserException ex) {
                             error = ex.getMessage();
-                            response.sendRedirect("index.jsp?success=" + URLEncoder.encode(error, "UTF-8"));
+                            response.sendRedirect("register.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
                         }
 
                         //response.sendRedirect("register.jsp?error=" + URLEncoder.encode(message, "UTF-8"));

@@ -66,6 +66,8 @@ public class UserMapper {
                 pstmt.setString(3, fullname);
                 System.out.println("Done");
                 pstmt.executeUpdate();
+            } else {
+                throw new UserException("That user already exists.");
             }
         } catch (SQLException ex) {
             throw new UserException("Error: the user couldn't be created. The user already exists");
