@@ -5,6 +5,8 @@
  */
 package serviceLayer.controllers;
 
+import serviceLayer.controllers.interfaces.IBuildingController;
+import dataAccessLayer.mappers.interfaces.IBuildingMapper;
 import dataAccessLayer.mappers.BuildingMapper;
 import java.util.ArrayList;
 import serviceLayer.entities.Building;
@@ -19,21 +21,20 @@ import serviceLayer.exceptions.BuildingException;
  *
  * @author Staal
  */
-public class BuildingController{
-    private final BuildingMapper buildingMapper;
+public class BuildingController implements IBuildingController{
+    private final IBuildingMapper buildingMapper = new BuildingMapper();
 
-    public BuildingController() {
-        this.buildingMapper = new BuildingMapper();
-    }
-
+    @Override
     public Building getCustomerBuilding(int buildingId, int userId) throws BuildingException {
         return buildingMapper.getCustomerBuilding(buildingId, userId);
     }
 
+    @Override
     public ArrayList<Building> getCustomerBuildings(int userId) throws BuildingException {
         return buildingMapper.getCustomerBuildings(userId);
     }
 
+    @Override
     public void addCustomerBuilding(String name, String address, String parcelNumber, int size, int userId) throws BuildingException {
         if (name != null && address != null && parcelNumber != null && size > 0 && userId > 0) {
             if (name.length() <= 40 && address.length() <= 50 && parcelNumber.length() <= 20) {
@@ -46,6 +47,7 @@ public class BuildingController{
         }
     }
 
+    @Override
     public void deleteCustomerBuilding(int buildingId) throws BuildingException {
         if (buildingId > 0) {
             buildingMapper.deleteCustomerBuilding(buildingId);
@@ -54,6 +56,7 @@ public class BuildingController{
         }
     }
 
+    @Override
     public void editCustomerBuilding(String name, String address, String parcelNumber, int size, int buildingId) throws BuildingException {
         if (name != null && address != null && parcelNumber != null && size > 0 && buildingId > 0) {
             if (name.length() <= 40 && address.length() <= 50 && parcelNumber.length() <= 20) {
@@ -67,46 +70,55 @@ public class BuildingController{
         
     }
 
+    @Override
     public ArrayList<Checkup> getBuildingCheckups(int buildingId) throws BuildingException {
         return buildingMapper.getBuildingCheckups(buildingId);
     }
 
+    @Override
     public ArrayList<Document> getBuildingDocuments(int buildingId) throws BuildingException {
         return buildingMapper.getBuildingDocuments(buildingId);
     }
 
+    @Override
     public int getBuildingConditionLevel(int buildingId) throws BuildingException {
         return buildingMapper.getBuildingConditionLevel(buildingId);
     }
     
+    @Override
     public void addCheckUpReport(String checkupPath, int conditionLevel, int buildingId) throws BuildingException{
         if (checkupPath != null && buildingId > 0 && conditionLevel >= 0 && conditionLevel <= 3) {
             buildingMapper.addCheckUpReport(checkupPath, conditionLevel, buildingId);
         }
     }
 
+    @Override
     public void addCustomerDocument(String documentNote, String documentPath, int buildingId) throws BuildingException {
         if (documentNote != null && documentPath != null && buildingId > 0) {
             buildingMapper.addCustomerDocument(documentNote, documentPath, buildingId);
         }
     }
 
+    @Override
     public void addDamage(String dmgTitle, String dmgDesc, int buildingId) throws BuildingException {
         if (dmgTitle != null && dmgDesc != null && buildingId > 0) {
             buildingMapper.addDamage(dmgTitle, dmgDesc, buildingId);
         }
     }
 
+    @Override
     public void deleteDamage(int damageId) throws BuildingException {
         if (damageId > 0) {
             buildingMapper.deleteDamage(damageId);
         }
     }
     
+    @Override
     public ArrayList<Damage> getDamages(int buildingId) throws BuildingException {
         return buildingMapper.getBuildingDamages(buildingId);
     }
     
+    @Override
     public void requestCheckup(int orderStatus, int buildingId, User user) throws BuildingException {
         // A mail server is required for the e-mail to be sent
         /*
@@ -147,10 +159,12 @@ public class BuildingController{
         */
     }
     
+    @Override
     public Order getOrderByBuildingId(int buildingId) throws BuildingException {
         return buildingMapper.getOrderByBuildingId(buildingId);
     }
     
+    @Override
     public boolean getPendingCheckup(int buildingId) throws BuildingException {
         return buildingMapper.getPendingCheckup(buildingId);
     }

@@ -5,6 +5,8 @@
  */
 package serviceLayer.controllers;
 
+import serviceLayer.controllers.interfaces.IUserController;
+import dataAccessLayer.mappers.interfaces.IUserMapper;
 import dataAccessLayer.mappers.UserMapper;
 import java.util.ArrayList;
 import serviceLayer.entities.User;
@@ -14,13 +16,10 @@ import serviceLayer.exceptions.UserException;
  *
  * @author lucas
  */
-public class UserController {
-    private final UserMapper userMapper;
-    
-    public UserController() {
-        this.userMapper = new UserMapper();
-    }
-    
+public class UserController implements IUserController {
+    private final IUserMapper userMapper = new UserMapper();
+
+    @Override
     public User loginUser(String email, String password) throws UserException {
         if (email != null && password != null &&
             !email.isEmpty() && !password.isEmpty() &&
@@ -38,6 +37,7 @@ public class UserController {
         return null;
     }
     
+    @Override
     public void registerUser(String email, String fullname, String password) throws UserException {
         if (email != null && fullname != null && password != null &&
             !email.isEmpty() && !fullname.isEmpty() && !password.isEmpty() &&
@@ -48,10 +48,12 @@ public class UserController {
         }
     }
     
+    @Override
     public User getUserByEmail(String email) throws UserException {
         return userMapper.getUserByEmail(email);
     }
     
+    @Override
     public ArrayList<User> getAllUsers(String userType) throws UserException {
         return userMapper.getAllUsers(userType);
     }
