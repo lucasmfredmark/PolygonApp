@@ -325,7 +325,13 @@ button {
 
 .support_table td:nth-child(1) { width:200px; }
 .support_table td:nth-child(2) { }
-.support_table td:nth-child(3) { width:200px; }
+.support_table td:nth-child(3) { width:100px; }
+
+.adminsupport_table td:nth-child(1) { width:100px; }
+.adminsupport_table td:nth-child(2) { width:200px; }
+.adminsupport_table td:nth-child(3) { }
+.adminsupport_table td:nth-child(4) { width:100px; }
+
 
 /* VIEW BUILDING */
 

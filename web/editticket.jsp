@@ -1,88 +1,90 @@
-<%-- 
-    Document   : editticket
-    Created on : 20-04-2016, 02:00:39
-    Author     : xboxm
---%>
-
+<%@page import="serviceLayer.entities.*"%>
+<%@page import="serviceLayer.exceptions.*"%>
+<%@page import="serviceLayer.controllers.*"%>
+<%@page import="java.util.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="serviceLayer.entities.Ticket"%>
-<%@page import="serviceLayer.exceptions.SupportException"%>
-<%@page import="serviceLayer.entities.User"%>
-<%@page import="serviceLayer.controllers.SupportController"%>
-<%@page import="java.util.ArrayList"%>
+<%
+    // SIGN OUT
+    if(request.getParameter("logout") != null) {
+        if (request.getSession(false) != null) {
+            session.invalidate();
+        }
+        response.sendRedirect("/PolygonApp/index.jsp");
+        return;
+    }
+    
+    // SESSION CHECK
+    User user = (User) session.getAttribute("user");
+    
+    if (user == null) {
+        response.sendRedirect("/PolygonApp/index.jsp");
+        return;
+    } else if (user.getUserType().equals(User.userType.ADMIN)) {
+        response.sendRedirect("/PolygonApp/admin/index.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Edit support ticket</title>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
         <link href="/PolygonApp/css/resets.css" rel="stylesheet" type="text/css">
         <link href="/PolygonApp/css/new_style.css" rel="stylesheet" type="text/css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Polygon - Support ticket</title>
     </head>
     <body>
-
-        <% User user = (User) session.getAttribute("user"); %>
-
-        <%
-
-            // SESSION CHECK
-            if (request.getParameter("logout") != null) {
-
-                if (request.getSession(false) != null) {
-                    session.invalidate();
-                }
-
-                response.sendRedirect("index.jsp");
-                return;
-            }
-
-            if (user == null) {
-                response.sendRedirect("index.jsp");
-                return;
-            } else if (user.getUserType().equals(User.userType.ADMIN)) {
-                response.sendRedirect("admin/index.jsp");
-                return;
-            }
-
-        %>
-
-        <div id="site">
+        <div id="top">
             <div id="header">
                 <div class="wrapper">
                     <img src="/PolygonApp/images/polygon-logo.svg" class="header_logo" alt="Polygon">
-                    <p>Hello, <%= user.getFullName()%> (<a href="?logout">Sign out</a>)</p>
+                    <p>Hello, <%= user.getFullName() %> (<a href="?logout">Sign out</a>)</p>
                 </div>
             </div>
             <div id="navigation">
-                <h2>Edit Support Ticket</h2>
-                <ul>
-                    <li class="inactive"><a href="index.jsp">Dashboard</a></li>
-                    <li class="inactive"><a href="support.jsp">Support</a></li>
-                </ul>
+                <div class="wrapper">
+                    <h2>Viewing ticket</h2>
+                    <ul>
+                        <li class="inactive"><a href="/PolygonApp/buildings.jsp">Your buildings</a></li>
+                        <li class="inactive"><a href="/PolygonApp/addbuilding.jsp">Add building</a></li>
+                        <li class='inactive'><a href="/PolygonApp/support.jsp">Support</a></li>
+                    </ul>
+                </div>
             </div>
-
-            <%
-                SupportController sc = new SupportController();
-                int ticketId = Integer.parseInt(request.getParameter("ticketId"));
-                Ticket ticket = sc.getTicket(ticketId);
-                String title = ticket.getTitle();
-                String text = ticket.getText();
-                String answer = sc.getAnswerToTicket(ticketId);
-                if (answer == null) {
-                    answer = "Your ticket has not been reviewed yet";
-                }
-            %>
-
-            <form method="POST" action="SupportServlet" style="width:200px"> <br>
-                Title:
-                <input type="text" name="title" value='<%=title%>' readonly>
-                <input type="hidden" name="action" value="edit">
-                <input type="hidden" name="ticketId" value='<%=ticketId%>'>
-                Text:
-                <textarea id='txt' name="text" style="width:400px; height:150px" placeholder='<%=text%>' autofocus required></textarea>
-                <input type="submit" value="Commit changes"> <br>
-                Answer from an employee:
-                <textarea name="answer" style="width:400px; height:150px" placeholder='<%=answer%>' readonly></textarea>
-            </form>
+        </div>
+        <div id="content">
+            <div class="wrapper">
+                <!-- BREADCRUMBS -->
+                <p class="breadcrumbs"><a href="\PolygonApp\buildings.jsp">Your buildings</a> &raquo; <a href="\PolygonApp\support.jsp">Support</a> &raquo; Create ticket</p>
+                
+                <%
+                    SupportController sc = new SupportController();
+                    int ticketId = Integer.parseInt(request.getParameter("ticketId"));
+                    Ticket t = sc.getTicket(ticketId);
+                    String answer = sc.getAnswerToTicket(ticketId);
+                    if (answer == null) {
+                        answer = "Your ticket has not been reviewed yet.";
+                    }
+                %>
+                <div class="left_column">
+                    <div class="box">
+                        <h1>Your ticket</h1>
+                        <form method="POST" action="SupportServlet">
+                            <input type="text" name="title" placeholder="Title" value="<%= t.getTitle() %>" readonly>
+                            <input type="hidden" name="action" value="edit">
+                            <input type="hidden" name="ticketId" value='<%= ticketId %>'>
+                            <textarea name="text" rows="6" placeholder="Description" autofocus required><%= t.getText() %></textarea>
+                            <input type="submit" value="Commit changes">
+                        </form>
+                    </div>
+                </div>
+                <div class='right_column'>
+                    <div class="box">
+                        <h1>Employee answer</h1>
+                        <textarea name="answer" rows="6" readonly><%= answer %></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
