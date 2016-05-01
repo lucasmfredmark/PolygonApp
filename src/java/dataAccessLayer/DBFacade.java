@@ -111,7 +111,8 @@ public class DBFacade implements IDBFacade {
             throw new BuildingException("Error: no order could be added. Check orderStatus and buildingId");
         }
     }
-
+    // Set value ticketanswer equal to parameter answer and match on ticketid
+    // If query fails it is because the ticketid caused errors. Throw new ex
     @Override
     public void answerTicket(int ticketId, String answer) throws SupportException {
         try {
@@ -125,7 +126,8 @@ public class DBFacade implements IDBFacade {
             throw new SupportException("Error: ticket not found with id: " + ticketId);
         }
     }
-
+    // Set state value to o and match on ticketid. If it fails throw ex -->
+    // ticketid mismatch
     @Override
     public void closeTicket(int ticketId) throws SupportException {
         try {
@@ -138,7 +140,8 @@ public class DBFacade implements IDBFacade {
             throw new SupportException("No ticket was found with id: " + ticketId);
         }
     }
-
+    // Create a new entry in DB with values determined by parameters. 
+    // Ticket id mismatch throws exception
     @Override
     public void createTicket(String title, String text, int userId) throws SupportException {
         try {
@@ -154,7 +157,7 @@ public class DBFacade implements IDBFacade {
             throw new SupportException("Error: No tickets exists for user with id: " + userId);
         }
     }
-
+    
     @Override
     public void deleteCustomerBuilding(int buildingId) throws BuildingException {
         try {
@@ -253,7 +256,7 @@ public class DBFacade implements IDBFacade {
             throw new BuildingException("Error: no buildings found. Check database?");
         }
     }
-
+    // Select all entries from tickets table and order by title in ascending order
     @Override
     public ArrayList<Ticket> getAllTickets() throws SupportException {
         try {
@@ -272,7 +275,7 @@ public class DBFacade implements IDBFacade {
             throw new SupportException("There are no tickets by customers"); 
         }
     }
-
+    // Select all tickets from table and match on userid
     @Override
     public ArrayList<Ticket> getAllTicketsFromCustomer(int userId) throws SupportException {
         try {
@@ -319,7 +322,7 @@ public class DBFacade implements IDBFacade {
             throw new UserException("A list of all users couldn't be returned. Is the database empty?");
         }
     }
-
+    // Select all from tickets and match on ticket id, but return only answer
     @Override
     public String getAnswerToTicket(int ticketId) throws SupportException {
         try {
@@ -337,7 +340,7 @@ public class DBFacade implements IDBFacade {
         }
         return null;
     }
-
+    
     @Override
     public ArrayList<Checkup> getBuildingCheckups(int buildingId) throws BuildingException {
         try {
@@ -521,7 +524,7 @@ public class DBFacade implements IDBFacade {
             throw new BuildingException("Error: no buildings found. Check database?");
         }
     }
-
+    // Find a specific entry from tickets table matched on ticketid
     @Override
     public Ticket getTicket(int ticketId) throws SupportException {
         try {

@@ -31,23 +31,29 @@ import serviceLayer.exceptions.BuildingException;
  * @author Patrick
  */
 public class UploadServlet extends HttpServlet {
-
+    // The file we are going to write
     private File file;
+    //Used to define the directory we write the file to
     private String filePath;
+    // Name of the file
     private String fileName;
+    // Value used for check up reports
     private int conditionLevel;
     private BuildingController bc;
+    // The text that goes with the file you upload (the note)
     private String note;
     private int buildingId;
+    // Used to fetch all data that is formfield from multi part.
     private ArrayList<FileItem> stack;
+    // Used for logic
     boolean isPathSet;
     boolean isWritten;
+    // Text used when throwing exceptions
     private String error;
 
     @Override
     public void init() {
         // The file path is specified in folder Configuration Files -> web.xml.
-        // The file path is set to work for a user, so it won't run on your computer. Fow now.
         bc = new BuildingController();
         fileName = null;
         note = null;
@@ -71,45 +77,69 @@ public class UploadServlet extends HttpServlet {
             throws ServletException, IOException, FileUploadException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         
+        // We catch the data from the form coing in with the request
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 
         try (PrintWriter out = response.getWriter()) {
             
             if (isMultipart) {
+                // Max allowed file size
                 int maxMemSize = 50 * 1024;
+                // Class from library commons-fileupload that handles writing files to disk
                 DiskFileItemFactory factory = new DiskFileItemFactory();
+                // Set maximum allowed file size
                 factory.setSizeThreshold(maxMemSize);
+                // Where we write files to temporaily if they are above threshold
                 factory.setRepository(new File("C:\\PolygonFiles"));
                 ServletFileUpload uploadHandler = new ServletFileUpload(factory);
+                // All of the multi part data
                 List fileItems = uploadHandler.parseRequest(request);
+                // We create an Iterator object so we can iterate through every
+                // element from our fileItems list
                 Iterator i = fileItems.iterator();
-
+                
+                // While there is another element to iterate through
                 while (i.hasNext()) {
+                    // We pass the element from the list to a FileItem and assign it
                     FileItem fi = (FileItem) i.next();
+                    // Check to see if the element is a file or formfield data
                     if (!fi.isFormField()) {
+                        // Get the name of the file and store in a temp and perm variable
                         String tempFileName = fi.getName();
                         fileName = tempFileName;
-                        
+                        // We are at the end of the name
                         if (tempFileName.lastIndexOf("\\") >= 0) {
+                            // Speficy file and directory to write it to
                             file = new File(filePath
                                     + tempFileName.substring(tempFileName.lastIndexOf("\\")));
                         } else {
                             file = new File(filePath
                                     + tempFileName.substring(tempFileName.lastIndexOf("\\") + 1));
                         }
+                        // Write the file!
                         fi.write(file);
+                        // We have now written and set our logic
                         isWritten = true;
                     } else {
+                        // If it isn't a file then it's formfield data
+                        // Add all of the elements to a stack
                         stack.add(fi);
                         if (!isPathSet && fi.getFieldName().equals("directory")) {
+                            // If we haven't specified the directory, do so
                             filePath = getServletContext().getInitParameter(fi.getString());
+                            // Update our logic
                             isPathSet = true;
                         }
                     }
                 }
-
+                // When a file has been written successfully
                 if (isWritten) {
                     for (FileItem fileItem : stack) {
+                        
+                        // For each element in our stack that is formfield data
+                        // find out what parameter it belonged to and execute
+                        // the right sequence
+                        
                         String fieldName = fileItem.getFieldName();
                         
                         switch (fieldName) {
@@ -137,7 +167,7 @@ public class UploadServlet extends HttpServlet {
                             }
                         }
                     }
-                    
+                    // Determine the action we need to perform from the request
                     String action = null;
                     for (FileItem fileItem : stack) {
                         if (fileItem.getFieldName().equals("action")) {
@@ -145,11 +175,14 @@ public class UploadServlet extends HttpServlet {
                             break;
                         }
                     }
-                    
+                    // Based on which action we handle uploading differently
+                    // If all goes well we send the result along with a redirect
                     if (action != null) {
                         switch (action) {
                             case "upload-report": {
                                 try {
+                                    // Use the variables we set using the stack
+                                    // to run the right method with those parameters
                                     bc.addCheckUpReport(fileName, conditionLevel, buildingId);
                                     String message = "The checkup has been added to the checkup list.";
                                     response.sendRedirect("/PolygonApp/admin/viewbuilding.jsp?buildingId=" + buildingId + "&success=" + URLEncoder.encode(message, "UTF-8"));

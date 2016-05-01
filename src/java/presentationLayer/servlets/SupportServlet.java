@@ -23,7 +23,7 @@ import serviceLayer.exceptions.SupportException;
  */
 @WebServlet(name = "SupportServlet", urlPatterns = {"/SupportServlet"})
 public class SupportServlet extends HttpServlet {
-
+    // These variables are set throughout to be used whenever we throw an exception
     private String error;
     private String message;
 
@@ -40,24 +40,27 @@ public class SupportServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            // Catch the parameter from the request, so we know which action the
+            // user performed
             String action = request.getParameter("action");
             SupportController sc = new SupportController();
 
             switch (action) {
                 case "create": {
+                    // Fetch the parameters sent from the reuqest
                     String title = request.getParameter("title");
                     String text = request.getParameter("text");
                     User user = (User) request.getSession().getAttribute("user");
                     int userId = user.getUserId();
                     
-                    System.out.println(title + "" + text);
                     try {
-                        System.out.println("Before create ticket");
+                        // Create a ticket and parse the request values we caught
                         sc.createTicket(title, text, userId);
-                        System.out.println("Create ticket");
+                        // All goes well, tell the user and redirect
                         message = "Your ticket was succesfully created";
                         response.sendRedirect("support.jsp?message=" + URLEncoder.encode(message, "UTF-8"));
                     } catch (SupportException ex) {
+                        // All goes wrong, tell the user and redirect
                         error = ex.getMessage();
                         response.sendRedirect("support.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
                     }
@@ -65,12 +68,16 @@ public class SupportServlet extends HttpServlet {
                 }
                 case "edit": {
                     try {
+                        // Fetch the parameters from the request and save them
                         int ticketId = Integer.parseInt(request.getParameter("ticketId"));
                         String text = request.getParameter("text");
+                        // Use saved variables as parameters for the method
                         sc.editTicket(text, ticketId);
+                        // Result and redirect
                         message = "Your ticket was succesfully edited";
                         response.sendRedirect("support.jsp?message=" + URLEncoder.encode(message, "UTF-8"));
                     } catch (SupportException ex) {
+                        // Error and redirect
                         error = ex.getMessage();
                         response.sendRedirect("support.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
                     }
@@ -80,12 +87,16 @@ public class SupportServlet extends HttpServlet {
                 case "answer": {
                 
                     try {
+                        // Fetch the parameters and save them to a variable
                         int ticketId = Integer.parseInt(request.getParameter("ticketId"));
                         String text = request.getParameter("answer");
+                        // Use the ariables as parameters in the method
                         sc.answerTicket(ticketId, text);
+                        // result and redirect
                         message = "You have answered ticket: " + ticketId + " successfully";
                         response.sendRedirect("/PolygonApp/admin/support.jsp?message=" + URLEncoder.encode(message, "UTF-8"));
                     } catch (SupportException ex) {
+                        // Error and redirect
                         error = ex.getMessage();
                         response.sendRedirect("/PolygonApp/admin/support.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
                     }
@@ -94,18 +105,22 @@ public class SupportServlet extends HttpServlet {
                 
                 case "close": {
                     try {
+                        // Fetch the parameters from the request and save variables
                        int ticketId = Integer.parseInt(request.getParameter("ticketId"));
+                       // Use variables as parameter in method
                        sc.closeTicket(ticketId);
-                        System.out.println(ticketId);
+                       // Result and redirect
                        message = "You have closed ticket with id: " + ticketId + " successfully";
                        response.sendRedirect("/PolygonApp/admin/support.jsp?message=" + URLEncoder.encode(message, "UTF-8"));
                     } catch (SupportException ex) {
+                        // Error and redirect
                         error = ex.getMessage();
                         response.sendRedirect("/PolygonApp/admin/support.jsp?error=" + URLEncoder.encode(error, "UTF-8"));
                     }
                     break;
                 }
                 default: {
+                    // Base case if the others fail
                     response.sendRedirect("support.jsp?message=" + URLEncoder.encode(message, "UTF-8"));
                     break;
                 }

@@ -45,7 +45,7 @@ public class AdminControllerTest {
     @AfterClass
     public static void tearDownClass() {
     }
-
+    // We have to setup a dummy database to use for testing
     @Before
     public void setUp() throws SQLException, ClassNotFoundException {
         ac = new AdminController();

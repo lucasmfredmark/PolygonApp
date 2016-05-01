@@ -10,19 +10,21 @@ package serviceLayer.entities;
  * @author xboxm
  */
 public class Order {
-    
+    // The fields of an order entity
     private int orderId;
     private String dateReceived;
     private String orderStatus;
     private String dateDone;
-
+    //The constructor sets the fields when we create an entity of type order
     public Order(int orderId, String dateReceived, String orderStatus, String dateDone) {
         this.orderId = orderId;
         this.dateReceived = dateReceived;
         this.orderStatus = orderStatus;
         this.dateDone = dateDone;
     }
-
+    
+    // Getters and setters
+    
     public int getOrderId() {
         return orderId;
     }

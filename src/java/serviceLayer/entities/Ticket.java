@@ -11,6 +11,7 @@ package serviceLayer.entities;
  */
 public class Ticket {
     
+    // Fields for a ticket
     private String text;
     private String title;
     private String answer;
@@ -18,6 +19,7 @@ public class Ticket {
     private int ticketId;
     private int userid;
 
+    // When we create a ticket, the constructor sets the field of the entity
     public Ticket(int ticketId, String title, String text, int state, int userid) {
         this.text = text;
         this.title = title;
@@ -27,6 +29,9 @@ public class Ticket {
         this.answer = getAnswer();
     }
 
+    
+    // Getters and setters
+    
     public String getAnswer() {
         return answer;
     }
@@ -42,7 +47,7 @@ public class Ticket {
     public void setUserid(int userid) {
         this.userid = userid;
     }
-
+    // Instead of returning a boolean, evaluate value and return a string
     public String getState() {
         if (this.state == 1) {
             return "open";

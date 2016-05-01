@@ -53,7 +53,9 @@ public class BuildingControllerTest {
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
+    
+    // We have to setup a dummy database to use in the test
     @Before
     public void setUp() throws Exception {
         try {
