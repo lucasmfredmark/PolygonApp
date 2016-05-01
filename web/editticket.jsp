@@ -61,8 +61,6 @@
                     SupportController sc = new SupportController();
                     int ticketId = Integer.parseInt(request.getParameter("ticketId"));
                     Ticket t = sc.getTicket(ticketId);
-                    String title = t.getTitle();
-                    String text = t.getText();
                     String answer = sc.getAnswerToTicket(ticketId);
                     if (answer == null) {
                         answer = "Your ticket has not been reviewed yet.";

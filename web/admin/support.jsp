@@ -1,109 +1,108 @@
-<%-- 
-    Document   : support
-    Created on : 19-04-2016, 22:58:13
-    Author     : xboxm
---%>
-<%@page import="serviceLayer.entities.Ticket"%>
-<%@page import="serviceLayer.exceptions.SupportException"%>
-<%@page import="serviceLayer.entities.User"%>
-<%@page import="serviceLayer.controllers.SupportController"%>
-<%@page import="java.util.ArrayList"%>
-
+<%@page import="serviceLayer.entities.*"%>
+<%@page import="serviceLayer.exceptions.*"%>
+<%@page import="serviceLayer.controllers.*"%>
+<%@page import="java.util.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    // SIGN OUT
+    if(request.getParameter("logout") != null) {
+        if (request.getSession(false) != null) {
+            session.invalidate();
+        }
+        response.sendRedirect("/PolygonApp/index.jsp");
+        return;
+    }
+    
+    // SESSION CHECK
+    User user = (User) session.getAttribute("user");
+    
+    if (user == null) {
+        response.sendRedirect("/PolygonApp/index.jsp");
+        return;
+    } else if (user.getUserType().equals(User.userType.CUSTOMER)) {
+        response.sendRedirect("/PolygonApp/buildings.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="../js/jquery-1.12.3.min.js"></script>
+        <script src="../js/main.js"></script>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
         <link href="/PolygonApp/css/resets.css" rel="stylesheet" type="text/css">
         <link href="/PolygonApp/css/new_style.css" rel="stylesheet" type="text/css">
-        <title>Support tickets</title>
-
-        <style>
-
-            table td {
-                padding:5px;
-            }
-
-        </style>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Polygon - Support</title>
     </head>
     <body>
-
-        <% User user = (User) session.getAttribute("user");%>
-
-        <div id="site">
+        <div id="top">
             <div id="header">
                 <div class="wrapper">
                     <img src="/PolygonApp/images/polygon-logo.svg" class="header_logo" alt="Polygon">
-                    <p>Hello, <%= user.getFullName()%> (<a href="?logout">Sign out</a>)</p>
+                    <p>Hello, <%= user.getFullName() %> (<a href="?logout">Sign out</a>)</p>
                 </div>
             </div>
             <div id="navigation">
-                <h2>Support Ticket</h2>
-                <ul>
-                    <li class="inactive"><a href="index.jsp">Dashboard</a></li>
-                    <li class="active"><a href="index.jsp">Support</a></li>
-                </ul>
+                <div class="wrapper">
+                    <h2>Support ticket overview</h2>
+                    <ul>
+                        <li class="inactive"><a href="/PolygonApp/admin/index.jsp">Dashboard</a></li>
+                        <li class="inactive"><a href="/PolygonApp/admin/users.jsp">Users</a></li>
+                        <li class="inactive"><a href="/PolygonApp/admin/buildings.jsp">Buildings</a></li>
+                        <li class="inactive"><a href="/PolygonApp/admin/pending.jsp">Checkups</a></li>
+                        <li class="active"><a href="/PolygonApp/admin/support.jsp">Support tickets</a></li>
+                    </ul>
+                </div>
             </div>
-            <br>
+        </div>
+        <div id="content">
+            <div class="wrapper">
+                <!-- BREADCRUMBS -->
+                <p class="breadcrumbs"><a href="/PolygonApp/admin/index.jsp">Admin panel</a> &raquo; Support</p>
+        
+                <div class="table">
+                    <table class="adminsupport_table">
+                        <!-- FEEDBACK MESSAGES -->
+                        <%
+                            if (request.getParameter("error") != null) {
+                                out.print("<h3 class='errormsg'>" + request.getParameter("error") + "</h3><br>");
+                            } else if (request.getParameter("success") != null) {
+                                out.print("<h3 class='errormsg'>" + request.getParameter("success") + "</h3><br>");
+                            }
+                        %>
+                        <!-- TABLE HEADER -->
+                        <tr>
+                            <td>ID</td>
+                            <td>Title</td>
+                            <td>Message</td>
+                            <td>Status</td>
+                        </tr>
+                        <%
+                            SupportController sc = new SupportController();
+                            ArrayList<Ticket> tickets = sc.getAllTickets();
 
-            <%
-
-                // SESSION CHECK
-                if (request.getParameter("logout") != null) {
-
-                    if (request.getSession(false) != null) {
-                        session.invalidate();
-                    }
-
-                    response.sendRedirect("index.jsp");
-                    return;
-                }
-
-                if (user == null) {
-                    response.sendRedirect("index.jsp");
-                    return;
-                }
-
-            %>
-
-            <div class="box viewbuilding">
-                <h1>Support tickets</h1>
-                <%                SupportController sc = new SupportController();
-                    ArrayList<Ticket> tickets = sc.getAllTickets();
-
-                    if (tickets.size() > 0) {
-                        out.print("<table class='viewdocs'>");
-                        for (Ticket t : tickets) {
-                            out.print("<tr>");
-                            out.print("<td> ID </td>");
-                            out.print("<td style='min-width:150px'> Title </td>");
-                            out.print("<td style='width:300px'> Message </td>");
-                            out.print("<td> Status </td>");
-                            out.print("</tr>");
-                            out.print("<tr onclick=\"document.location='answerticket.jsp?ticketId=" + t.getTicketId() + "'\">");
-                            out.print("<td>" + t.getTicketId() + "</td>");
-                            out.print("<td>" + t.getTitle() + "</td>");
-                            out.print("<td>" + t.getText() + "</td>");
-                            out.print("<td>" + t.getState() + "</td>");
-                            out.print("</tr>");
-                        }
-                        out.print("</table> <br>");
-                        out.print("<p>Click on a ticket to read/answer/close it.</p>");
-                    } else {
-                        out.print("<br><p>There are no tickets reported to this building.</p>");
-                    }
-
-                %>
+                            if (tickets.size() > 0) {
+                                for (Ticket t : tickets) {
+                                    out.print("<tr onclick=\"document.location='/PolygonApp/admin/answerticket.jsp?ticketId=" + t.getTicketId()+ "'\">");
+                                        out.print("<td>" + t.getTicketId() + "</td>");
+                                        out.print("<td>" + t.getTitle()+ "</td>");
+                                        out.print("<td>" + t.getText() + "</td>");
+                                        out.print("<td>" + t.getState() + "</td>");
+                                    out.print("</tr>");
+                                }
+                            } else {
+                                out.print("<tr class='nohover'>");
+                                    out.print("<td colspan='5'>You have no support tickets yet.</td>");
+                                out.print("</tr>");
+                            }
+                        %>
+                    </table>
+                    <form method="POST" action="createticket.jsp">
+                        <input type="submit" class="btn" value="Create a new ticket">
+                    </form>
+                </div>
             </div>
-
-            <%                if (request.getParameter("error") != null) {
-                    out.print("<h3 style='color:red' class='center'>" + request.getParameter("error") + "</h3>");
-                } else if (request.getParameter("message") != null) {
-                    out.print("<h3 style='color:green' class='center'>" + request.getParameter("message") + "</h3>");
-                }
-            %>
-
-
+        </div>   
     </body>
 </html>
