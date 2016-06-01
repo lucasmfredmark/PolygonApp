@@ -5,9 +5,12 @@
  */
 package dataAccessLayer.mappers;
 
+import dataAccessLayer.DBConnector;
 import dataAccessLayer.mappers.interfaces.ISupportMapper;
-import dataAccessLayer.DBFacade;
-import dataAccessLayer.interfaces.IDBFacade;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import serviceLayer.entities.Ticket;
 import serviceLayer.exceptions.SupportException;
@@ -17,47 +20,137 @@ import serviceLayer.exceptions.SupportException;
  * @author xboxm
  */
 public class SupportMapper implements ISupportMapper {
-    private final IDBFacade dbf = new DBFacade();
-    
-    //Create a new ticket, which needs 3 parameters due to the database structure
-    @Override
-    public void createTicket(String title, String text, int userId) throws SupportException {
-        dbf.createTicket(title, text, userId);
-    }
-    // Find the right ticket in DB on ticketId and edit with value text
-    @Override
-    public void editTicket(String text, int ticketId) throws SupportException {
-        dbf.editTicket(text, ticketId);
-    }
-    // Find the ticket with id in DB
-    @Override
-    public Ticket getTicket(int ticketId) throws SupportException {
-        return dbf.getTicket(ticketId);
-    }
-    // Find all tickets belonging to a specific user
-    @Override
-    public ArrayList<Ticket> getAllTicketsFromCustomer(int userId) throws SupportException {
-        return dbf.getAllTicketsFromCustomer(userId);
-    }
-    // Get all tickets in the DB with no filter
-    @Override
-    public ArrayList<Ticket> getAllTickets() throws SupportException {
-        return dbf.getAllTickets();
-    }
-    // Find a ticket by id and set its status to closed
-    @Override
-    public void closeTicket(int ticketId) throws SupportException {
-        dbf.closeTicket(ticketId);
-    }
-    // Find an employee's answer to a ticket with id from DB
-    @Override
-    public String getAnswerToTicket(int ticketId) throws SupportException {
-        return dbf.getAnswerToTicket(ticketId);
-    }
-    // Set the answer to a ticket by id with value answer
+
     @Override
     public void answerTicket(int ticketId, String answer) throws SupportException {
-        dbf.answerTicket(ticketId, answer);
+        try {
+            Connection conn = DBConnector.getConnection();
+            String sql = "UPDATE tickets SET ticketanswer = ? WHERE ticketid = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, answer);
+            pstmt.setInt(2, ticketId);
+            int rs = pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            throw new SupportException("Error: ticket not found with id: " + ticketId);
+        }
     }
 
+    @Override
+    public void closeTicket(int ticketId) throws SupportException {
+        try {
+            Connection conn = DBConnector.getConnection();
+            String sql = "UPDATE tickets SET ticketstate = 0 WHERE ticketid = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, ticketId);
+            int rs = pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            throw new SupportException("No ticket was found with id: " + ticketId);
+        }
+    }
+
+    @Override
+    public void createTicket(String title, String text, int userId) throws SupportException {
+        try {
+            Connection conn = DBConnector.getConnection();
+            String sql = "INSERT INTO tickets (tickettitle, tickettext, fk_userid) VALUES (?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, title);
+            pstmt.setString(2, text);
+            pstmt.setInt(3, userId);
+            int rowsAffected = pstmt.executeUpdate();
+            System.out.println(rowsAffected);
+        } catch (SQLException ex) {
+            throw new SupportException("Error: No tickets exists for user with id: " + userId);
+        }
+    }
+
+    @Override
+    public void editTicket(String text, int ticketId) throws SupportException {
+        try {
+            Connection conn = DBConnector.getConnection();
+            String sql = "UPDATE tickets SET tickettext = ? WHERE ticketid = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, text);
+            pstmt.setInt(2, ticketId);
+            int rs = pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            throw new SupportException("Error: no ticket found to edit under id: " + ticketId);
+        }
+    }
+
+    @Override
+    public ArrayList<Ticket> getAllTickets() throws SupportException {
+        try {
+            Connection conn = DBConnector.getConnection();
+            String sql = "SELECT * FROM tickets ORDER BY tickettitle ASC";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            ArrayList<Ticket> tickets = new ArrayList();
+            
+            while (rs.next()) {
+                Ticket ticket = new Ticket(rs.getInt("ticketid"), rs.getString("tickettitle"), rs.getString("tickettext"), rs.getInt("ticketstate"), rs.getInt("fk_userid"));
+                tickets.add(ticket);
+            }
+            return tickets;
+        } catch (SQLException ex) {
+            throw new SupportException("There are no tickets by customers"); 
+        }
+    }
+
+    @Override
+    public ArrayList<Ticket> getAllTicketsFromCustomer(int userId) throws SupportException {
+        try {
+            Connection conn = DBConnector.getConnection();
+            String sql = "SELECT * FROM tickets WHERE fk_userid = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            ArrayList<Ticket> tickets = new ArrayList();
+            while (rs.next()) {
+                Ticket ticket = new Ticket(rs.getInt("ticketid"), rs.getString("tickettitle"), rs.getString("tickettext"), rs.getInt("ticketstate"), rs.getInt("fk_userid"));
+                tickets.add(ticket);
+            }
+            return tickets;
+        } catch (SQLException ex) {
+            throw new SupportException("Error: there was no tickets found for user with id: " + userId);
+        }
+    }
+
+    @Override
+    public String getAnswerToTicket(int ticketId) throws SupportException {
+        try {
+            Connection conn = DBConnector.getConnection();
+            String sql = "SELECT * FROM tickets WHERE ticketid = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, ticketId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                System.out.println("Answer is: " + rs.getString("ticketanswer"));
+                return rs.getString("ticketanswer");
+            }
+        } catch (SQLException ex) {
+            throw new SupportException("Error: There was no answer found to ticket with id: " + ticketId);
+        }
+        return null;
+    }
+
+    @Override
+    public Ticket getTicket(int ticketId) throws SupportException {
+        try {
+            Connection conn = DBConnector.getConnection();
+            String sql = "SELECT * FROM tickets WHERE ticketid = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, ticketId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new Ticket(rs.getInt("ticketid"), rs.getString("tickettitle"), rs.getString("tickettext"), rs.getInt("ticketstate"), rs.getInt("fk_userid"));
+            }
+
+        } catch (SQLException ex) {
+            throw new SupportException("There was no ticket found under ticket id: " + ticketId);
+        }
+        return null;
+    }
 }
