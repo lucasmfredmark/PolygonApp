@@ -5,9 +5,9 @@
  */
 package serviceLayer.controllers;
 
+import dataAccessLayer.DBFacade;
+import dataAccessLayer.interfaces.IDBFacade;
 import serviceLayer.controllers.interfaces.IUserController;
-import dataAccessLayer.mappers.interfaces.IUserMapper;
-import dataAccessLayer.mappers.UserMapper;
 import java.util.ArrayList;
 import serviceLayer.entities.User;
 import serviceLayer.exceptions.UserException;
@@ -17,7 +17,7 @@ import serviceLayer.exceptions.UserException;
  * @author lucas
  */
 public class UserController implements IUserController {
-    private final IUserMapper userMapper = new UserMapper();
+    private final IDBFacade dbf = new DBFacade();
 
     @Override
     public User loginUser(String email, String password) throws UserException {
@@ -42,7 +42,7 @@ public class UserController implements IUserController {
         if (email != null && fullname != null && password != null &&
             !email.isEmpty() && !fullname.isEmpty() && !password.isEmpty() &&
             fullname.length() <= 50 && password.length() <= 20) {
-            userMapper.insertUser(email, fullname, password);
+            dbf.insertUser(email, fullname, password);
         } else {
             throw new UserException("One or more fields were empty");
         }
@@ -50,11 +50,11 @@ public class UserController implements IUserController {
     
     @Override
     public User getUserByEmail(String email) throws UserException {
-        return userMapper.getUserByEmail(email);
+        return dbf.getUserByEmail(email);
     }
     
     @Override
     public ArrayList<User> getAllUsers(String userType) throws UserException {
-        return userMapper.getAllUsers(userType);
+        return dbf.getAllUsers(userType);
     }
 }

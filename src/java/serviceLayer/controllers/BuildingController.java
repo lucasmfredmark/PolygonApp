@@ -5,9 +5,9 @@
  */
 package serviceLayer.controllers;
 
+import dataAccessLayer.DBFacade;
+import dataAccessLayer.interfaces.IDBFacade;
 import serviceLayer.controllers.interfaces.IBuildingController;
-import dataAccessLayer.mappers.interfaces.IBuildingMapper;
-import dataAccessLayer.mappers.BuildingMapper;
 import java.util.ArrayList;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.Checkup;
@@ -22,16 +22,16 @@ import serviceLayer.exceptions.BuildingException;
  * @author Staal
  */
 public class BuildingController implements IBuildingController{
-    private final IBuildingMapper buildingMapper = new BuildingMapper();
+    private final IDBFacade dbf = new DBFacade();
 
     @Override
     public Building getCustomerBuilding(int buildingId, int userId) throws BuildingException {
-        return buildingMapper.getCustomerBuilding(buildingId, userId);
+        return dbf.getCustomerBuilding(buildingId, userId);
     }
 
     @Override
     public ArrayList<Building> getCustomerBuildings(int userId) throws BuildingException {
-        return buildingMapper.getCustomerBuildings(userId);
+        return dbf.getCustomerBuildings(userId);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class BuildingController implements IBuildingController{
         if (name != null && address != null && parcelNumber != null && size > 0 && userId > 0) {
             if (name.length() <= 40 && address.length() <= 50 && parcelNumber.length() <= 20) {
                 if (parcelNumber.matches("[0-9a-z]+") && String.valueOf(size).matches("\\d*")) {
-                    buildingMapper.addCustomerBuilding(name, address, parcelNumber, size, userId);
+                    dbf.addCustomerBuilding(name, address, parcelNumber, size, userId);
                 }
             }
         } else {
@@ -50,7 +50,7 @@ public class BuildingController implements IBuildingController{
     @Override
     public void deleteCustomerBuilding(int buildingId) throws BuildingException {
         if (buildingId > 0) {
-            buildingMapper.deleteCustomerBuilding(buildingId);
+            dbf.deleteCustomerBuilding(buildingId);
         } else {
             throw new BuildingException("The building id does not exist");
         }
@@ -61,7 +61,7 @@ public class BuildingController implements IBuildingController{
         if (name != null && address != null && parcelNumber != null && size > 0 && buildingId > 0) {
             if (name.length() <= 40 && address.length() <= 50 && parcelNumber.length() <= 20) {
                 if (parcelNumber.matches("[0-9a-z]+") && String.valueOf(size).matches("\\d*")) {
-                    buildingMapper.editCustomerBuilding(name, address, parcelNumber, size, buildingId);
+                    dbf.editCustomerBuilding(name, address, parcelNumber, size, buildingId);
                 }
             }
         } else {
@@ -72,50 +72,50 @@ public class BuildingController implements IBuildingController{
 
     @Override
     public ArrayList<Checkup> getBuildingCheckups(int buildingId) throws BuildingException {
-        return buildingMapper.getBuildingCheckups(buildingId);
+        return dbf.getBuildingCheckups(buildingId);
     }
 
     @Override
     public ArrayList<Document> getBuildingDocuments(int buildingId) throws BuildingException {
-        return buildingMapper.getBuildingDocuments(buildingId);
+        return dbf.getBuildingDocuments(buildingId);
     }
 
     @Override
     public int getBuildingConditionLevel(int buildingId) throws BuildingException {
-        return buildingMapper.getBuildingConditionLevel(buildingId);
+        return dbf.getBuildingConditionLevel(buildingId);
     }
     
     @Override
     public void addCheckUpReport(String checkupPath, int conditionLevel, int buildingId) throws BuildingException{
         if (checkupPath != null && buildingId > 0 && conditionLevel >= 0 && conditionLevel <= 3) {
-            buildingMapper.addCheckUpReport(checkupPath, conditionLevel, buildingId);
+            dbf.addCheckUpReport(checkupPath, conditionLevel, buildingId);
         }
     }
 
     @Override
     public void addCustomerDocument(String documentNote, String documentPath, int buildingId) throws BuildingException {
         if (documentNote != null && documentPath != null && buildingId > 0) {
-            buildingMapper.addCustomerDocument(documentNote, documentPath, buildingId);
+            dbf.addCustomerDocument(documentNote, documentPath, buildingId);
         }
     }
 
     @Override
     public void addDamage(String dmgTitle, String dmgDesc, int buildingId) throws BuildingException {
         if (dmgTitle != null && dmgDesc != null && buildingId > 0) {
-            buildingMapper.addDamage(dmgTitle, dmgDesc, buildingId);
+            dbf.addDamage(dmgTitle, dmgDesc, buildingId);
         }
     }
 
     @Override
     public void deleteDamage(int damageId) throws BuildingException {
         if (damageId > 0) {
-            buildingMapper.deleteDamage(damageId);
+            dbf.deleteDamage(damageId);
         }
     }
     
     @Override
     public ArrayList<Damage> getDamages(int buildingId) throws BuildingException {
-        return buildingMapper.getBuildingDamages(buildingId);
+        return dbf.getBuildingDamages(buildingId);
     }
     
     @Override
@@ -148,7 +148,7 @@ public class BuildingController implements IBuildingController{
                 
                 Transport.send(message);
                 */
-                buildingMapper.addOrder(orderStatus, buildingId);
+                dbf.addOrder(orderStatus, buildingId);
             /*
             }
         } catch (MessagingException ex) {
@@ -161,12 +161,12 @@ public class BuildingController implements IBuildingController{
     
     @Override
     public Order getOrderByBuildingId(int buildingId) throws BuildingException {
-        return buildingMapper.getOrderByBuildingId(buildingId);
+        return dbf.getOrderByBuildingId(buildingId);
     }
     
     @Override
     public boolean getPendingCheckup(int buildingId) throws BuildingException {
-        return buildingMapper.getPendingCheckup(buildingId);
+        return dbf.getPendingCheckup(buildingId);
     }
     
 }

@@ -5,11 +5,9 @@
  */
 package serviceLayer.controllers;
 
+import dataAccessLayer.DBFacade;
+import dataAccessLayer.interfaces.IDBFacade;
 import serviceLayer.controllers.interfaces.IAdminController;
-import dataAccessLayer.mappers.interfaces.IBuildingMapper;
-import dataAccessLayer.mappers.interfaces.IUserMapper;
-import dataAccessLayer.mappers.BuildingMapper;
-import dataAccessLayer.mappers.UserMapper;
 import java.util.ArrayList;
 import serviceLayer.entities.Building;
 import serviceLayer.entities.User;
@@ -21,33 +19,31 @@ import serviceLayer.exceptions.UserException;
  * @author HazemSaeid
  */
 public class AdminController implements IAdminController {
-
-    private final IUserMapper um = new UserMapper();
-    private final IBuildingMapper bm = new BuildingMapper();
+    private final IDBFacade dbf = new DBFacade();
 
     @Override
     public ArrayList<Building> getCustomerBuildings(int userId) throws BuildingException {
-        return bm.getCustomerBuildings(userId);
+        return dbf.getCustomerBuildings(userId);
     }
     
     @Override
     public ArrayList<Building> getAllBuildings() throws BuildingException {
-        return bm.getAllBuildings();
+        return dbf.getAllBuildings();
     }
 
     @Override
     public ArrayList<User> getAllUsers(String userType) throws UserException {
         // The return has been commented out because the method is not implemented yet in Mapper
-        return um.getAllUsers(userType);
+        return dbf.getAllUsers(userType);
     }
     
     @Override
     public Building getAdminBuilding(int buildingId) throws BuildingException {
-        return bm.getAdminBuilding(buildingId);
+        return dbf.getAdminBuilding(buildingId);
     }
     
     @Override
     public ArrayList<Building> getPendingCheckups() throws BuildingException {
-        return bm.getPendingCheckups();
+        return dbf.getPendingCheckups();
     }
 }
